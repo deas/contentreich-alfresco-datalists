@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+   
+   <bean id="fme.resources" class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
+      <property name="resourceBundles">
+         <list>
+            <value>alfresco.web-extension.messages.fme-datalist</value>
+         </list>
+      </property>
+   </bean>
+   
+   <!-- Load the datalist form config -->
+   <bean id="fme.datalist" class="org.springframework.extensions.config.ConfigBootstrap" init-method="register">
+         <property name="configService" ref="web.config" />
+         <property name="configs">
+            <list>
+               <value>classpath:alfresco/web-extension/fme-extended-datalist-config-custom.xml</value>
+            </list>
+         </property>
+   </bean>
+   
+</beans>

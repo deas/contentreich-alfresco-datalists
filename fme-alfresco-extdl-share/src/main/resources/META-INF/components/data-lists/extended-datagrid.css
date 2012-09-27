@@ -1,0 +1,12 @@
+/* Preview Tooltip */
+.yui-tt .bd
+{
+   background-color: #f4faff !important;
+   border: 1px solid #333 !important;
+   padding: 4px 4px 1px !important;
+   text-align: left;
+   max-width: 900px;
+}
+.datagrid .form-container .form-buttons {
+    padding-top: 0em;
+}

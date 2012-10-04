@@ -1,0 +1,6 @@
+http://www.contentreich.de/alfresco-extended-datalists-migrated-to-4-0
+- migrated to maven and git
+- build generates extension artifacts ready for dropping into the appropriate folders
+- richtext control does not quite work as expected when using a recent version of Firefox -> reverted to a plain text area.
+- richtext JIRA issue https://issues.alfresco.com/jira/browse/ALF-16153
+- artifacts are compiled to target 1.6-JVM and alfresco 4.0.e

@@ -55,9 +55,8 @@
     <!--                                        --> 
  
     <!-- Download a datalist as Excel XLS / XLSX -->
-    <!-- Bummer ! Cannot override here (Alfresco 4.0.x)
-    <bean id="webscript.org.alfresco.slingshot.datalists.list.get"
-          class="de.fme.alfresco.repo.web.scripts.datalist.DataListDownloadWebScriptt"
+    <bean id="webscript.de.fme.slingshot.datalists.list.get"
+          class="de.fme.alfresco.repo.web.scripts.datalist.DataListDownloadWebScript"
           parent="webscript"> 
         <property name="nodeService" ref="NodeService"/> 
         <property name="siteService" ref="SiteService"/> 
@@ -65,9 +64,9 @@
         <property name="personService" ref="PersonService"/> 
         <property name="namespaceService" ref="namespaceService"/> 
         <property name="dictionaryService" ref="dictionaryService"/> 
-        <property name="modelOrder"--> 
+        <property name="modelOrder"> 
            <!-- These are taken from the forms config for now --> 
-           <!-- map> 
+           <map> 
               <entry key="dl:todoList"> 
                 <value>dl:itemId,dl:todoTitle,dl:todoDueDate,dl:todoPriority,dl:todoStatus,dl:todoNotes,dl:assignee,dl:attachments,fm:forum</value> 
               </entry> 
@@ -97,7 +96,7 @@
               </entry> 
            </map> 
         </property> 
-    </bean-->
+    </bean>
     
     <bean id="datalistIDService" class="de.fme.alfresco.repo.datalist.DatalistIDServiceImpl">
 		<property name="nodeService" ref="NodeService" />

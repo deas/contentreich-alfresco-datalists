@@ -8,7 +8,7 @@
   </parent>
   <groupId>de.fme</groupId>
   <artifactId>fme-alfresco-extdl-repo</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
   <packaging>jar</packaging>
   <name>fme Alfresco Extended Datalists Repo</name>
   <url>http://maven.apache.org</url>

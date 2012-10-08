@@ -121,6 +121,14 @@
   <build>
     <pluginManagement>
       <plugins>
+	<plugin>
+	  <artifactId>maven-jar-plugin</artifactId>
+	  <configuration>
+	    <archive>
+	      <addMavenDescriptor>false</addMavenDescriptor>
+	    </archive>
+	  </configuration>
+	</plugin>
             </plugins>
     </pluginManagement>
   </build>

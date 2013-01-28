@@ -5,7 +5,7 @@
   <artifactId>fme-alfresco-extdl-parent</artifactId>
   <packaging>pom</packaging>
   <name>[parent] fme Alfresco Extended Datalists</name>
-  <version>1.0</version>
+  <version>1.1</version>
   <description>
         Parent project for fme Alfresco Extended Datalists
     </description>
@@ -46,14 +46,18 @@
     <module>fme-alfresco-extdl-share</module>
   </modules>
   <properties>
-    <alfresco.version>4.0.e</alfresco.version>
-    <spring.version>3.0.5.RELEASE</spring.version>
-    <spring.surf.version>1.0.0</spring.surf.version>
+    <alfresco.version>4.2.c</alfresco.version>
+    <spring.version>3.0.6.RELEASE</spring.version>
+    <spring.surf.version>1.2.0-SNAPSHOT</spring.surf.version>
   </properties>
   <repositories>
     <repository>
       <id>alfresco-public</id>
       <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
+    </repository>
+    <repository>
+      <id>alfresco-public-snapshots</id>
+      <url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>
     </repository>
   </repositories>
   <pluginRepositories>

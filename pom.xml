@@ -45,15 +45,19 @@
         <module>fme-alfresco-extdl-share</module>
     </modules>
     <properties>
-        <alfresco.version>4.0.e</alfresco.version>
-        <spring.version>3.0.5.RELEASE</spring.version>
-        <spring.surf.version>1.0.0</spring.surf.version>
+    <alfresco.version>4.2.c</alfresco.version>
+    <spring.version>3.0.6.RELEASE</spring.version>
+    <spring.surf.version>1.2.0-SNAPSHOT</spring.surf.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <repositories>
         <repository>
             <id>alfresco-public</id>
             <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
+    </repository>
+    <repository>
+      <id>alfresco-public-snapshots</id>
+      <url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -128,6 +132,15 @@
                         <target>1.6</target>
                     </configuration>
                 </plugin>
+	<plugin>
+	  <artifactId>maven-jar-plugin</artifactId>
+	  <configuration>
+	    <archive>
+	      <addMavenDescriptor>false</addMavenDescriptor>
+	    </archive>
+	  </configuration>
+	</plugin>
+
             </plugins>
         </pluginManagement>
     </build>

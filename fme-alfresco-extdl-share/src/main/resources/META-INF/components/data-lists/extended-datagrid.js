@@ -1,4 +1,3 @@
-
 (function()
 {
    /**
@@ -485,7 +484,7 @@
            });
     	  var data =
           {
-             htmlid: this.id
+             htmlid: this.id + "-extDgFilterForm"
           };
     	  
     	  Alfresco.util.Ajax.request(
@@ -662,6 +661,13 @@
     	 {
     		 var event = keyEvent[1],
     		 target = event.target ? event.target : event.srcElement;
+    		 
+    		 var targetId = target.id;
+    		 if (!(targetId.contains(me.id) && targetId.contains("-extDgFilterForm")))
+    		 {
+    		 	 //this is not from filterForm
+    		 	 return false;
+    		 }
     		 
     		 if (target.tagName == "TEXTAREA")
     		 {

@@ -20,6 +20,7 @@
          		<css src="/components/upload/html-upload.css" />
          		<css src="/components/upload/flash-upload.css" />
          		<js src="/components/form/filter-date-range.js" />
+      			<js src="/components/form/workflow/activiti-transitions.js"/>
       		</dependencies>
 	   </forms>
 	</config>   

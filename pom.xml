@@ -46,9 +46,11 @@
     <module>fme-alfresco-extdl-share</module>
   </modules>
   <properties>
-    <alfresco.version>4.2.c</alfresco.version>
+    <alfresco.version>4.2.e</alfresco.version>
     <spring.version>3.0.6.RELEASE</spring.version>
     <spring.surf.version>1.2.0-SNAPSHOT</spring.surf.version>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
   </properties>
   <repositories>
     <repository>
@@ -133,7 +135,14 @@
 	    </archive>
 	  </configuration>
 	</plugin>
-            </plugins>
+    <plugin>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <configuration>
+        <source>${maven.compiler.source}</source>
+        <target>${maven.compiler.target}</target>
+      </configuration>
+    </plugin>
+  </plugins>
     </pluginManagement>
   </build>
 </project>

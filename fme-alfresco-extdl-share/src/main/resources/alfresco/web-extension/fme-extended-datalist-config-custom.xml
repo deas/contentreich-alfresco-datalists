@@ -49,7 +49,7 @@
                </field>
                <field id="cm:description">
                   <control template="/org/alfresco/components/form/controls/textarea.ftl">
-                  	<control-param name="rows">20</control-param>
+                  	<control-param name="rows">10</control-param>
                   	<control-param name="style">width:750px</control-param>
                   </control>
                </field> 
@@ -171,7 +171,7 @@
                </field>
                <field id="cm:description" set="normal">
                   <control template="/org/alfresco/components/form/controls/textarea.ftl">
-                  	<control-param name="rows">20</control-param>
+                  	<control-param name="rows">10</control-param>
                   	<control-param name="style">width:450px</control-param>
                   </control>
                </field> 
@@ -184,7 +184,7 @@
                <field id="cm:created" set="normal" read-only="true"/>
                <field id="fm:discussable" label-id="form.label.comments" set="other">
                   <control template="/org/alfresco/components/form/controls/comments.ftl">
-                  	<control-param name="editorWidth">450</control-param>
+                  	<control-param name="style">width:450px;</control-param>
                   </control>
                </field>
                <field id="cm:versionable" label-id="form.label.version-history" set="normal">
@@ -250,7 +250,7 @@
                </field>	
                <field id="dl:contactNotes">
                   <control template="/org/alfresco/components/form/controls/textarea.ftl" >
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   		<control-param name="style">width:750px</control-param>
                   </control>
                </field>
@@ -406,7 +406,7 @@
                </field>
                <field id="dl:contactNotes"  set="normal">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   		<control-param name="style">width:450px</control-param>
                   	</control>
                </field>
@@ -417,7 +417,7 @@
                <field id="cm:created" set="normal"/>
                <field id="fm:discussable" label-id="form.label.comments" set="other">
                   <control template="/org/alfresco/components/form/controls/comments.ftl">
-                  	<control-param name="editorWidth">450</control-param>
+                      <control-param name="style">width:450px;</control-param>
                   </control>
                </field>
                <field id="cm:versionable" label-id="form.label.version-history" set="normal">
@@ -649,7 +649,7 @@
                <field id="cm:created" set="normal"/>
                <field id="fm:discussable" label-id="form.label.comments" set="other">
                   <control template="/org/alfresco/components/form/controls/comments.ftl">
-                  	<control-param name="editorWidth">450</control-param>
+                      <control-param name="style">width:450px;</control-param>
                   </control>
                </field>
                <field id="cm:versionable" label-id="form.label.version-history" set="normal">
@@ -690,7 +690,7 @@
                <field id="cm:description">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:750px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
                <field id="dl:eventLocation">
@@ -837,7 +837,7 @@
                <field id="cm:description" set="normal">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:450px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
                <field id="dl:eventLocation" set="normal">
@@ -861,7 +861,7 @@
                
                <field id="fm:discussable" label-id="form.label.comments" set="other">
                   <control template="/org/alfresco/components/form/controls/comments.ftl">
-                  	<control-param name="editorWidth">450</control-param>
+                      <control-param name="style">width:450px;</control-param>
                   </control>
                </field>
                <field id="cm:creator" set="other">
@@ -906,7 +906,7 @@
             	<field id="cm:description">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:750px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
                <field id="cm:attachments">
@@ -1067,7 +1067,7 @@
                <field id="cm:description" set="normal">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:450px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
                <field id="dl:issueDueDate" set="normal"/>
@@ -1080,7 +1080,7 @@
                
                <field id="fm:discussable" label-id="form.label.comments" set="other">
                   <control template="/org/alfresco/components/form/controls/comments.ftl">
-                  	<control-param name="editorWidth">450</control-param>
+                      <control-param name="style">width:450px;</control-param>
                   </control>
                </field>
                <field id="cm:creator" set="other">
@@ -1156,7 +1156,7 @@
             	<field id="cm:description">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:750px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
                <field id="cm:attachments">
@@ -1326,7 +1326,7 @@
             	<field id="cm:description" set="normal">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:450px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
                <field id="cm:attachments" set="normal">
@@ -1338,7 +1338,7 @@
                
                <field id="fm:discussable" label-id="form.label.comments" set="other">
                   <control template="/org/alfresco/components/form/controls/comments.ftl">
-                  	<control-param name="editorWidth">450</control-param>
+                      <control-param name="style">width:450px;</control-param>
                   </control>
                </field>
                <field id="cm:creator" set="other">
@@ -1386,7 +1386,7 @@
             	<field id="cm:description">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:750px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
             	<field id="dl:meetingAgendaTime">
@@ -1517,7 +1517,7 @@
             	<field id="cm:description" set="normal">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:450px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
             	<field id="dl:meetingAgendaTime" set="normal">
@@ -1539,7 +1539,7 @@
                
                <field id="fm:discussable" label-id="form.label.comments" set="other">
                   <control template="/org/alfresco/components/form/controls/comments.ftl">
-                  	<control-param name="editorWidth">450</control-param>
+                      <control-param name="style">width:450px;</control-param>
                   </control>
                </field>
                <field id="cm:creator" set="other">
@@ -1588,7 +1588,7 @@
             	<field id="cm:description">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:750px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
                <field id="cm:attachments">
@@ -1750,7 +1750,7 @@
             	<field id="cm:description" set="normal">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:450px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
             	<field id="dl:ganttStartDate" set="normal"/>
@@ -1768,7 +1768,7 @@
                
                <field id="fm:discussable" label-id="form.label.comments" set="other">
                   <control template="/org/alfresco/components/form/controls/comments.ftl">
-                  	<control-param name="editorWidth">450</control-param>
+                      <control-param name="style">width:450px;</control-param>
                   </control>
                </field>
                <field id="cm:creator" set="other">
@@ -1808,7 +1808,7 @@
             	<field id="dl:todoNotes">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:750px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
                <field id="dl:attachments">
@@ -1931,7 +1931,7 @@
                <field id="dl:todoNotes" set="normal">
                		<control template="/org/alfresco/components/form/controls/textarea.ftl" >
                   		<control-param name="style">width:450px</control-param>
-                  		<control-param name="rows">20</control-param>
+                  		<control-param name="rows">10</control-param>
                   	</control>
                </field>
                <field id="dl:assignee" set="normal"/>
@@ -1943,7 +1943,7 @@
                </field>
                <field id="fm:discussable" label-id="form.label.comments" set="other">
                   <control template="/org/alfresco/components/form/controls/comments.ftl">
-                  	<control-param name="editorWidth">450</control-param>
+                      <control-param name="style">width:450px;</control-param>
                   </control>
                </field>
                <field id="cm:creator" set="other">

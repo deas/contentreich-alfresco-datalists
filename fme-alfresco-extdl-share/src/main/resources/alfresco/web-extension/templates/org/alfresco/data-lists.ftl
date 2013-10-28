@@ -80,9 +80,10 @@
                <@region id="filter" scope="template" protected=true />
            </div>
         </div>
-         <@region id="html-upload" scope="template" protected=true />
+        <@region id="html-upload" scope="template" protected=true />
         <@region id="flash-upload" scope="template" protected=true />
         <@region id="file-upload" scope="template" protected=true />
+        <@region id="dnd-upload" scope="template" protected=true />
    </div>
 </@>
 

@@ -106,11 +106,6 @@
                     var selectedFolder = args[1].selectedFolder;
                     if (selectedFolder !== null)
                     {
-                       /*var ctx = this.renderers["arca:destination-dialog-button"].currentCtx;
-                       this._setHiddenParameter(ctx.configDef, ctx.ruleConfig, ctx.paramDef._destinationParam, selectedFolder.nodeRef);
-                       Alfresco.util.ComponentManager.get(this.id + "-" + ctx.configDef._id + "-destinationLabel").displayByPath(selectedFolder.path, selectedFolder.siteId, selectedFolder.siteTitle);
-                       this._updateSubmitElements(ctx.configDef);*/
-                      
                        if (this.fileUpload === null)
                        {
                           this.fileUpload = Alfresco.getFileUploadInstance(); 

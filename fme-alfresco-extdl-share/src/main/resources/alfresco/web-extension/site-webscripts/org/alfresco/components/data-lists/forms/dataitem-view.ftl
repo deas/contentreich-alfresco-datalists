@@ -1,29 +1,3 @@
-<#--<#assign id=args.htmlid>
-<#if formUI == "true">
-   <@formLib.renderFormsRuntime formId=formId />
-</#if>-->
-<#--
-<div>	
-      <div id="${formId}-container" class="form-container bd">
-         <#if form.showCaption?exists && form.showCaption>
-            <div id="${formId}-caption" class="caption"><span class="mandatory-indicator">*</span>${msg("form.required.fields")}</div>
-         </#if>
-   
-            <div id="${formId}-fields" class="form-fields">
-
-               <#list form.structure as item>
-                  <#if item.kind == "set">
-                     <@formLib.renderSet set=item />
-                  <#else>
-                     <@formLib.renderField field=form.fields[item.id] />
-                  </#if>
-               </#list>
-
-            </div>
-       </div>
-</div>
--->
-
 <#if error?exists>
    <div class="error">${error}</div>
 <#elseif form?exists>

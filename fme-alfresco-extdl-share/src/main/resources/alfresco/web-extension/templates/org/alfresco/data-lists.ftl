@@ -1,5 +1,6 @@
 <#include "include/alfresco-template.ftl" />
 <@templateHeader>
+   <@markup id="location-hash">
    <script type="text/javascript">//<![CDATA[
    (function()
    {
@@ -54,30 +55,34 @@
       }
    })();
    //]]></script>
+   </@>
+   <@markup id="resizer">
    <script type="text/javascript">//<![CDATA[
       new Alfresco.widget.Resizer("DataLists");
    //]]></script>
+   </@>
    <@script type="text/javascript" src="${url.context}/res/modules/data-lists/datalist-actions.js"></@script>
 </@>
 
 <@templateBody>
+   <@markup id="alf-hd">
    <div id="alf-hd">
-      <@region id="header" scope="global" protected=true />
-      <@region id="title" scope="template" protected=true />
-      <@region id="navigation" scope="template" protected=true />
+      <@region scope="global" id="share-header" chromeless="true"/>
    </div>
+   </@>
+   <@markup id="bd">
    <div id="bd">
-      <@region id="actions-common" scope="template" protected=true />
+      <@region id="actions-common" scope="template" />
         <div class="yui-t1" id="alfresco-data-lists">
            <div id="yui-main">
               <div class="yui-b" id="alf-content">
-                <@region id="toolbar" scope="template" protected=true />               
-                <@region id="datagrid" scope="template" protected=true />
+                <@region id="toolbar" scope="template" />
+                <@region id="datagrid" scope="template" />
               </div>
            </div>
            <div class="yui-b" id="alf-filters">
-               <@region id="datalists" scope="template" protected=true />
-               <@region id="filter" scope="template" protected=true />
+               <@region id="datalists" scope="template" />
+               <@region id="filter" scope="template" />
            </div>
         </div>
         <@region id="html-upload" scope="template" protected=true />
@@ -85,10 +90,13 @@
         <@region id="file-upload" scope="template" protected=true />
         <@region id="dnd-upload" scope="template" protected=true />
    </div>
+   </@>
 </@>
 
 <@templateFooter>
+   <@markup id="alf-ft">
    <div id="alf-ft">
-      <@region id="footer" scope="global" protected=true />
+      <@region id="footer" scope="global" />
    </div>
+   </@>
 </@>

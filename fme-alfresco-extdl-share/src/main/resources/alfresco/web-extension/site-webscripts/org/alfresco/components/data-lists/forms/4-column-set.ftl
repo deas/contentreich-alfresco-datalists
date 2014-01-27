@@ -9,9 +9,9 @@
       </#if>
       <@formLib.renderField field=form.fields[item.id] />
       </div>
-      <#if ((item_index % 4) == 1) || !item_has_next>
-      </div>
-      <#elseif ((item_index % 4) == 3) || !item_has_next>
+      <#if ((item_index % 4) == 1)>
+      </div> 
+      <#elseif ((item_index % 4) == 3)>
       </div></div>
       </#if>
    </#if>

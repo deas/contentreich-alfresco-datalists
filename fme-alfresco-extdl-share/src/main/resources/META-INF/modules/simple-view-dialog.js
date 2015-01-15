@@ -183,11 +183,11 @@
          }
         
          // Create and render the YUI dialog
-         this.dialog = Alfresco.util.createYUIPanel(dialogDiv,
+         Dom.addClass(dialogDiv, "bd");
+         this.dialog = Alfresco.util.createYUIPanel(containerDiv,
          {
             width: this.options.width
          });
-         Dom.addClass(dialogDiv, "bd");
          this._showDialog();
       },
 

@@ -13,7 +13,6 @@
 </#if>
 
 <#assign fieldValue=field.value>
-
 <#if fieldValue?string == "" && field.control.params.defaultValueContextProperty??>
    <#if context.properties[field.control.params.defaultValueContextProperty]??>
       <#assign fieldValue = context.properties[field.control.params.defaultValueContextProperty]>
@@ -21,16 +20,32 @@
       <#assign fieldValue = args[field.control.params.defaultValueContextProperty]>
    </#if>
 </#if>
+
+<#assign values=[]>
+
 <#if field.control.params.defaultValues??>
 
-      <#assign fieldValue = field.control.params.defaultValues>
+    <#assign fieldValue = field.control.params.defaultValues>
+	<#assign valueToInput="">
+     <#assign first=true>
+	<#list fieldValue?split(optionSeparator) as nameValue>
+		<#if !first>
+  			<#assign valueToInput=valueToInput + ",">
+   		<#else>
+  			<#assign first=false>
+   		</#if>
+		<#assign choice=nameValue?split(labelSeparator)>
+        <#assign values=values + [choice[0]]>
+        <#assign valueToInput=valueToInput + choice[0]>
+   </#list>
+
+<#elseif fieldValue?string != "">
+   <#assign values=fieldValue?split(",")>
+	<#assign valueToInput=fieldValue>
 </#if>
 
-<#if fieldValue?string != "">
-   <#assign values=fieldValue?split(",")>
-<#else>
-   <#assign values=[]>
-</#if>
+<#-- filedValue: ${fieldValue?string}, optionSeparator: ${optionSeparator?string}, labelSeparator: ${labelSeparator?string} -->
+
 
 <div class="form-field">
    <#if form.mode == "view">
@@ -50,11 +65,11 @@
                     <#assign choice=nameValue?split(labelSeparator)>
                     <#if isSelected(choice[0])>
                        <#if !firstLabel>
-                          <#assign valueToShow=valueToShow+",">
+                          <#assign valueToShow=valueToShow + ",">
                        <#else>
                           <#assign firstLabel=false>
                        </#if>
-                       <#assign valueToShow=valueToShow+choice[1]>
+                       <#assign valueToShow=valueToShow + choice[1]>
                     </#if>
                  </#list>
             <#else>
@@ -65,7 +80,7 @@
       </div>
    <#else>
       <label for="${fieldHtmlId}-entry">${field.label?html}:<#if field.mandatory><span class="mandatory-indicator">${msg("form.required.fields.marker")}</span></#if></label>
-      <input id="${fieldHtmlId}" type="hidden" name="${field.name}" value="${fieldValue?string}" />
+      <input id="${fieldHtmlId}" type="hidden" name="${field.name}" value="${valueToInput?string}" />
       <#if field.control.params.options?? && field.control.params.options != "">
          <select id="${fieldHtmlId}-entry" name="-" multiple="multiple" size="${size}" tabindex="0"
                onchange="javascript:Alfresco.util.updateMultiSelectListValue('${fieldHtmlId}-entry', '${fieldHtmlId}', <#if field.mandatory>true<#else>false</#if>);"

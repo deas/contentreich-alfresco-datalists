@@ -93,8 +93,25 @@
               </entry> 
               <entry key="dl:eventAgenda"> 
                 <value>dl:itemId,dl:eventAgendaRef,dl:eventAgendaStartTime,dl:eventAgendaEndTime,dl:eventAgendaSessionName,dl:eventAgendaPresenter,dl:eventAgendaAudience,cm:attachments,dl:eventAgendaNotes,fm:forum</value> 
-              </entry> 
-           </map> 
+              </entry>
+           </map>
+        </property>
+        <property name="messageLookup">
+            <bean class="org.springframework.aop.framework.ProxyFactoryBean" >
+                <!-- Lazy init to avoid circular dependencies -->
+                <property name="targetSource">
+                    <bean class="org.alfresco.config.NonBlockingLazyInitTargetSource">
+                        <property name="targetBeanName">
+                            <idref bean="messageService" />
+                        </property>
+                    </bean>
+                </property>
+                <property name="proxyInterfaces">
+                    <list>
+                        <value>org.alfresco.service.cmr.i18n.MessageLookup</value>
+                    </list>
+                </property>
+            </bean>
         </property> 
     </bean>
     

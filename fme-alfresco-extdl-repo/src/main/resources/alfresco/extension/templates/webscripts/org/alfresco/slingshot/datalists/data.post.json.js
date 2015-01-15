@@ -1,8 +1,8 @@
 <import resource="classpath:alfresco/templates/webscripts/org/alfresco/slingshot/datalists/evaluator.lib.js">
-<import resource="classpath:alfresco/extension/templates/webscripts/org/alfresco/slingshot/datalists/filters.lib.js">
+<import resource="classpath:alfresco/extension/templates/webscripts/org/alfresco/slingshot/datalists/extdl-filters.lib.js">
 <import resource="classpath:alfresco/extension/templates/webscripts/org/alfresco/slingshot/datalists/parse-args.lib.js">
 
-const REQUEST_MAX = 1000;
+const REQUEST_MAX = 2000;
 
 /**
  * Copyright (C) 2005-2010 Alfresco Software Limited.
@@ -52,49 +52,49 @@ function filterRange(array, range) {
 	return filtered;
 }
 
-function xPathFilterQuery(filterData) {
-	var rangeFilters = [];
-	var fieldQuery = [];
-	var fieldNamesIterator = filterData.getFieldNames().iterator();
-	for ( ; fieldNamesIterator.hasNext(); ){
-		var fieldName = fieldNamesIterator.next();
-		if (filterData.getFieldData(fieldName).getValue()!= ""){
-			var propName = fieldName.replace("prop_","").replace("_",":");
-	    	var value = new String(filterData.getFieldData(fieldName).getValue());
-	    	if (propName.indexOf("-date-range") > 0){
-	    		propName = propName.replace("-date-range","");
-	    		rf = { prop: propName };
-				var dates = value.split("TO");
-				if (dates[0] == ""){
-					rf.max =  utils.fromISO8601(dates[1]);
-				}
-				else if (dates[1] == ""){
-					rf.min = utils.fromISO8601(dates[0]);
-				}else{
-					rf.min =  utils.fromISO8601(dates[0]);
-					rf.max = utils.fromISO8601(dates[1]);
-				}
-	    		rangeFilters.push(rf);
-	    	}
-	    	else if (propName.indexOf("Priority") > 0 || propName.indexOf("Status") > 0){
-				var values = value.split(",");
-				var escaped = [];
-				for (var i=0;i<values.length;i++) {
-					escaped.push('"' + escape(values[i]) + '"');
-				}
-				fieldQuery.push('(@' + propName + '=' + escaped.join(' or @' + propName + '=') + ')');
-	    	} 
-	    	else{
-	    		fieldQuery.push("(like(@" + propName + ',"*' + escape(value) + '*"))');
-	    	}
-	    	
-		}
-	}
-	return {
-		rangeFilters : rangeFilters,
-		propQuery : "[" + fieldQuery.join(" and ") + "]" 
-	}
-}
+//function xPathFilterQuery(filterData) {
+//	var rangeFilters = [];
+//	var fieldQuery = [];
+//	var fieldNamesIterator = filterData.getFieldNames().iterator();
+//	for ( ; fieldNamesIterator.hasNext(); ){
+//		var fieldName = fieldNamesIterator.next();
+//		if (filterData.getFieldData(fieldName).getValue()!= ""){
+//			var propName = fieldName.replace("prop_","").replace("_",":");
+//	    	var value = new String(filterData.getFieldData(fieldName).getValue());
+//	    	if (propName.indexOf("-date-range") > 0){
+//	    		propName = propName.replace("-date-range","");
+//	    		rf = { prop: propName };
+//				var dates = value.split("TO");
+//				if (dates[0] == ""){
+//					rf.max =  utils.fromISO8601(dates[1]);
+//				}
+//				else if (dates[1] == ""){
+//					rf.min = utils.fromISO8601(dates[0]);
+//				}else{
+//					rf.min =  utils.fromISO8601(dates[0]);
+//					rf.max = utils.fromISO8601(dates[1]);
+//				}
+//	    		rangeFilters.push(rf);
+//	    	}
+//	    	else if (propName.indexOf("Priority") > 0 || propName.indexOf("Status") > 0){
+//				var values = value.split(",");
+//				var escaped = [];
+//				for (var i=0;i<values.length;i++) {
+//					escaped.push('"' + escape(values[i]) + '"');
+//				}
+//				fieldQuery.push('(@' + propName + '=' + escaped.join(' or @' + propName + '=') + ')');
+//	    	} 
+//	    	else{
+//	    		fieldQuery.push("(like(@" + propName + ',"*' + escape(value) + '*"))');
+//	    	}
+//	    	
+//		}
+//	}
+//	return {
+//		rangeFilters : rangeFilters,
+//		propQuery : "[" + fieldQuery.join(" and ") + "]" 
+//	}
+//}
 
 /**
  * Main entry point: Return data list with properties being supplied in POSTed arguments
@@ -128,20 +128,61 @@ function getData()
    // Try to find a filter query based on the passed-in arguments
    var filter = parsedArgs.filter,
       allNodes = [], node,
-      items = [];
-
-   if (filter == null || filter.filterId == "all")
+      items = [],
+      totalItems,
+      startIndex = 0,
+      requestTotalCountMax = 0,
+      paged=false;
+   
+   var 	skip = 0,
+   		size = 0;
+   
+   
+   if (json.has("size"))
    {
-      // Use non-query method
-      var parentNode = parsedArgs.listNode;
+	   size = json.get("size");
+	   
+      if (json.has("page"))
+      {
+         skip = (json.get("page") - 1) * size;
+      }
+   } 
+  requestTotalCountMax = skip + REQUEST_MAX; 
+  
+  var filterJson = json.get("filter");
+  
+  if (filterJson.has("sortField")) {
+	  var sortField = filterJson.get("sortField").replace("assoc_","").replace("prop_","").replace("_",":");
+  } else {
+	  var sortField = "cm:name";
+  }
+  if (filterJson.has("sortAsc")) {
+	  var sortAsc = filterJson.get("sortAsc");
+  } else {
+	  var sortAsc = true;
+  }
+  
+   var parentNode = parsedArgs.listNode;
+   if (filter == null || filter.filterId == "" || filter.filterId == "all")
+   {
+
+      
+	  // Use non-query method
       if (parentNode != null)
       {
-         var pagedResult = parentNode.childFileFolders(true, false, Filters.IGNORED_TYPES, -1, -1, REQUEST_MAX, "cm:name", true, null);
+
+         var pagedResult = parentNode.childFileFolders(true, false, Filters.IGNORED_TYPES, skip, size, requestTotalCountMax, sortField, sortAsc, null);
          allNodes = pagedResult.page;
+         totalItems = pagedResult.totalResultCountUpper;
       }
+      
+      startIndex = skip;
+      paged = true;
    }
-   else
+   else    
    {
+	 /* this creates a bug for the items filters in the datalist.
+	  * 
 	  // XPath for solr systems
 	  var n = search.findNode(parsedArgs.nodeRef);
 	  var q = xPathFilterQuery(filter.filterData);
@@ -152,27 +193,57 @@ function getData()
 		  res = filterRange(res, q.rangeFilters[i]);
 	  }
 	  allNodes = res;
-	  /*
-      var filterParams = Filters.getFilterParams(filter, parsedArgs)
-         query = filterParams.query;
+	  */
+	  
+      var filterParams = Filters.getFilterParams(filter, parsedArgs);
+      var query = filterParams.query;
       // Query the nodes - passing in default sort and result limit parameters
       if (query !== "")
       {
+    	  var sortObj = [
+    		                 {
+    		                     column: "@" + sortField,
+    		                     ascending: sortAsc
+    		                  }];
+//this is just cm:name sorting    		  var sortObj = filterParams.sort;
          allNodes = search.query(
          {
             query: query,
             language: filterParams.language,
-            page:
-            {
-               maxItems: (filterParams.limitResults ? parseInt(filterParams.limitResults, 10) : 0)
-            },
-            sort: filterParams.sort,
+ /* we need to get all and slice, no paging results, doh!
+page:
+{
+	skipCount: skip,
+	maxItems: size //maxItems: (filterParams.limitResults ? Math.min(parseInt(filterParams.limitResults, 10), size) : size)
+}, */
+            
+/*if you get exception on custom text property sorting, you need indexing in your model set to
+ * <index enabled="true">
+      <atomic>false</atomic>
+      <stored>false</stored> 
+      <tokenised>both</tokenised>
+   </index>
+  */
+            sort: sortObj,
             templates: filterParams.templates,
             namespace: (filterParams.namespace ? filterParams.namespace : null)
          });
+         paged = true;
       }
-      */
+      
+	  totalItems = allNodes.length;
+	  allNodes = allNodes.slice(skip, skip + size);
    }
+   
+   var paging = {
+		   totalRecords: totalItems,
+		   startIndex: startIndex,
+   }
+   
+   if (paged && (totalItems == requestTotalCountMax))
+   {
+      paging.totalRecordsUpper = requestTotalCountMax;
+   } 
 
    if (allNodes.length > 0)
    {
@@ -189,11 +260,7 @@ function getData()
    return (
    {
       fields: fields,
-      paging:
-      {
-         totalRecords: items.length,
-         startIndex: 0
-      },
+      paging: paging,
       parent:
       {
          node: parsedArgs.listNode,

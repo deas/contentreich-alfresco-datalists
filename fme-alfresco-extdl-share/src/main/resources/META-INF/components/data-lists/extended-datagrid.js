@@ -266,7 +266,7 @@
                   Alfresco.util.Ajax.jsonPost(
                   {
                      url: Alfresco.constants.PROXY_URI + "slingshot/datalists/item/node/" + new Alfresco.util.NodeRef(item.nodeRef).uri,
-                     dataObj: this._buildDataGridParams(), //get old filter?
+                     //dataObj: this._buildDataGridParams(), //get old filter?
                      successCallback:
                      {
                         fn: function DataGrid_onActionEdit_refreshSuccess(response)
@@ -396,7 +396,6 @@
          this.widgets.dataTable.handleDataReturnPayload = function DataGrid_handleDataReturnPayload(oRequest, oResponse, oPayload)
          {
             me.totalRecords = oResponse.meta.totalRecords;
-            me.totalRecordsUpper = oResponse.meta.totalRecordsUpper;
             return oResponse.meta;
          };
 
@@ -759,6 +758,7 @@
            fields: this.dataRequestFields,
            page : this.currentPage,
            size : this.options.pageSize,
+           total : this.totalRecords,
            noCache : new Date().getTime() 
         };
         

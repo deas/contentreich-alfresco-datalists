@@ -130,12 +130,12 @@ function getData()
       allNodes = [], node,
       items = [],
       totalItems,
-      startIndex = 0,
       requestTotalCountMax = 0,
       paged=false;
    
    var 	skip = 0,
-   		size = 0;
+   		size = 0,
+   		total = 0;
    
    
    if (json.has("size"))
@@ -146,8 +146,18 @@ function getData()
       {
          skip = (json.get("page") - 1) * size;
       }
-   } 
-  requestTotalCountMax = skip + REQUEST_MAX; 
+   }
+   
+   requestTotalCountMax = skip + REQUEST_MAX;
+   
+   if (json.has("total"))
+   {
+	   total = json.get("total");
+	  
+	   if (total < REQUEST_MAX) {
+		   requestTotalCountMax = total + 10; // add for growth
+	   } // else we do not know use absolute max: requestTotalCountMax
+   }
   
   var filterJson = json.get("filter");
   
@@ -165,8 +175,6 @@ function getData()
    var parentNode = parsedArgs.listNode;
    if (filter == null || filter.filterId == "" || filter.filterId == "all")
    {
-
-      
 	  // Use non-query method
       if (parentNode != null)
       {
@@ -176,7 +184,6 @@ function getData()
          totalItems = pagedResult.totalResultCountUpper;
       }
       
-      startIndex = skip;
       paged = true;
    }
    else    
@@ -200,22 +207,22 @@ function getData()
       // Query the nodes - passing in default sort and result limit parameters
       if (query !== "")
       {
-    	  var sortObj = [
-    		                 {
+    	  var sortObj = [{
     		                     column: "@" + sortField,
     		                     ascending: sortAsc
     		                  }];
 //this is just cm:name sorting    		  var sortObj = filterParams.sort;
-         allNodes = search.query(
+         allNodes = pagedSearch.query(
          {
             query: query,
             language: filterParams.language,
- /* we need to get all and slice, no paging results, doh!
-page:
-{
-	skipCount: skip,
-	maxItems: size //maxItems: (filterParams.limitResults ? Math.min(parseInt(filterParams.limitResults, 10), size) : size)
-}, */
+ /* we need to get all and slice, no paging results, doh! */
+			page:
+			{
+				skipCount: skip,
+				pageSize: page, 
+				maxItems: requestTotalCountMax //maxItems: (filterParams.limitResults ? Math.min(parseInt(filterParams.limitResults, 10), size) : size)
+			},
             
 /*if you get exception on custom text property sorting, you need indexing in your model set to
  * <index enabled="true">
@@ -231,19 +238,15 @@ page:
          paged = true;
       }
       
-	  totalItems = allNodes.length;
-	  allNodes = allNodes.slice(skip, skip + size);
+	  totalItems = skip + allNodes.length;
+	  allNodes = allNodes.slice(0, size);
    }
    
    var paging = {
 		   totalRecords: totalItems,
-		   startIndex: startIndex,
+		   startIndex: skip,
    }
    
-   if (paged && (totalItems == requestTotalCountMax))
-   {
-      paging.totalRecordsUpper = requestTotalCountMax;
-   } 
 
    if (allNodes.length > 0)
    {

@@ -43,7 +43,7 @@ import org.apache.commons.logging.LogFactory;
 import org.mozilla.javascript.Context;
 
 /**
- * Paged Search component for use by the ScriptService.
+ * Paged Search component for use by the ScriptService. Better paging version of Search.java/search in javascript
  * <p>
  * Provides access to Lucene search facilities including saved search objects. The results
  * from a search are returned as an array (collection) of scriptable Node wrapper objects.
@@ -399,8 +399,9 @@ public class PagedSearch extends Search
         if (null == set) {
         	 return new ScriptPagingNodes(Context.getCurrentContext().newArray(getScope(), new Object[0]), Boolean.FALSE, 0, 0);
         } else {
+        	int fullLength = length + sp.getSkipCount();
         	 return new ScriptPagingNodes(Context.getCurrentContext().newArray(getScope(), set.toArray(new Object[(set.size())])), 
-             		length > set.size(), length, length);
+             		length > set.size(), fullLength, fullLength);
         }
        
     }

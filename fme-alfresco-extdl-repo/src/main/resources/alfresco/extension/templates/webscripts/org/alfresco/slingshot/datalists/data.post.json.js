@@ -130,12 +130,12 @@ function getData()
       allNodes = [], node,
       items = [],
       totalItems,
-      requestTotalCountMax = 0,
-      paged=false;
+      requestTotalCountMax = 0;
    
    var 	skip = 0,
    		size = 0,
-   		total = 0;
+   		total = 0,
+   		page = 1;
    
    
    if (json.has("size"))
@@ -144,7 +144,8 @@ function getData()
 	   
       if (json.has("page"))
       {
-         skip = (json.get("page") - 1) * size;
+    	  page = json.get("page");
+          skip = (page - 1) * size;
       }
    }
    
@@ -154,7 +155,7 @@ function getData()
    {
 	   total = json.get("total");
 	  
-	   if (total < REQUEST_MAX) {
+	   if (0 < total  && total < REQUEST_MAX) {
 		   requestTotalCountMax = total + 10; // add for growth
 	   } // else we do not know use absolute max: requestTotalCountMax
    }
@@ -183,11 +184,10 @@ function getData()
          allNodes = pagedResult.page;
          totalItems = pagedResult.totalResultCountUpper;
       }
-      
-      paged = true;
    }
    else    
    {
+	   var userPagedSearch = true;
 	 /* this creates a bug for the items filters in the datalist.
 	  * 
 	  // XPath for solr systems
@@ -212,41 +212,61 @@ function getData()
     		                     ascending: sortAsc
     		                  }];
 //this is just cm:name sorting    		  var sortObj = filterParams.sort;
-         allNodes = pagedSearch.query(
-         {
-            query: query,
-            language: filterParams.language,
- /* we need to get all and slice, no paging results, doh! */
-			page:
-			{
-				skipCount: skip,
-				pageSize: page, 
-				maxItems: requestTotalCountMax //maxItems: (filterParams.limitResults ? Math.min(parseInt(filterParams.limitResults, 10), size) : size)
-			},
-            
-/*if you get exception on custom text property sorting, you need indexing in your model set to
- * <index enabled="true">
-      <atomic>false</atomic>
-      <stored>false</stored> 
-      <tokenised>both</tokenised>
-   </index>
-  */
-            sort: sortObj,
-            templates: filterParams.templates,
-            namespace: (filterParams.namespace ? filterParams.namespace : null)
-         });
-         paged = true;
+    	  
+    	  var queryObj = {
+    	            query: query,
+    	            language: filterParams.language,
+    	 /* we need to get all and slice, no paging results, doh! */
+    				page:
+    				{
+    					skipCount: skip,
+    					pageSize: size, 
+    					maxItems: requestTotalCountMax 
+    				},
+    	            
+    	/*if you get exception on custom text property sorting, you need indexing in your model set to
+    	 * <index enabled="true">
+    	      <atomic>false</atomic>
+    	      <stored>false</stored> 
+    	      <tokenised>both</tokenised>
+    	   </index>
+    	   
+    	   for numerical properties you need
+    	     <index enabled="true">
+    	      <atomic>false</atomic>
+    	      <stored>false</stored> 
+    	      <tokenised>true</tokenised>
+    	   </index>
+    	  */
+    	            sort: sortObj,
+    	            templates: filterParams.templates,
+    	            namespace: (filterParams.namespace ? filterParams.namespace : null)
+    	         };
+    	  if (userPagedSearch) {
+    		  pagedResult = pagedSearch.pagedQuery(queryObj);
+    	  } 
+    	  else 
+    	  {
+    		  allNodes = search.query(queryObj);
+    	  }
+       
       }
-      
-	  totalItems = skip + allNodes.length;
-	  allNodes = allNodes.slice(0, size);
+      if (pagedResult) {
+	      allNodes = pagedResult.page;
+	      totalItems = pagedResult.totalResultCountUpper;
+		  //allNodes = allNodes.slice(0, size);
+      }
+      else 
+	  {
+    	  totalItems = skip + allNodes.length;
+		  allNodes = allNodes.slice(0, size);
+	  }
    }
    
    var paging = {
 		   totalRecords: totalItems,
 		   startIndex: skip,
    }
-   
 
    if (allNodes.length > 0)
    {

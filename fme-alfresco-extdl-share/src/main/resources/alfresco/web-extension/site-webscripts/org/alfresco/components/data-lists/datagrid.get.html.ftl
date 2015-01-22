@@ -33,6 +33,7 @@
            <div id="${id}-filterTwisterPanel">
                 <div id="${id}-filterform" style="width:900px"></div>
                 <button id="${id}-filterform-submit">${msg("filterform.submit")}</button>
+                <button id="${id}-filterform-clear">${msg("filterform.clear")}</button>
                 <#--<button id="${id}-filterform-save">${msg("filterform.save")}</button>-->
            </div>
          </div>

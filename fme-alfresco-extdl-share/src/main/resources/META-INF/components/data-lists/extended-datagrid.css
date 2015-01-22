@@ -10,3 +10,12 @@
 .datagrid .form-container .form-buttons {
     padding-top: 0em;
 }
+.datagrid .item-select .yui-button {
+    float: left;
+}
+.datagrid .datagrid-bar .item-select {
+    width: 35%;
+}
+.datagrid .datagrid-bar .paginator {
+    width: 65%;
+}

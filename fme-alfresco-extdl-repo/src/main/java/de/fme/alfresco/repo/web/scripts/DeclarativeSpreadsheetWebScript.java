@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 import org.alfresco.repo.content.MimetypeMap;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.dictionary.PropertyDefinition;
+import org.alfresco.service.cmr.i18n.MessageLookup;
 import org.alfresco.service.namespace.QName;
 import org.alfresco.util.Pair;
 import org.apache.commons.csv.CSVPrinter;
@@ -63,10 +64,19 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
 {
     public static final String MODEL_CSV = "csv";
     public static final String MODEL_EXCEL = "excel";
-    
+    private static final String PROP_PREFIX = "prop_";
+    private static final String ASSOC_PREFIX = "assoc_";
+    private static final String EMPTY_PROP_SUFFIX = "=";
+
     protected DictionaryService dictionaryService;
     protected String filenameBase;
-    
+
+    private MessageLookup messageLookup;
+
+    public void setMessageLookup(final MessageLookup messageLookup) {
+        this.messageLookup = messageLookup;
+    }
+
     /**
      * @param dictionaryService          the DictionaryService to set
      */
@@ -179,11 +189,11 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
                 
                 // Ask the dictionary service nicely for the details
                 PropertyDefinition pd = dictionaryService.getProperty(column);
-                if(pd != null && pd.getTitle() != null)
+                if ((pd != null) && (pd.getTitle(messageLookup) != null))
                 {
                     // Use the friendly titles, which may even be localised!
-                    headings[i] = pd.getTitle();
-                    descriptions[i] = pd.getDescription();
+                    headings[i] = pd.getTitle(messageLookup);
+                    descriptions[i] = pd.getDescription(messageLookup);
                 }
                 else
                 {

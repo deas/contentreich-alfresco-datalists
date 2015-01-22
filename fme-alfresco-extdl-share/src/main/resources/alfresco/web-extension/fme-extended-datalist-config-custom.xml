@@ -6,6 +6,7 @@
          		<css src="/components/data-lists/datalist-versions.css" />
          		<js src="/components/data-lists/datalist-versions.js" />
          		<js src="/components/form/attachments.js" />
+         		<js src="/components/form/attachmentsMod.js" />
          		<js src="/modules/documentlibrary/global-folder.js" />
          		<css src="/modules/documentlibrary/global-folder.css" />
          		<js src="/modules/simple-view-dialog.js" />

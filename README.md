@@ -12,5 +12,9 @@ Installation
 * Put `./fme-alfresco-extdl-share/target/fme-alfresco-extdl-share-1.3.jar` in `tomcat/shared/lib` or `tomcat/webapps/share/WEB-INF/lib`
 * Put `./fme-alfresco-extdl-repo/target/fme-alfresco-extdl-repo-1.3.jar` in `tomcat/webapps/alfresco/WEB-INF/lib`
 
+Customization Example
+=====================
+See repo custom context for an approach: https://github.com/tass01024/fme-alfresco-extdl/blob/master/fme-alfresco-extdl-repo/example/my-custom-datalists-context.xml
+
 
 Thanks Jan for supporting me !

@@ -87,7 +87,7 @@ public class PagedSearch extends Search
      * page
      * {
      *    maxItems: int,          optional, max number of items to return in result set
-     *    pageSize: int,		  optional, max number of items to return in result set
+     *    pageSize: int,		  optional, max number of items to return in PagingResult
      *    skipCount: int          optional, number of items to skip over before returning results
      * }
      * 
@@ -115,7 +115,7 @@ public class PagedSearch extends Search
             Serializable obj = new ValueConverter().convertValueForRepo((Serializable)search);
             if (obj instanceof Map)
             {
-                Map<Serializable, Serializable> def = (Map<Serializable, Serializable>)obj;
+                Map<Serializable, Serializable> def = (Map<Serializable, Serializable>) obj;
                 
                 // test for mandatory values
                 String query = (String)def.get("query");
@@ -333,7 +333,35 @@ public class PagedSearch extends Search
         
         return pagedQuery(sp, pageSize, true);
     }
-    
+    /**
+     * Execute the query and only count the rpotential results
+     * 
+     * Removes any duplicates that may be present (ID search can cause duplicates -
+     * it is better to remove them here)
+     * 
+     * @param store         StoreRef to search against - null for default configured store
+     * @param search        Lucene search to execute
+     * @param sort          Columns to sort by
+     * @param language      Search language to use e.g. SearchService.LANGUAGE_LUCENE
+     * @param maxResults    Maximum results to return if > 0
+     * @param skipResults   Results to skip in the result set
+     * 
+     * @return Array of Node objects
+     */
+    public ScriptPagingNodes countQuery(String store, String search, String language)
+    {   
+        SearchParameters sp = new SearchParameters();
+        sp.addStore(store != null ? new StoreRef(store) : this.storeRef);
+        sp.setLanguage(language != null ? language : SearchService.LANGUAGE_LUCENE);
+        sp.setQuery(search);
+        
+        sp.setMaxItems(0); //do count
+        sp.setLimitBy(LimitBy.UNLIMITED); //all
+        
+        
+        
+        return pagedQuery(sp, 50, true);
+    }
     /**
      * Execute the query
      * 
@@ -350,8 +378,12 @@ public class PagedSearch extends Search
         Collection<ScriptNode> set = null;
         
         if (logger.isDebugEnabled())
-           logger.debug("query=" + sp.getQuery() + " limit=" + (sp.getLimitBy() != LimitBy.UNLIMITED ? sp.getLimit() : "none"));
-        int length = 0;
+           logger.debug("query=" + sp.getQuery() 
+        		   + " limit=" + (sp.getLimitBy() != LimitBy.UNLIMITED ? sp.getLimit() : "none")
+        		   + " skipCount=" + sp.getSkipCount()
+        		   + " pageSize=" + pageSize
+        		   + " maxItems=" + sp.getMaxItems());
+        long length = 0;
         // perform the search against the repo
         ResultSet results = null;
         try
@@ -364,7 +396,7 @@ public class PagedSearch extends Search
                 NodeService nodeService = this.services.getNodeService();
                 int page = 0 < pageSize ? pageSize : results.length();
                 set = new LinkedHashSet<ScriptNode>(page, 1.0f);
-                for (ResultSetRow row: results)
+                for (ResultSetRow row : results)
                 {
                     NodeRef nodeRef = row.getNodeRef();
                     if (nodeService.exists(nodeRef))
@@ -376,6 +408,9 @@ public class PagedSearch extends Search
                        }
                     }
                 }
+                
+            } else {
+            	length = results.getNumberFound();
             }
         }
         catch (Throwable err)
@@ -396,10 +431,18 @@ public class PagedSearch extends Search
                 results.close();
             }
         }
+        int fullLength = Integer.MAX_VALUE < length ? Integer.MAX_VALUE : (int) length; // + sp.getSkipCount();
+        
         if (null == set) {
-        	 return new ScriptPagingNodes(Context.getCurrentContext().newArray(getScope(), new Object[0]), Boolean.FALSE, 0, 0);
+        	 return new ScriptPagingNodes(Context.getCurrentContext().newArray(getScope(), new Object[0]), Boolean.FALSE, fullLength, fullLength);
         } else {
-        	int fullLength = length + sp.getSkipCount();
+        	
+        	if (logger.isDebugEnabled())
+                logger.debug("result length=" + length 
+             		   + " fullLength=" + fullLength
+             		   + " skipCount=" + sp.getSkipCount()
+             		   + " set.size()=" + set.size());
+        	
         	 return new ScriptPagingNodes(Context.getCurrentContext().newArray(getScope(), set.toArray(new Object[(set.size())])), 
              		length > set.size(), fullLength, fullLength);
         }

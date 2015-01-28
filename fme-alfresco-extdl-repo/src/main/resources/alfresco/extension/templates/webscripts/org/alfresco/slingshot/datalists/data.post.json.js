@@ -3,6 +3,8 @@
 <import resource="classpath:alfresco/extension/templates/webscripts/org/alfresco/slingshot/datalists/parse-args.lib.js">
 
 const REQUEST_MAX = 2000;
+const userPagedSearch = true;
+const allFilterUseSearch = true; //this works faster for larger lists
 
 /**
  * Copyright (C) 2005-2010 Alfresco Software Limited.
@@ -36,21 +38,21 @@ function escape(value) {
 	*/
 }
 
-function filterRange(array, range) {
-	logger.log("Applying " + range.prop + " range filter " + range.min + " <= x <= " + range.max);
-	var filtered = [];
-	for (var i=0; i<array.length; i++) {
-		obj = array[i];
-		logger.log(obj.properties[range.prop]);
-		var minOk = !range.min || (obj.properties[range.prop] && (range.min.getTime() <= obj.properties[range.prop].getTime()));
-		var maxOk = !range.max || (obj.properties[range.prop] && (obj.properties[range.prop].getTime() <= range.max.getTime()));
-		if (minOk && maxOk) {
-			filtered.push(obj);
-		}
-	}
-	
-	return filtered;
-}
+//function filterRange(array, range) {
+//	logger.log("Applying " + range.prop + " range filter " + range.min + " <= x <= " + range.max);
+//	var filtered = [];
+//	for (var i=0; i<array.length; i++) {
+//		obj = array[i];
+//		logger.log(obj.properties[range.prop]);
+//		var minOk = !range.min || (obj.properties[range.prop] && (range.min.getTime() <= obj.properties[range.prop].getTime()));
+//		var maxOk = !range.max || (obj.properties[range.prop] && (obj.properties[range.prop].getTime() <= range.max.getTime()));
+//		if (minOk && maxOk) {
+//			filtered.push(obj);
+//		}
+//	}
+//	
+//	return filtered;
+//}
 
 //function xPathFilterQuery(filterData) {
 //	var rangeFilters = [];
@@ -133,9 +135,10 @@ function getData()
       requestTotalCountMax = 0;
    
    var 	skip = 0,
-   		size = 0,
+   		size = 100,
    		total = 0,
-   		page = 1;
+   		page = 1,
+   		countTotal;
    
    
    if (json.has("size"))
@@ -159,35 +162,44 @@ function getData()
 		   requestTotalCountMax = total + 10; // add for growth
 	   } // else we do not know use absolute max: requestTotalCountMax
    }
-  
-  var filterJson = json.get("filter");
-  
-  if (filterJson.has("sortField")) {
-	  var sortField = filterJson.get("sortField").replace("assoc_","").replace("prop_","").replace("_",":");
-  } else {
-	  var sortField = "cm:name";
-  }
-  if (filterJson.has("sortAsc")) {
-	  var sortAsc = filterJson.get("sortAsc");
-  } else {
-	  var sortAsc = true;
-  }
+   var sortAsc = true;
+   var sortField = "cm:name";
+
+   if (json.has("filter")) {
+	   var filterJson = json.get("filter");
+	  
+	   if (filterJson.has("sortField")) {
+		  var sortField = filterJson.get("sortField").replace("assoc_","").replace("prop_","").replace("_",":");
+	   } 
+	   if (filterJson.has("sortAsc")) {
+		  var sortAsc = filterJson.get("sortAsc");
+	   } 
+   }
   
    var parentNode = parsedArgs.listNode;
-   if (filter == null || filter.filterId == "" || filter.filterId == "all")
+   if (null != parentNode) {
+	   countTotal = parentNode.properties["cm:counter"];
+	   if (null !== countTotal && 0 < countTotal) {
+		   requestTotalCountMax = size;
+	   }
+   }
+   
+
+   
+   if (!allFilterUseSearch && (parentNode != null) && (filter == null || filter.filterId == "" || filter.filterId == "all"))
    {
 	  // Use non-query method
-      if (parentNode != null)
-      {
+//      if (parentNode != null)
+//      {
 
          var pagedResult = parentNode.childFileFolders(true, false, Filters.IGNORED_TYPES, skip, size, requestTotalCountMax, sortField, sortAsc, null);
          allNodes = pagedResult.page;
          totalItems = pagedResult.totalResultCountUpper;
-      }
+//      }
    }
    else    
    {
-	   var userPagedSearch = true;
+
 	 /* this creates a bug for the items filters in the datalist.
 	  * 
 	  // XPath for solr systems
@@ -207,6 +219,8 @@ function getData()
       // Query the nodes - passing in default sort and result limit parameters
       if (query !== "")
       {
+    	   var queryTotal = pagedSearch.countQuery(null, query, filterParams.language).totalResultCountUpper;
+    	  
     	  var sortObj = [{
     		                     column: "@" + sortField,
     		                     ascending: sortAsc
@@ -221,7 +235,7 @@ function getData()
     				{
     					skipCount: skip,
     					pageSize: size, 
-    					maxItems: requestTotalCountMax 
+    					maxItems: requestTotalCountMax
     				},
     	            
     	/*if you get exception on custom text property sorting, you need indexing in your model set to
@@ -264,10 +278,14 @@ function getData()
    }
    
    var paging = {
-		   totalRecords: totalItems,
+		   totalRecords: (0 < countTotal ? (0 < queryTotal ? queryTotal : countTotal) : totalItems),
 		   startIndex: skip,
    }
 
+   if (paging.totalRecords == (skip + REQUEST_MAX)) {
+	   paging.totalRecordsUpper = true;
+   }
+   
    if (allNodes.length > 0)
    {
       for each (node in allNodes)

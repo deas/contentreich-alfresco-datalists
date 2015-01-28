@@ -23,6 +23,9 @@
       Alfresco.component.ExtDataGrid.superclass.constructor.call(this, htmlId);
       YAHOO.Bubbling.on("afterFormRuntimeInit", this.onAfterFormRuntimeInit, this);
       YAHOO.Bubbling.on("beforeFormRuntimeInit", this.onBeforeFormRuntimeInit, this);
+      
+      this.totalRecordsUpper = null;
+      
       return this;
    };
 
@@ -396,6 +399,7 @@
          this.widgets.dataTable.handleDataReturnPayload = function DataGrid_handleDataReturnPayload(oRequest, oResponse, oPayload)
          {
             me.totalRecords = oResponse.meta.totalRecords;
+            me.totalRecordsUpper = oResponse.meta.totalRecordsUpper;
             return oResponse.meta;
          };
 
@@ -460,6 +464,29 @@
                this.afterDataGridUpdate[i].call(this);
             }
             this.afterDataGridUpdate = [];
+            
+         // Update the paginator if it's been created
+            if (this.widgets.paginator)
+            {
+               Alfresco.logger.debug("Setting paginator state: page=" + this.currentPage + ", totalRecords=" + this.totalRecords);
+
+               this.widgets.paginator.setState(
+               {
+                  page: this.currentPage,
+                  totalRecords: this.totalRecords
+               });
+
+               if (this.totalRecordsUpper)
+               {
+                  this.widgets.paginator.set("pageReportTemplate", this.msg("pagination.template.page-report.more"));
+               }
+               else
+               {
+                  this.widgets.paginator.set("pageReportTemplate", this.msg("pagination.template.page-report"));
+               }
+
+               this.widgets.paginator.render();
+            }
          }, this, true);
 
          // Enable row highlighting
@@ -823,7 +850,8 @@
               metaFields:
               {
                  paginationRecordOffset: "startIndex",
-                 totalRecords: "totalRecords"
+                 totalRecords: "totalRecords",
+                 totalRecordsUpper: "totalRecordsUpper"
               }
            }
         });

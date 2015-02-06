@@ -42,6 +42,17 @@
     <system>GitHub</system>
     <url>https://github.com/deas/fme-alfresco-extdl/issues</url>
   </issueManagement>
+  <distributionManagement>
+    <repository>
+      <id>hmh-releases</id>
+      <name>HMH Releases</name>
+      <url>https://inexus.ixxus.co.uk/nexus/content/repositories/hmh-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>ixxus-snapshots</id>
+      <url>https://inexus.ixxus.co.uk/nexus/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
   <modules>
     <module>fme-alfresco-extdl-repo</module>
     <module>fme-alfresco-extdl-share</module>

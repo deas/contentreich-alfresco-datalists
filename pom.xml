@@ -33,9 +33,10 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:git://github.com/deas/fme-alfresco-extdl.git</connection>
-    <developerConnection>scm:git:git://github.com/deas/fme-alfresco-extdl</developerConnection>
-    <url>http://github.com/deas/fme-alfresco-extdl</url>
+    <connection>
+    scm:git:git@github.com:IXIPP/fme-alfresco-extdl.git</connection>
+    <developerConnection>scm:git:git@github.com:IXIPP/fme-alfresco-extdl.git</developerConnection>
+    <url>https://github.com/IXIPP/fme-alfresco-extdl</url>
   </scm>
   <issueManagement>
     <system>GitHub</system>

@@ -1,6 +1,7 @@
-<import resource="classpath:alfresco/templates/webscripts/org/alfresco/slingshot/datalists/evaluator.lib.js">
+<import resource="classpath:/alfresco/extension/templates/webscripts/org/alfresco/slingshot/datalists/evaluator.lib.js">
 <import resource="classpath:alfresco/extension/templates/webscripts/org/alfresco/slingshot/datalists/extdl-filters.lib.js">
 <import resource="classpath:alfresco/extension/templates/webscripts/org/alfresco/slingshot/datalists/parse-args.lib.js">
+/* Note: the evaluator.lib.js customisation resides in the hmhcms project hmhcms-core-alfresco module */
 
 const REQUEST_MAX = 2000;
 
@@ -257,6 +258,14 @@ page:
       }
    }
 
+   // HMH - Ixxus - BEGIN
+   // And this is how to disable the "New Item" button for HMSI Standards Data List
+   var createPermission = false;
+   //if (parsedArgs.listNode.type != "{http://www.hmhco.com/model/hmh-cms/1.0}standardDataList") {
+      createPermission = parsedArgs.listNode.hasPermission("CreateChildren");
+   //}
+   // HMH - Ixxus - END
+
    return (
    {
       fields: fields,
@@ -266,7 +275,9 @@ page:
          node: parsedArgs.listNode,
          userAccess:
          {
-            create: parsedArgs.listNode.hasPermission("CreateChildren")
+            // HMH - Ixxus - BEGIN
+            create: createPermission
+            // HMH - Ixxus - END
          }
       },
       items: items

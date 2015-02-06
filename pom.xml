@@ -44,9 +44,8 @@
   </issueManagement>
   <distributionManagement>
     <repository>
-      <id>hmh-releases</id>
-      <name>HMH Releases</name>
-      <url>https://inexus.ixxus.co.uk/nexus/content/repositories/hmh-releases/</url>
+      <id>ixxus-releases</id>
+      <url>https://inexus.ixxus.co.uk/nexus/content/repositories/releases</url>
     </repository>
     <snapshotRepository>
       <id>ixxus-snapshots</id>

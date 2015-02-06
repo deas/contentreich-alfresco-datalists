@@ -5,7 +5,7 @@
   <artifactId>hmh-fme-alfresco-extdl-parent</artifactId>
   <packaging>pom</packaging>
   <name>[parent] fme Alfresco Extended Datalists</name>
-  <version>1.3.1-SNAPSHOT</version>
+  <version>1.3.1</version>
   <description>
         Parent project for fme Alfresco Extended Datalists
     </description>

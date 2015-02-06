@@ -145,6 +145,9 @@
                            case "cm:content":
                            case "cm:cmobject":
                            case "cm:folder":
+                           // HMH - Ixxus - BEGIN
+                           case "noderef":
+                           // HMH - Ixxus - END
                         	  if (ii > 2 && i === 2){
                         		  html +="<span>...</span>"
                         	  }else if (i < 2){

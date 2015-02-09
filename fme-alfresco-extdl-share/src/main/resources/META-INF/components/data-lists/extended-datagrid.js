@@ -240,8 +240,11 @@
              */
          };
 
-         var templateUrl = YAHOO.lang.substitute(Alfresco.constants.URL_SERVICECONTEXT + "components/form?itemKind={itemKind}&itemId={itemId}&mode={mode}&submitType={submitType}&showCancelButton=true",
+         var templateUrl = YAHOO.lang.substitute(Alfresco.constants.URL_SERVICECONTEXT + "components/form?itemKind={itemKind}&itemId={itemId}&mode={mode}&submitType={submitType}&formId={formId}&showCancelButton=true",
          {
+            // HMH - Ixxus - BEGIN
+            formId: "doclib-simple-metadata",
+            // HMH - Ixxus - END
             itemKind: "node",
             itemId: item.nodeRef,
             mode: "edit",

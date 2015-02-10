@@ -94,6 +94,9 @@
               <entry key="dl:eventAgenda"> 
                 <value>dl:itemId,dl:eventAgendaRef,dl:eventAgendaStartTime,dl:eventAgendaEndTime,dl:eventAgendaSessionName,dl:eventAgendaPresenter,dl:eventAgendaAudience,cm:attachments,dl:eventAgendaNotes,fm:forum</value> 
               </entry>
+              <entry key="hmh-cms:standard">
+                <value>hmh-cms:hmco,hmh-cms:standardText,hmh-cms:fromGrade,hmh-cms:toGrade,hmh-cms:source,hmh-cms:officialCode,hmh-cms:subject,hmh-cms:hierarchyId,hmh-cms:customCode,hmh-cms:correlated</value> 
+              </entry>
            </map>
         </property>
         <property name="messageLookup">

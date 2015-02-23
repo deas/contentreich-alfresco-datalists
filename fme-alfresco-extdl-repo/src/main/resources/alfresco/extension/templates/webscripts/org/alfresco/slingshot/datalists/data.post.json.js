@@ -225,7 +225,7 @@ function getData()
     		                     column: "@" + sortField,
     		                     ascending: sortAsc
     		                  }];
-//this is just cm:name sorting    		  var sortObj = filterParams.sort;
+//this is just cm:name sorting - var sortObj = filterParams.sort;
     	  
     	  var queryObj = {
     	            query: query,

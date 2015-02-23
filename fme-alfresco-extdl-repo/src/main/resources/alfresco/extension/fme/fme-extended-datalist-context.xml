@@ -21,9 +21,10 @@
   </bean>
   
   <bean id="datalistBaseFormFilter" abstract="true" parent="baseFormFilter">
-     <property name="namespacePrefixResolver">
+      <property name="namespacePrefixResolver">
           <ref bean="namespaceService" />
       </property>
+
       <property name="behaviourFilter" ref="policyBehaviourFilter" />
   	  <property name="nodeService" ref="nodeService" />
   	  <property name="contentService" ref="contentService" />
@@ -43,11 +44,13 @@
   </bean>
   
   <bean id="datalistFormFilterNode" class="de.fme.alfresco.repo.form.DataListFormFilter" parent="datalistBaseFormFilter" >
-  	<property name="filterRegistry" ref="nodeFilterRegistry" />  	
+  	<property name="filterRegistry" ref="nodeFilterRegistry" />
+  	<property name="properties" ref="global-properties" />
   </bean>
   
   <bean id="datalistFormFilterType" class="de.fme.alfresco.repo.form.DataListFormFilter" parent="datalistBaseFormFilter">
   	<property name="filterRegistry" ref="typeFilterRegistry" />
+  	<property name="properties" ref="global-properties" />
   </bean>
   
     <!--                                        --> 

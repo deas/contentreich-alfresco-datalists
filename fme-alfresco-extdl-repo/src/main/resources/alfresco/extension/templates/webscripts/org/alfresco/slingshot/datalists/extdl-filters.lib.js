@@ -13,13 +13,25 @@ var getFilterParams_orig = Filters.getFilterParams;
     */
 Filters.getFilterParams = function Filter_getFilterParams(filter, parsedArgs)
    {
+	/*allow and fix versions of all filter */
+	if (filter == null || filter.filterId == "" || filter.filterId == "all") 
+	{
+		if (null == filter) {
+			filter = {
+					filterId : "all"
+			};
+		} else {
+			filter.filerId = "all";
+		}
+	}
+	
 	var filterParams = getFilterParams_orig(filter, parsedArgs);
 
       switch (String(filter.filterId))
       {
          case "filterform":
          	//we have a filter form!
-        	  	var filterData = filter.filterData;
+        	 var filterData = filter.filterData;
         	  	
              filterQuery = "+PARENT:\"" + parsedArgs.nodeRef;
              if (parsedArgs.nodeRef == "alfresco://sites/home")

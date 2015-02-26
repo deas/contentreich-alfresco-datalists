@@ -1,10 +1,12 @@
 package de.fme.alfresco.repo.form;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.alfresco.model.ContentModel;
@@ -12,8 +14,8 @@ import org.alfresco.model.ForumModel;
 import org.alfresco.repo.forms.FieldDefinition;
 import org.alfresco.repo.forms.Form;
 import org.alfresco.repo.forms.FormData;
-import org.alfresco.repo.forms.PropertyFieldDefinition;
 import org.alfresco.repo.forms.FormData.FieldData;
+import org.alfresco.repo.forms.PropertyFieldDefinition;
 import org.alfresco.repo.forms.processor.AbstractFilter;
 import org.alfresco.repo.forms.processor.Filter;
 import org.alfresco.repo.policy.BehaviourFilter;
@@ -37,6 +39,14 @@ public class DataListFormFilter<ItemType, PersistType> extends AbstractFilter<It
 
     private static final Log LOGGER = LogFactory.getLog(DataListFormFilter.class);
     private static final String COMMENTS_TOPIC_NAME = "Comments";
+    private static final String COMMENTS_LABEL = "datalist.datagrid.comments.header";
+    
+    private static final String DISCUSSABLE_FIELDNAME = "fm:discussable";
+    private static final String DISCUSSABLE_FORMPROPNAME = "prop_fm_discussable";
+    
+    /* use this is datagrid forms to place the actions, not always at the end! 
+     * */
+    private static final String ACTIONS_FIELDNAME = "actions";
     
     private NodeService nodeService;
     private ContentService contentService;
@@ -44,28 +54,77 @@ public class DataListFormFilter<ItemType, PersistType> extends AbstractFilter<It
     private Set<QName> datalistTypes;
     private NamespacePrefixResolver namespacePrefixResolver;
     
-
+	// Global properties 
+	public Properties properties;
+	
     @Override
     public void afterGenerate(ItemType item, List<String> fields, List<String> forcedFields, Form form,
             Map<String, Object> context) {
+
         if (item instanceof TypeDefinition)
         {
-            final TypeDefinition typeDef = (TypeDefinition) item;
-            if (datalistTypes.contains(typeDef.getName()))
-            {
-                final FieldDefinition discussableFieldDef = new PropertyFieldDefinition("fm_discussable", "discussion");
-                discussableFieldDef.setDataKeyName("fm_discussable");
-                discussableFieldDef.setProtectedField(true);
-                discussableFieldDef.setLabel("Comments");
-                LOGGER.debug("... generating field definition " + discussableFieldDef);
-                form.addFieldDefinition(discussableFieldDef);
+        	final TypeDefinition typeDef = (TypeDefinition) item;
+        	boolean addedDiscussable = false;
+        	boolean addedActions = false;
+        	boolean shouldAddDiscussable = datalistTypes.contains(typeDef.getName());
+        	ArrayList<FieldDefinition> fieldDefs = new ArrayList<FieldDefinition>(fields.size());
+        	for (String fieldName : fields) {
+        		if (DISCUSSABLE_FIELDNAME.equals(fieldName))
+                {
+        			if (shouldAddDiscussable) {
+	                    final FieldDefinition discussableFieldDef = getDiscussableFieldDef();
+	                    
+	                    //form.addFieldDefinition(discussableFieldDef);
+	                    fieldDefs.add(discussableFieldDef);
+	                    addedDiscussable = true;
+        			}
+                    
+                } else if (ACTIONS_FIELDNAME.equals(fieldName)) {
+                    //form.addFieldDefinition(discussableFieldDef);
+                    final FieldDefinition actionsFieldDef = new PropertyFieldDefinition(ACTIONS_FIELDNAME, "actions");
+                    actionsFieldDef.setDataKeyName(ACTIONS_FIELDNAME);
+                    actionsFieldDef.setProtectedField(true);
+                    actionsFieldDef.setLabel(ACTIONS_FIELDNAME);
+                    if (LOGGER.isDebugEnabled()) LOGGER.debug("... generating field definition " + actionsFieldDef);
+                    fieldDefs.add(actionsFieldDef);
+                    addedActions = true;
+                } else { // regular fields
+                	fieldDefs.add(getNamedFieldDef(fieldName, form));
+                }
+        	}
+        	
+        	
+            if (shouldAddDiscussable && !addedDiscussable) {
+            	final FieldDefinition discussableFieldDef = getDiscussableFieldDef();
+                //form.addFieldDefinition(discussableFieldDef);
+            	fieldDefs.add(discussableFieldDef);
+                addedDiscussable = true;
             }
+            
+
+        	form.setFieldDefinitions(fieldDefs);
         }
     }
+	private FieldDefinition getNamedFieldDef(final String name, Form form) {
+		for (FieldDefinition def :form.getFieldDefinitions()) {
+			if (name.equals(def.getName())) {
+				return def;
+			}
+		}
+		return null;
+	}
+	private FieldDefinition getDiscussableFieldDef() {
+		final FieldDefinition discussableFieldDef = new PropertyFieldDefinition(DISCUSSABLE_FIELDNAME, "discussion");//was fm_dis....
+		discussableFieldDef.setDataKeyName(DISCUSSABLE_FORMPROPNAME);
+		discussableFieldDef.setProtectedField(true);
+		discussableFieldDef.setLabel(properties.getProperty(COMMENTS_LABEL, "Comments")); //was hard-coded
+		if (LOGGER.isDebugEnabled()) LOGGER.debug("... generating field definition " + discussableFieldDef);
+		return discussableFieldDef;
+	}
 
     @Override
     public void afterPersist(ItemType item, FormData data, PersistType persistedObject) {
-        LOGGER.debug("afterPersist");
+    	if (LOGGER.isDebugEnabled()) LOGGER.debug("afterPersist");
         final NodeRef nodeRef;
         if (persistedObject instanceof NodeRef) {
             nodeRef = (NodeRef) persistedObject;
@@ -76,7 +135,7 @@ public class DataListFormFilter<ItemType, PersistType> extends AbstractFilter<It
         
         Set<String> fieldNames = data.getFieldNames();
         for (String fieldName : fieldNames) {
-            if (fieldName.equalsIgnoreCase("fm_discussable")){
+            if (fieldName.equalsIgnoreCase("DISCUSSABLE_FIELDNAME")){
                 FieldData newCommentData = data.getFieldData(fieldName);
                 String comment = newCommentData.getValue().toString();
                 if (StringUtils.isNotEmpty( comment)){
@@ -101,11 +160,7 @@ public class DataListFormFilter<ItemType, PersistType> extends AbstractFilter<It
         if (item instanceof NodeRef){
             NodeRef nodeRef = (NodeRef) item;
             if (datalistTypes.contains(nodeService.getType(nodeRef)) && nodeRef.getStoreRef().equals(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE)){
-                final FieldDefinition discussableFieldDef = new PropertyFieldDefinition("fm_discussable", "discussion");
-                discussableFieldDef.setDataKeyName("prop_fm_discussable");
-                discussableFieldDef.setProtectedField(true);
-                discussableFieldDef.setLabel("Comments");
-                LOGGER.debug("... generating field definition " + discussableFieldDef);
+                final FieldDefinition discussableFieldDef = getDiscussableFieldDef();
                 form.addFieldDefinition(discussableFieldDef);
                 NodeRef commentsFolder = getCommentsFolder(nodeRef);
                 int commentCount = 0;
@@ -114,19 +169,26 @@ public class DataListFormFilter<ItemType, PersistType> extends AbstractFilter<It
                     types.add(ForumModel.TYPE_POST);
                     commentCount = nodeService.getChildAssocs(commentsFolder, types).size();
                 }
-                form.addData("prop_fm_discussable", commentCount);
+                form.addData(DISCUSSABLE_FORMPROPNAME, commentCount);
                 
             }
 
         }
     }
 
+
     @Override
     public void beforePersist(ItemType item, FormData data) {
-        // nothing to do
+  	  if (LOGGER.isDebugEnabled()) LOGGER.debug("beforePersist: " + item.toString());
 
+  	  if (data.hasFieldData(ACTIONS_FIELDNAME)) {
+  		data.removeFieldData(ACTIONS_FIELDNAME);
+  	  }
     }
 
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
     /**
      * @param nodeService the nodeService to set
      */

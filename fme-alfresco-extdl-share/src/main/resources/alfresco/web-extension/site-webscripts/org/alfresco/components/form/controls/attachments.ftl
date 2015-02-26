@@ -19,7 +19,8 @@
       multipleSelectMode: ${field.endpointMany?string},
       parentNodeRef: "alfresco://company/home",
       itemFamily: "node",
-      displayMode: "${field.control.params.displayMode!"items"}"
+      displayMode: "${field.control.params.displayMode!"items"}",
+      selectActionLabelId: "form.control.attachments.select"
    });
    new Alfresco.AttachmentControl("${controlId}-upload", "${fieldHtmlId}-upload").setOptions(
    {

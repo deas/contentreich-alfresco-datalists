@@ -50,17 +50,24 @@ Filters.getFilterParams = function Filter_getFilterParams(filter, parsedArgs)
  	            	var value = new String(filterData.getFieldData(fieldName).getValue());
  	            	if (luceneFieldName.indexOf("-date-range") > 0){
  	            		luceneFieldName = luceneFieldName.replace("-date-range","");
-             			var dates = value.split("TO");
+	                        //prepare ranges (e.g. value = 2015-01-01T00:00:00+01:00 TO 2016-01-01T00:00:00+01:00)
+	             		var dates = value.split("TO");
+	                        var fromDateString = dates[0].substring(0,10);
+	                        var toDateString = dates[1].substring(0,10);
+	                        var fromQuery = fromDateString + "T00:00:00.000";
+	                        var toQuery   = toDateString + "T23:59:59.999";
+
+                        	//build range query
              			if (dates[0] == ""){
-             				filterQuery += " +@"+ luceneFieldName +":[MIN TO " + dates[1] +']'; //use utils.fromISO8601(dates[1]) ?
+             				filterQuery += " AND +@"+ luceneFieldName +":[MIN TO " + toQuery +']';
              			}
              			else if (dates[1] == ""){
-             				filterQuery += " +@"+ luceneFieldName +":[" + dates[0]+ " TO MAX]";
+             				filterQuery += " AND +@"+ luceneFieldName +":[" + fromQuery+ " TO MAX]";
              			}else{
-             				filterQuery += " +@"+ luceneFieldName +":[" +  dates[0] + " TO " + dates[1] +']';
+             				filterQuery += " AND +@"+ luceneFieldName +":[" +  fromQuery + " TO " + toQuery +']';
              			}
- 	            		
- 	            	}
+	 	            		
+	 	        }
  	            	else if (0 < value.indexOf(",") || luceneFieldName.indexOf("Priority") > 0 || luceneFieldName.indexOf("Status") > 0 || luceneFieldName.indexOf("assignedToAdded") > 0 || luceneFieldName.indexOf("taskInitiator") > 0 || luceneFieldName.indexOf("lastModifier") > 0 ){
              			var values = value.split(",");
              			if (values.length > 1){

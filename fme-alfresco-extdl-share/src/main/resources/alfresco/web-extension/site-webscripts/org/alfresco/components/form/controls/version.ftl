@@ -1,6 +1,3 @@
-<#if (context.properties.nodeRef?? && context.properties.nodeRef?js_string?starts_with("workspace://SpacesStore")) 
-|| ((form.mode == "edit" || form.mode == "view") && args.itemId?? && args.itemId?js_string?starts_with("workspace://SpacesStore"))>
-
 <#assign controlId = fieldHtmlId + "-cntrl">
 
 <div class="form-field">
@@ -30,4 +27,3 @@
    </div>
    
 </div>
-</#if>

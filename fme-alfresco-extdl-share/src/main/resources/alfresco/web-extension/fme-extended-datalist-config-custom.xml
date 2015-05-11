@@ -155,7 +155,7 @@
                <show id="cm:creator" />
                <show id="cm:created" />
                <show id="fm:discussable"/>
-               <show id="cm:versionable"/>
+               <show id="cm:versionLabel"/>
             </field-visibility>
             <edit-form template="../data-lists/forms/dataitem-edit.ftl" />
             <view-form template="../data-lists/forms/dataitem-view.ftl" />
@@ -188,7 +188,7 @@
                   	<control-param name="style">width:450px;</control-param>
                   </control>
                </field>
-               <field id="cm:versionable" label-id="form.label.version-history" set="normal">
+               <field id="cm:versionLabel" label-id="form.label.version-history" set="normal">
                   <control template="/org/alfresco/components/form/controls/version.ftl" />
                </field>
             </appearance>
@@ -362,7 +362,7 @@
                <show id="cm:creator" />
                <show id="cm:created" />
                <show id="fm:discussable"/>
-               <show id="cm:versionable"/>
+               <show id="cm:versionLabel"/>
             </field-visibility>
             <edit-form template="../data-lists/forms/dataitem-edit.ftl" />
             <view-form template="../data-lists/forms/dataitem-view.ftl" />
@@ -421,7 +421,7 @@
                       <control-param name="style">width:450px;</control-param>
                   </control>
                </field>
-               <field id="cm:versionable" label-id="form.label.version-history" set="normal">
+               <field id="cm:versionLabel" label-id="form.label.version-history" set="normal">
                   <control template="/org/alfresco/components/form/controls/version.ftl" />
                </field>	
             </appearance>
@@ -595,7 +595,7 @@
                <show id="cm:creator" />
                <show id="cm:created" />
                <show id="fm:discussable"/>
-               <show id="cm:versionable"/>
+               <show id="cm:versionLabel"/>
             </field-visibility>
              <edit-form template="../data-lists/forms/dataitem-edit.ftl" />
             <view-form template="../data-lists/forms/dataitem-view.ftl" />
@@ -653,7 +653,7 @@
                       <control-param name="style">width:450px;</control-param>
                   </control>
                </field>
-               <field id="cm:versionable" label-id="form.label.version-history" set="normal">
+               <field id="cm:versionLabel" label-id="form.label.version-history" set="normal">
                   <control template="/org/alfresco/components/form/controls/version.ftl" />
                </field>	
             </appearance>
@@ -822,7 +822,7 @@
                <show id="fm:discussable"/>
                <show id="cm:creator" />
                <show id="cm:created" />
-               <show id="cm:versionable"/>
+               <show id="cm:versionLabel"/>
             </field-visibility>
             <edit-form template="../data-lists/forms/dataitem-edit.ftl" />
             <view-form template="../data-lists/forms/dataitem-view.ftl" />
@@ -869,7 +869,7 @@
                		<control template="/org/alfresco/components/form/controls/extended-person.ftl"/>
                	</field>
                <field id="cm:created" set="other"/>
-               <field id="cm:versionable" label-id="form.label.version-history" set="other">
+               <field id="cm:versionLabel" label-id="form.label.version-history" set="other">
                   <control template="/org/alfresco/components/form/controls/version.ftl" />
                </field>	
             </appearance>
@@ -1044,7 +1044,7 @@
                <show id="fm:discussable"/>
                <show id="cm:creator" />
                <show id="cm:created" />
-               <show id="cm:versionable"/>
+               <show id="cm:versionLabel"/>
             </field-visibility>
             <edit-form template="../data-lists/forms/dataitem-edit.ftl" />
             <view-form template="../data-lists/forms/dataitem-view.ftl" />
@@ -1088,7 +1088,7 @@
                		<control template="/org/alfresco/components/form/controls/extended-person.ftl"/>
                	</field>
                <field id="cm:created" set="other"/>
-               <field id="cm:versionable" label-id="form.label.version-history" set="other">
+               <field id="cm:versionLabel" label-id="form.label.version-history" set="other">
                   <control template="/org/alfresco/components/form/controls/version.ftl" />
                </field>	
             </appearance>
@@ -1282,7 +1282,7 @@
                <show id="fm:discussable"/>
                <show id="cm:creator" />
                <show id="cm:created" />
-               <show id="cm:versionable"/>
+               <show id="cm:versionLabel"/>
             </field-visibility>
             <edit-form template="../data-lists/forms/dataitem-edit.ftl" />
             <view-form template="../data-lists/forms/dataitem-view.ftl" />
@@ -1346,7 +1346,7 @@
                		<control template="/org/alfresco/components/form/controls/extended-person.ftl"/>
                	</field>
                <field id="cm:created" set="other"/>
-               <field id="cm:versionable" label-id="form.label.version-history" set="other">
+               <field id="cm:versionLabel" label-id="form.label.version-history" set="other">
                   <control template="/org/alfresco/components/form/controls/version.ftl" />
                </field>	
             </appearance>
@@ -1498,7 +1498,7 @@
                <show id="fm:discussable"/>
                <show id="cm:creator" />
                <show id="cm:created" />
-               <show id="cm:versionable"/>
+               <show id="cm:versionLabel"/>
             </field-visibility>
             <edit-form template="../data-lists/forms/dataitem-edit.ftl" />
             <view-form template="../data-lists/forms/dataitem-view.ftl" />
@@ -1547,7 +1547,7 @@
                		<control template="/org/alfresco/components/form/controls/extended-person.ftl"/>
                	</field>
                <field id="cm:created" set="other"/>
-               <field id="cm:versionable" label-id="form.label.version-history" set="other">
+               <field id="cm:versionLabel" label-id="form.label.version-history" set="other">
                   <control template="/org/alfresco/components/form/controls/version.ftl" />
                </field>	
             </appearance>
@@ -1733,7 +1733,7 @@
                <show id="fm:discussable"/>
                <show id="cm:creator" />
                <show id="cm:created" />
-               <show id="cm:versionable"/>
+               <show id="cm:versionLabel"/>
             </field-visibility>
             <edit-form template="../data-lists/forms/dataitem-edit.ftl" />
             <view-form template="../data-lists/forms/dataitem-view.ftl" />
@@ -1776,7 +1776,7 @@
                		<control template="/org/alfresco/components/form/controls/extended-person.ftl"/>
                	</field>
                <field id="cm:created" set="other"/>
-               <field id="cm:versionable" label-id="form.label.version-history" set="other">
+               <field id="cm:versionLabel" label-id="form.label.version-history" set="other">
                   <control template="/org/alfresco/components/form/controls/version.ftl" />
                </field>	
             </appearance>
@@ -1914,7 +1914,7 @@
                <show id="fm:discussable"/>
                <show id="cm:creator" />
                <show id="cm:created" />
-               <show id="cm:versionable"/>
+               <show id="cm:versionLabel"/>
             </field-visibility>
             <edit-form template="../data-lists/forms/dataitem-edit.ftl" />
             <view-form template="../data-lists/forms/dataitem-view.ftl" />
@@ -1951,7 +1951,7 @@
                		<control template="/org/alfresco/components/form/controls/extended-person.ftl"/>
                	</field>
                <field id="cm:created" set="other"/>
-               <field id="cm:versionable" label-id="form.label.version-history" set="other">
+               <field id="cm:versionLabel" label-id="form.label.version-history" set="other">
                   <control template="/org/alfresco/components/form/controls/version.ftl" />
                </field>	
             </appearance>

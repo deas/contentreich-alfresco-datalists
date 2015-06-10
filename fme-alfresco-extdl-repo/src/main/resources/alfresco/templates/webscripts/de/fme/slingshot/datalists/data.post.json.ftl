@@ -1,4 +1,4 @@
-<#import "item.lib.ftl" as itemLib />
+<#import "/org/alfresco/slingshot/datalists/item.lib.ftl" as itemLib />
 <#escape x as jsonUtils.encodeJSONString(x)>
 {
    "totalRecords": ${data.paging.totalRecords?c},

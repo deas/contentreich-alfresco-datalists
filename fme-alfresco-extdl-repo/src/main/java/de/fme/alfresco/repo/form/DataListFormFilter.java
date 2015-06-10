@@ -65,7 +65,7 @@ public class DataListFormFilter<ItemType, PersistType> extends AbstractFilter<It
         {
         	final TypeDefinition typeDef = (TypeDefinition) item;
         	boolean addedDiscussable = false;
-        	boolean addedActions = false;
+        	// boolean addedActions = false;
         	boolean shouldAddDiscussable = datalistTypes.contains(typeDef.getName());
         	ArrayList<FieldDefinition> fieldDefs = new ArrayList<FieldDefinition>(fields.size());
         	for (String fieldName : fields) {
@@ -87,8 +87,15 @@ public class DataListFormFilter<ItemType, PersistType> extends AbstractFilter<It
                     actionsFieldDef.setLabel(ACTIONS_FIELDNAME);
                     if (LOGGER.isDebugEnabled()) LOGGER.debug("... generating field definition " + actionsFieldDef);
                     fieldDefs.add(actionsFieldDef);
-                    addedActions = true;
+                    // addedActions = true;
                 } else { // regular fields
+                    FieldDefinition fieldDef =  getNamedFieldDef(fieldName, form);
+                    if (fieldDef != null) {
+                        fieldDefs.add(fieldDef);
+                    } else {
+                        LOGGER.warn("Missing field " + fieldName);
+
+                    }
                 	fieldDefs.add(getNamedFieldDef(fieldName, form));
                 }
         	}
@@ -129,7 +136,7 @@ public class DataListFormFilter<ItemType, PersistType> extends AbstractFilter<It
         if (persistedObject instanceof NodeRef) {
             nodeRef = (NodeRef) persistedObject;
             
-        }else{
+        } else{
             return;
         }
         

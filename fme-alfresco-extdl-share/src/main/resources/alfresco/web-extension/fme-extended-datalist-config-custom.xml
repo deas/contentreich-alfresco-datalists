@@ -61,19 +61,19 @@
                   </control>
                </field> 
                <field id="dl:simpletaskDueDate" set="normal">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="style">width:250px</control-param>
                		</control>
                </field>
                <field id="dl:simpletaskPriority" set="normal" >
-	               	<control template="/org/alfresco/components/form/controls/filter-selectmany.ftl">
+	               	<control template="/de/fme/components/ext-data-lists/forms/controls/filter-selectmany.ftl">
 	             		<control-param name="style">width:250px</control-param>
 						<control-param name="defaultValues">High,Low,Normal</control-param>
 						<control-param name="size">4</control-param>
 					</control>	
                </field>
                <field id="dl:simpletaskStatus" set="normal">
-               		<control template="/org/alfresco/components/form/controls/filter-selectmany.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-selectmany.ftl">
 	             		<control-param name="style">width:250px</control-param>
 	             		<control-param name="defaultValues">Not Started,In Progress,Complete,On Hold</control-param>
 	             		<control-param name="size">4</control-param>
@@ -86,7 +86,7 @@
                		</control>
                	</field>
                <field id="cm:created" set="normal" mandatory="false">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
@@ -164,7 +164,7 @@
                		</control>
                	</field>
                <field id="cm:created" set="normal" mandatory="false">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
@@ -225,19 +225,19 @@
                		</control>
                	</field>
                	<field id="dl:eventAgendaStartTime"  set="normal">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
                </field>
                <field id="dl:eventAgendaEndTime"  set="normal">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
                </field>
                <field id="cm:created" set="normal" mandatory="false">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
@@ -300,19 +300,19 @@
                		</control>
                	</field>
                	<field id="dl:eventStartDate"  set="dates">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
                </field>
                <field id="dl:eventEndDate"  set="dates">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
                </field>
                <field id="cm:created" set="dates" mandatory="false">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
@@ -357,14 +357,14 @@
                   	</control>
                </field-->
                <field id="dl:issueStatus"  set="normal">
-               		<control template="/org/alfresco/components/form/controls/filter-selectmany.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-selectmany.ftl">
 	             		<control-param name="style">width:250px</control-param>
 	             		<control-param name="defaultValues">Not Started,In Progress,Complete,On Hold</control-param>
 	             		<control-param name="size">4</control-param>
 	             	</control>
                </field>
                <field id="dl:issuePriority"  set="normal">
-               		<control template="/org/alfresco/components/form/controls/filter-selectmany.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-selectmany.ftl">
 	             		<control-param name="style">width:250px</control-param>
 						<control-param name="defaultValues">High,Low,Normal</control-param>
 						<control-param name="size">4</control-param>
@@ -387,13 +387,13 @@
                		</control>
                	</field>
                <field id="dl:issueDueDate"  set="dates">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
                </field>
                <field id="cm:created" set="dates" mandatory="false">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
@@ -471,7 +471,7 @@
                		</control>
                	</field>
                <field id="cm:created" set="dates" mandatory="false">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
@@ -529,7 +529,7 @@
                		</control>
                	</field>
                <field id="cm:created" set="dates" mandatory="false">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
@@ -580,14 +580,14 @@
                   	</control>
                </field-->
                <field id="dl:taskStatus"  set="normal">
-               		<control template="/org/alfresco/components/form/controls/filter-selectmany.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-selectmany.ftl">
 	             		<control-param name="style">width:250px</control-param>
 	             		<control-param name="defaultValues">Not Started,In Progress,Complete,On Hold</control-param>
 	             		<control-param name="size">4</control-param>
 	             	</control>
                </field>
                <field id="dl:taskPriority"  set="normal">
-               		<control template="/org/alfresco/components/form/controls/filter-selectmany.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-selectmany.ftl">
 	             		<control-param name="style">width:250px</control-param>
 						<control-param name="defaultValues">High,Low,Normal</control-param>
 						<control-param name="size">4</control-param>
@@ -605,19 +605,19 @@
                		</control>
                	</field>
                	 <field id="dl:ganttStartDate"  set="dates">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
                </field>
                <field id="dl:ganttEndDate"  set="dates">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
                </field>
                <field id="cm:created" set="dates" mandatory="false">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
@@ -650,7 +650,7 @@
                   	</control>
                </field>
                <field id="dl:todoStatus"  set="normal">
-               		<control template="/org/alfresco/components/form/controls/filter-selectmany.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-selectmany.ftl">
 	             		<control-param name="style">width:250px</control-param>
 	             		<control-param name="defaultValues">Not Started,In Progress,Complete,On Hold</control-param>
 	             		<control-param name="size">4</control-param>
@@ -678,13 +678,13 @@
                		</control>
                	</field>
                	 <field id="dl:todoDueDate"  set="dates">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>
                </field>
                <field id="cm:created" set="dates" mandatory="false">
-               		<control template="/org/alfresco/components/form/controls/filter-daterange.ftl">
+               		<control template="/de/fme/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                			<control-param name="forceEditable">true</control-param>
                			<control-param name="style">width:250px</control-param>
                		</control>

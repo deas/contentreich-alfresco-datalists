@@ -1,28 +1,47 @@
 <extension>
     <modules>
-        <!--module>
+        <module>
             <id>FME Extended Datalists</id>
             <version>1.4</version>
             <components>
                 <component>
-                <scope>template</scope>
-                <region-id>datagrid</region-id>
-                <source-id>data-lists</source-id>
-                <sub-components>
-                    <sub-component id="default">
-                        <evaluations>
-                            <evaluation id="xy">
-                                <evaluators>
-                                    <evaluator type="xy.evaluator"></evaluator>
-                                </evaluators>
-                                <render>false</render>
-                            </evaluation>
-                        </evaluations>
-                        <url>/components/contentreich/data-lists/ext-datagrid</url>
-                    </sub-component>
-                </sub-components>
+                    <scope>template</scope>
+                    <region-id>datagrid</region-id>
+                    <source-id>data-lists</source-id>
+                    <sub-components>
+                        <sub-component id="default">
+                            <!--evaluations>
+                                <evaluation id="xy">
+                                    <evaluators>
+                                        <evaluator type="xy.evaluator"></evaluator>
+                                    </evaluators>
+                                    <render>false</render>
+                                </evaluation>
+                            </evaluations-->
+                            <url>/components/fme/ext-data-lists/datagrid</url>
+                        </sub-component>
+                    </sub-components>
+                </component>
+                <component>
+                    <scope>template</scope>
+                    <region-id>actions-common</region-id>
+                    <source-id>data-lists</source-id>
+                    <sub-components>
+                        <sub-component id="dnd-upload" index="50">
+                            <url>/components/upload/dnd-upload</url>
+                        </sub-component>
+                        <sub-component id="file-upload" index="60">
+                            <url>/components/upload/file-upload</url>
+                        </sub-component>
+                        <sub-component id="flash-upload" index="70">
+                            <url>/components/upload/flash-upload</url>
+                        </sub-component>
+                        <sub-component id="html-upload" index="80">
+                            <url>/components/upload/html-upload</url>
+                        </sub-component>
+                    </sub-components>
                 </component>
             </components>
-        </module-->
-        </modules>
-    </extension>
+        </module>
+    </modules>
+</extension>

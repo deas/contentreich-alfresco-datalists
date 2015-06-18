@@ -130,8 +130,7 @@ function getData()
    var filter = parsedArgs.filter,
       allNodes = [], node,
       items = [],
-      totalItems,
-      requestTotalCountMax = 0;
+      totalItems;
    
    var 	skip = 0,
    		size = 100,
@@ -176,15 +175,7 @@ function getData()
    }
   
    var parentNode = parsedArgs.listNode;
-   if (null != parentNode) {
-	   countTotal = parentNode.properties["cm:counter"];
-	   if (null !== countTotal && 0 < countTotal) {
-		   requestTotalCountMax = size;
-	   }
-   }
-   
 
-   
    if (!allFilterUseSearch && (parentNode != null) && (filter == null || filter.filterId == "" || filter.filterId == "all"))
    {
 	  // Use non-query method
@@ -218,8 +209,6 @@ function getData()
       // Query the nodes - passing in default sort and result limit parameters
       if (query !== "")
       {
-    	   var queryTotal = pagedSearch.countQuery(null, query, filterParams.language).totalResultCountUpper;
-    	  
     	  var sortObj = [{
     		                     column: "@" + sortField,
     		                     ascending: sortAsc
@@ -271,7 +260,7 @@ function getData()
    }
    
    var paging = {
-		   totalRecords: (0 < countTotal ? (0 < queryTotal ? queryTotal : countTotal) : totalItems),
+		   totalRecords: totalItems,
 		   startIndex: skip };
 
    if (paging.totalRecords == (skip + REQUEST_MAX)) {

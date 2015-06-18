@@ -10,15 +10,4 @@
          </list>
       </property>
    </bean>
-   
-   <!-- Load the datalist form config -->
-   <bean id="fme.datalist" class="org.springframework.extensions.config.ConfigBootstrap" init-method="register">
-         <property name="configService" ref="web.config" />
-         <property name="configs">
-            <list>
-               <value>classpath:alfresco/web-extension/fme-extended-datalist-config-custom.xml</value>
-            </list>
-         </property>
-   </bean>
-   
 </beans>

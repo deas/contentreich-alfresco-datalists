@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Definition of Share Data Lists Model -->
+
+<!-- Note: the xdl: namespace is defined further on in the document -->
+<model name="xdl:datalistmodel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+   <!-- Meta-data about the model -->
+   <description>Extended Alfresco Share Data List Model</description>
+   <author>Andreas Steffan</author>
+   <version>0.1</version>
+
+   <!-- Imports are required to allow references to definitions in other models -->
+   <imports>
+      <!-- Import Alfresco Dictionary Definitions -->
+      <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+      <!-- Import Alfresco Content Domain Model Definitions -->
+      <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+      <!-- Import Alfresco Forum Model Definitions -->
+      <import uri="http://www.alfresco.org/model/forum/1.0" prefix="fm"/>
+      <!-- Import Alfresco Content Domain Model Definitions -->
+      <import uri="http://www.alfresco.org/model/system/1.0" prefix="sys" />
+
+      <import uri="http://www.alfresco.org/model/datalist/1.0" prefix="dl"/>
+   </imports>
+
+   <!-- Data List Namespace -->
+   <namespaces>
+      <namespace uri="http://www.contentreich.de/model/xdatalist/1.0" prefix="xdl"/>
+   </namespaces>
+
+   <types>
+
+      <!-- Data List - Container. DO NOT MODIFY -->
+      <type name="xdl:dataList">
+         <title>Ext Data List container type</title>
+         <parent>dl:dataList</parent>
+         <!--properties>
+            <property name="xdl:dataListItemType">
+               <title>List Item Type</title>
+               <description>Determines which Data Dictionary type will be used when create new items within the Data List.</description>
+               <type>d:text</type>
+            </property>
+         </properties-->
+         <mandatory-aspects>
+            <aspect>cm:countable</aspect>
+         </mandatory-aspects>
+      </type>
+
+      <!-- Data List - Data Item Base Type. DO NOT MODIFY -->
+      <type name="xdl:dataListItem">
+         <title>Ext. Data List parent type</title>
+         <parent>cm:dataListItem</parent>
+         <mandatory-aspects>
+            <aspect>cm:versionable</aspect>
+         	<aspect>fm:discussable</aspect>
+         	<!--aspect>xdl:dataListItemId</aspect-->
+         </mandatory-aspects>
+      </type>
+
+      <!-- Data List - Simple "To do" list -->
+      <!--type name="xdl:todoList">
+         <title>To Do List</title>
+         <parent>xdl:dataListItem</parent>
+         <properties>
+         </properties>
+         <associations>
+         </associations>
+      </type-->
+
+      <!-- Data List - Simple Tasks List -->
+      <type name="xdl:simpletask">
+         <title>Task List (Simple)</title>
+         <parent>xdl:dataListItem</parent>
+         <!--properties>
+         </properties-->
+         <!--mandatory-aspects>
+            <aspect>cm:titled</aspect>
+         </mandatory-aspects-->
+      </type>
+
+      <!-- Data List - Advanced Tasks List -->
+      <!--type name="xdl:task">
+         <title>Task List (Advanced)</title>
+         <parent>xdl:dataListItem</parent>
+         <properties>
+         </properties>
+         <associations>
+         </associations>
+         <mandatory-aspects>
+            <aspect>cm:titled</aspect>
+            <aspect>cm:attachable</aspect>
+            <aspect>xdl:gantt</aspect>
+         </mandatory-aspects>
+      </type-->
+
+      <!-- Data List - Contact List -->
+      <!--type name="xdl:contact">
+         <title>Contacts List</title>
+         <parent>xdl:dataListItem</parent>
+         <properties>
+         </properties>
+      </type-->
+
+      <!-- Data List - Contact List -->
+      <!--type name="xdl:issue">
+         <title>Issues List</title>
+         <parent>xdl:dataListItem</parent>
+         <properties>
+         </properties>
+         <associations>
+         </associations>
+         <mandatory-aspects>
+            <aspect>cm:titled</aspect>
+            <aspect>cm:attachable</aspect>
+         </mandatory-aspects>
+      </type-->
+
+      <!-- Data List - Event List -->
+      <!--type name="xdl:event">
+         <title>Event</title>
+         <parent>xdl:dataListItem</parent>
+         <properties>
+         </properties>
+         <mandatory-aspects>
+         </mandatory-aspects>
+      </type-->
+
+      <!-- Data List - Event List -->
+      <!--type name="xdl:location">
+         <title>Location</title>
+         <parent>xdl:dataListItem</parent>
+         <properties>
+         </properties>
+         <mandatory-aspects>
+            <aspect>cm:titled</aspect>
+            <aspect>cm:attachable</aspect>
+         </mandatory-aspects>
+      </type-->
+
+      <!-- Data List - Meeting Agenda List -->
+      <!--type name="xdl:meetingAgenda">
+         <title>Meeting Agenda</title>
+         <parent>xdl:dataListItem</parent>
+         <properties>
+         </properties>
+         <mandatory-aspects>
+            <aspect>cm:titled</aspect>
+            <aspect>cm:attachable</aspect>
+         </mandatory-aspects>
+      </type-->
+
+      <!-- Data List - Event Agenda List -->
+      <!--type name="xdl:eventAgenda">
+         <title>Event Agenda</title>
+         <parent>xdl:dataListItem</parent>
+         <properties>
+         </properties>
+         <mandatory-aspects>
+             <aspect>cm:attachable</aspect>
+         </mandatory-aspects>
+      </type-->
+   </types>
+
+   <!--aspects-->
+
+      <!--aspect name="xdl:gantt">
+         <title>Gantt</title>
+         <properties>
+         </properties>
+      </aspect-->
+      <!--aspect name="xdl:dataListItemId">
+         <title>ID</title>
+         <properties>
+            <property name="xdl:itemId">
+               <title>ID</title>
+               <type>d:int</type>
+               <index enabled="true">
+    	         <atomic>false</atomic>
+    	         <stored>false</stored> 
+    	         <tokenised>true</tokenised>
+    	       </index>
+            </property>
+         </properties>
+      </aspect-->
+      <!--aspect name="xdl:assigneeHelper">
+         <title>Assignee Names</title>
+         <properties>
+            <property name="xdl:assigneeFullName">
+               <title>Assignee Names</title>
+               <type>d:text</type>
+               <multiple>true</multiple>
+            </property>
+         </properties>
+      </aspect-->
+
+   <!--/aspects-->
+
+</model>

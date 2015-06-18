@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<beans>
+ 
+  <!--bean id="extension.dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
+	<property name="models">
+		<list>
+			<value>alfresco/extension/fme-extended-datalist-model.xml</value>
+		</list>
+	</property>
+</bean-->
+    
+  <!-- Datalist Policy -->
+  <!-- bean id="DataListItemPolicies" class="de.fme.alfresco.repo.policy.DataListItemPolicies"
+    init-method="init">
+    <property name="policyComponent" ref="policyComponent"/>
+    <property name="nodeService" ref="nodeService" />
+    <property name="dictionaryService" ref="dictionaryService" />
+    <property name="versionService" ref="versionService" />
+    <property name="datalistIDService" ref="datalistIDService" />
+  </bean-->
+  
+  <!--bean id="datalistBaseFormFilter" abstract="true" parent="baseFormFilter">
+      <property name="namespacePrefixResolver">
+          <ref bean="namespaceService" />
+      </property>
+
+      <property name="behaviourFilter" ref="policyBehaviourFilter" />
+  	  <property name="nodeService" ref="nodeService" />
+  	  <property name="contentService" ref="contentService" />
+  	   <property name="datalistTypes">
+         <set>
+             <value>dl:simpletask</value>
+             <value>dl:contact</value>
+             <value>dl:eventAgenda</value>
+             <value>dl:todoList</value>
+             <value>dl:task</value>
+             <value>dl:issue</value>
+             <value>dl:event</value>
+             <value>dl:location</value>
+             <value>dl:meetingAgenda</value>
+         </set>
+     </property>
+  </bean-->
+  
+  <!--bean id="datalistFormFilterNode" class="de.fme.alfresco.repo.form.DataListFormFilter" parent="datalistBaseFormFilter" >
+  	<property name="filterRegistry" ref="nodeFilterRegistry" />
+  	<property name="properties" ref="global-properties" />
+  </bean>
+  
+  <bean id="datalistFormFilterType" class="de.fme.alfresco.repo.form.DataListFormFilter" parent="datalistBaseFormFilter">
+  	<property name="filterRegistry" ref="typeFilterRegistry" />
+  	<property name="properties" ref="global-properties" />
+  </bean-->
+
+    <!--bean id="datalistIDService" class="de.fme.alfresco.repo.datalist.DatalistIDServiceImpl">
+		<property name="nodeService" ref="NodeService" />
+	</bean>
+	
+	<bean id="datalistIDServiceSciptFacade" parent="baseJavaScriptExtension" class="de.fme.alfresco.repo.datalist.DatalistIDServiceScriptFacade">
+		<property name="extensionName" value="datalistIDService" />
+		<property name="datalistIDService" ref="datalistIDService" />
+		<property name="nodeService" ref="NodeService" />
+	</bean>
+	-->
+
+      <bean id="pagedSearchScript" parent="searchScript" class="de.fme.alfresco.repo.jscript.PagedSearch">
+        <property name="extensionName">
+            <value>pagedSearch</value>
+        </property>
+    </bean>
+</beans>

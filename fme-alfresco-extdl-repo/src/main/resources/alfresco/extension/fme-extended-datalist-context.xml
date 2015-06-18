@@ -63,10 +63,4 @@
 		<property name="nodeService" ref="NodeService" />
 	</bean>
 	-->
-
-      <bean id="pagedSearchScript" parent="searchScript" class="de.fme.alfresco.repo.jscript.PagedSearch">
-        <property name="extensionName">
-            <value>pagedSearch</value>
-        </property>
-    </bean>
 </beans>

@@ -4,8 +4,8 @@
   <groupId>de.fme</groupId>
   <artifactId>fme-alfresco-extdl-parent</artifactId>
   <packaging>pom</packaging>
-  <name>[parent] fme Alfresco Extended Datalists</name>
-  <version>1.4.0-SNAPSHOT</version>
+  <name>fme Alfresco Extended Datalists</name>
+  <version>1.4.0</version>
   <description>
         Parent project for fme Alfresco Extended Datalists
     </description>
@@ -54,8 +54,8 @@
   </modules>
   <properties>
     <alfresco.version>5.0.d</alfresco.version><!-- works with 5.0.c also with version set to 4.2.f -->
-    <spring.version>3.0.6.RELEASE</spring.version>
-    <spring.surf.version>1.2.0-SNAPSHOT</spring.surf.version>
+    <spring.version>3.2.10.RELEASE</spring.version>
+    <spring.surf.version>5.0.d</spring.surf.version>
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
   </properties>
@@ -82,19 +82,19 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
+    <!--dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
       <version>3.8</version>
       <scope>provided</scope>
-    </dependency>
+    </dependency-->
     <dependency>
       <groupId>org.alfresco</groupId>
       <artifactId>alfresco-core</artifactId>
       <version>${alfresco.version}</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
+    <!--dependency>
       <groupId>org.apache.tika</groupId>
       <artifactId>tika-parsers</artifactId>
       <version>1.1</version>
@@ -105,7 +105,7 @@
       <artifactId>solr-commons-csv</artifactId>
       <version>3.5.0</version>
       <scope>provided</scope>
-    </dependency>
+    </dependency-->
     <dependency>
       <groupId>org.alfresco</groupId>
       <artifactId>alfresco-repository</artifactId>

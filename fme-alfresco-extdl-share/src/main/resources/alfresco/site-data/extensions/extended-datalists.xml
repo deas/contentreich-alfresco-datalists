@@ -2,7 +2,7 @@
     <modules>
         <module>
             <id>FME Extended Datalists</id>
-            <version>1.4</version>
+            <version>1.4.1</version>
             <components>
                 <component>
                     <scope>template</scope>

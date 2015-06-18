@@ -3,7 +3,6 @@
 <import resource="classpath:alfresco/templates/webscripts/de/fme/slingshot/datalists/parse-args.lib.js">
 
 const REQUEST_MAX = 2000;
-const userPagedSearch = true;
 const allFilterUseSearch = true; //this works faster for larger lists
 
 /**
@@ -256,14 +255,8 @@ function getData()
     	            templates: filterParams.templates,
     	            namespace: (filterParams.namespace ? filterParams.namespace : null)
     	         };
-    	  if (userPagedSearch) {
-    		  pagedResult = pagedSearch.pagedQuery(queryObj);
-    	  } 
-    	  else 
-    	  {
-    		  allNodes = search.query(queryObj);
-    	  }
-       
+
+         allNodes = search.query(queryObj);
       }
       if (pagedResult) {
 	      allNodes = pagedResult.page;
@@ -279,8 +272,7 @@ function getData()
    
    var paging = {
 		   totalRecords: (0 < countTotal ? (0 < queryTotal ? queryTotal : countTotal) : totalItems),
-		   startIndex: skip,
-   }
+		   startIndex: skip };
 
    if (paging.totalRecords == (skip + REQUEST_MAX)) {
 	   paging.totalRecordsUpper = true;

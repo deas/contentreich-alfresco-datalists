@@ -2,7 +2,7 @@
     <modules>
         <module>
             <id>FME Extended Datalists</id>
-            <version>1.4.3</version>
+            <version>1.4.4</version>
             <components>
                 <component>
                     <scope>template</scope>
@@ -19,6 +19,24 @@
                                 </evaluation>
                             </evaluations-->
                             <url>/components/fme/ext-data-lists/datagrid</url>
+                        </sub-component>
+                    </sub-components>
+                </component>
+                <component>
+                    <scope>template</scope>
+                    <region-id>toolbar</region-id>
+                    <source-id>data-lists</source-id>
+                    <sub-components>
+                        <sub-component id="default">
+                            <!--evaluations>
+                                <evaluation id="xy">
+                                    <evaluators>
+                                        <evaluator type="xy.evaluator"></evaluator>
+                                    </evaluators>
+                                    <render>false</render>
+                                </evaluation>
+                            </evaluations-->
+                            <url>/components/fme/ext-data-lists/toolbar</url>
                         </sub-component>
                     </sub-components>
                 </component>

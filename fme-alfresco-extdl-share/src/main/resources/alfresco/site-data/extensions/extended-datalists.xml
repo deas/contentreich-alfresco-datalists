@@ -10,14 +10,6 @@
                     <source-id>data-lists</source-id>
                     <sub-components>
                         <sub-component id="default">
-                            <!--evaluations>
-                                <evaluation id="xy">
-                                    <evaluators>
-                                        <evaluator type="xy.evaluator"></evaluator>
-                                    </evaluators>
-                                    <render>false</render>
-                                </evaluation>
-                            </evaluations-->
                             <url>/components/fme/ext-data-lists/datagrid</url>
                         </sub-component>
                     </sub-components>
@@ -28,14 +20,6 @@
                     <source-id>data-lists</source-id>
                     <sub-components>
                         <sub-component id="default">
-                            <!--evaluations>
-                                <evaluation id="xy">
-                                    <evaluators>
-                                        <evaluator type="xy.evaluator"></evaluator>
-                                    </evaluators>
-                                    <render>false</render>
-                                </evaluation>
-                            </evaluations-->
                             <url>/components/fme/ext-data-lists/toolbar</url>
                         </sub-component>
                     </sub-components>
@@ -466,8 +450,6 @@
                     </forms>
                 </config>
 
-
-
                 <!-- dl:location type create form config-->
                 <config evaluator="model-type" condition="dl:location">
                     <forms>
@@ -754,7 +736,6 @@
                                 </field>
                             </appearance>
                         </form>
-
                     </forms>
                 </config>
             </configurations>

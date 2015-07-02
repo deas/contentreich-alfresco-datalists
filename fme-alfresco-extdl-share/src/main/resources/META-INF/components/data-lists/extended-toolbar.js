@@ -62,7 +62,7 @@
 	      onExportCsv: function ExtDataListToolbar_onExportCsv(e, p_obj)
 	      {
 	    	   var nodeRef = Alfresco.util.NodeRef(this.modules.dataGrid.datalistMeta.nodeRef)
-	    	   window.location.href = Alfresco.constants.PROXY_URI + "slingshot/datalists/list/node/"+nodeRef.uri +"?format=xlsx";
+	    	   window.location.href = Alfresco.constants.PROXY_URI + "fme/slingshot/datalists/list/node/"+nodeRef.uri +"?format=xlsx";
 	    	   
 	      },
 

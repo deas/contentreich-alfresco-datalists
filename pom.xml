@@ -5,7 +5,7 @@
   <artifactId>fme-alfresco-extdl-parent</artifactId>
   <packaging>pom</packaging>
   <name>fme Alfresco Extended Datalists</name>
-  <version>1.4.5</version>
+  <version>1.4.6</version>
   <description>
         Parent project for fme Alfresco Extended Datalists
     </description>
@@ -109,6 +109,12 @@
     <dependency>
       <groupId>org.alfresco</groupId>
       <artifactId>alfresco-repository</artifactId>
+      <version>${alfresco.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.alfresco</groupId>
+      <artifactId>alfresco-remote-api</artifactId>
       <version>${alfresco.version}</version>
       <scope>provided</scope>
     </dependency>

@@ -1,0 +1,11 @@
+<webscript>
+  <shortname>Type Fix DataLists - Download a Data List</shortname>
+  <description>Type Fix Data Lists Component - Download a Data List</description>
+  <url>/contentreich/slingshot/datalists/list/site/{site}/{container}/{list}/</url>
+  <url>/contentreich/slingshot/datalists/list/site/{site}/{container}/{list}</url>
+  <url>/contentreich/slingshot/datalists/list/node/{store_type}/{store_id}/{id}</url>
+  <format default="xls">argument</format>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <lifecycle>internal</lifecycle>
+</webscript>

@@ -23,7 +23,7 @@
       Alfresco.component.ExtDataGrid.superclass.constructor.call(this, htmlId);
       YAHOO.Bubbling.on("afterFormRuntimeInit", this.onAfterFormRuntimeInit, this);
       YAHOO.Bubbling.on("beforeFormRuntimeInit", this.onBeforeFormRuntimeInit, this);
-      
+
       this.totalRecordsUpper = null;
       
       return this;
@@ -46,6 +46,118 @@
    {
 	   
 	   filterFormResponse: null,
+
+      /*
+       * Quick Hack fix for #34 (window.escape assuming Latin1 charset on FF). Calls replaced be  *URIComponent.
+       */
+      _setupHistoryManagers: function DataGrid__setupHistoryManagers()
+      {
+         /**
+          * YUI History - filter
+          */
+         var bookmarkedFilter = YAHOO.util.History.getBookmarkedState("filter");
+         bookmarkedFilter = bookmarkedFilter === null ? "all" : (YAHOO.env.ua.gecko > 0) ? bookmarkedFilter : encodeURIComponent(bookmarkedFilter);
+
+         try
+         {
+            while (bookmarkedFilter != (bookmarkedFilter = decodeURIComponent(bookmarkedFilter))){}
+         }
+         catch (e1)
+         {
+            // Catch "malformed URI sequence" exception
+         }
+
+         var fnDecodeBookmarkedFilter = function DataGrid_fnDecodeBookmarkedFilter(strFilter)
+         {
+            var filters = strFilter.split("|"),
+                filterObj =
+                {
+                   filterId: decodeURIComponent(filters[0] || ""),
+                   filterData: decodeURIComponent(filters[1] || "")
+                };
+
+            filterObj.filterOwner = Alfresco.util.FilterManager.getOwner(filterObj.filterId);
+            return filterObj;
+         };
+
+         this.options.initialFilter = fnDecodeBookmarkedFilter(bookmarkedFilter);
+
+         // Register History Manager filter update callback
+         YAHOO.util.History.register("filter", bookmarkedFilter, function DataGrid_onHistoryManagerFilterChanged(newFilter)
+         {
+            Alfresco.logger.debug("HistoryManager: filter changed:" + newFilter);
+            // Firefox fix
+            if (YAHOO.env.ua.gecko > 0)
+            {
+               newFilter = decodeURIComponent(newFilter);
+               Alfresco.logger.debug("HistoryManager: filter (after Firefox fix):" + newFilter);
+            }
+
+            this._updateDataGrid.call(this,
+                {
+                   filter: fnDecodeBookmarkedFilter(newFilter)
+                });
+         }, null, this);
+
+
+         /**
+          * YUI History - page
+          */
+         var me = this;
+         var handlePagination = function DataGrid_handlePagination(state, me)
+         {
+            me.widgets.paginator.setState(state);
+            YAHOO.util.History.navigate("page", String(state.page));
+         };
+
+         if (this.options.usePagination)
+         {
+            var bookmarkedPage = YAHOO.util.History.getBookmarkedState("page") || "1";
+            while (bookmarkedPage != (bookmarkedPage = decodeURIComponent(bookmarkedPage))){}
+            this.currentPage = parseInt(bookmarkedPage || this.options.initialPage, 10);
+
+            // Register History Manager page update callback
+            YAHOO.util.History.register("page", bookmarkedPage, function DataGrid_onHistoryManagerPageChanged(newPage)
+            {
+               Alfresco.logger.debug("HistoryManager: page changed:" + newPage);
+               me.widgets.paginator.setPage(parseInt(newPage, 10));
+               this.currentPage = parseInt(newPage, 10);
+            }, null, this);
+
+            // YUI Paginator definition
+            this.widgets.paginator = new YAHOO.widget.Paginator(
+                {
+                   containers: [this.id + "-paginator", this.id + "-paginatorBottom"],
+                   rowsPerPage: this.options.pageSize,
+                   initialPage: this.currentPage,
+                   template: this.msg("pagination.template"),
+                   pageReportTemplate: this.msg("pagination.template.page-report"),
+                   previousPageLinkLabel: this.msg("pagination.previousPageLinkLabel"),
+                   nextPageLinkLabel: this.msg("pagination.nextPageLinkLabel")
+                });
+
+            this.widgets.paginator.subscribe("changeRequest", handlePagination, this);
+
+            // Display the bottom paginator bar
+            Dom.setStyle(this.id + "-datagridBarBottom", "display", "block");
+         }
+
+         // Initialize the browser history management library
+         try
+         {
+            YAHOO.util.History.initialize("yui-history-field", "yui-history-iframe");
+         }
+         catch (e2)
+         {
+            /*
+             * The only exception that gets thrown here is when the browser is
+             * not supported (Opera, or not A-grade)
+             */
+            Alfresco.logger.error(this.name + ": Couldn't initialize HistoryManager.", e2);
+            this.onHistoryManagerReady();
+         }
+      },
+
       /**
        * Returns actions custom datacell formatter
        *
@@ -598,7 +710,6 @@
       },
       /**
        * DataList View change filter request event handler
-       *
        * @method onChangeFilter
        * @param layer {object} Event fired (unused)
        * @param args {array} Event parameters (new filterId)

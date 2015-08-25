@@ -3,7 +3,7 @@
 <import resource="classpath:alfresco/templates/webscripts/de/contentreich/slingshot/datalists/parse-args.lib.js">
 
 const REQUEST_MAX = 2000;
-const allFilterUseSearch = true; //this works faster for larger lists
+const ALL_FILTER_USE_SEARCH = true; //this works faster for larger lists
 
 /**
  * Copyright (C) 2005-2010 Alfresco Software Limited.
@@ -26,16 +26,15 @@ const allFilterUseSearch = true; //this works faster for larger lists
 
 
 // var ESCAPES = [[/&/g, "&amp;"], [/</g, "&lt;"], [/>/g, "&gt;"], [/"/g, "&quot;"]]
-
+/*
 function escape(value) {
-	return value.replace('"','');
-	/*
-	var escaped = value;
-	for(var item in ESCAPES)
-	    escaped = escaped.replace(ESCAPES[item][0], ESCAPES[item][1]);
-	return escaped;
-	*/
+    return value.replace('"', '');
+     var escaped = value;
+     for(var item in ESCAPES)
+     escaped = escaped.replace(ESCAPES[item][0], ESCAPES[item][1]);
+     return escaped;
 }
+*/
 
 //function filterRange(array, range) {
 //	logger.log("Applying " + range.prop + " range filter " + range.min + " <= x <= " + range.max);
@@ -102,197 +101,185 @@ function escape(value) {
  *
  * @method getData
  */
-function getData()
-{
-   // Use helper function to get the arguments
-   var parsedArgs = ParseArgs.getParsedArgs();
-   if (parsedArgs === null)
-   {
-      return;
-   }
+function getData() {
+    // Use helper function to get the arguments
+    var parsedArgs = ParseArgs.getParsedArgs();
+    if (parsedArgs === null) {
+        return;
+    }
 
-   var fields = null;
-   // Extract fields (if given)
-   if (json.has("fields"))
-   {
-      // Convert the JSONArray object into a native JavaScript array
-      fields = [];
-      var jsonFields = json.get("fields"),
-         numFields = jsonFields.length();
-      
-      for (count = 0; count < numFields; count++)
-      {
-         fields.push(jsonFields.get(count).replaceFirst("_", ":"));
-      }
-   }
+    var fields = null;
+    // Extract fields (if given)
+    if (json.has("fields")) {
+        // Convert the JSONArray object into a native JavaScript array
+        fields = [];
+        var jsonFields = json.get("fields"),
+            numFields = jsonFields.length();
 
-   // Try to find a filter query based on the passed-in arguments
-   var filter = parsedArgs.filter,
-      allNodes = [], node,
-      items = [],
-      totalItems;
-   
-   var 	skip = 0,
-   		size = 100,
-   		total = 0,
-   		page = 1,
-   		countTotal;
-   
-   
-   if (json.has("size"))
-   {
-	   size = json.get("size");
-	   
-      if (json.has("page"))
-      {
-    	  page = json.get("page");
-          skip = (page - 1) * size;
-      }
-   }
-   
-   requestTotalCountMax = skip + REQUEST_MAX;
-   
-   if (json.has("total"))
-   {
-	   total = json.get("total");
-	  
-	   if (0 < total  && total < REQUEST_MAX) {
-		   requestTotalCountMax = total + 10; // add for growth
-	   } // else we do not know use absolute max: requestTotalCountMax
-   }
-   var sortAsc = true;
-   var sortField = "cm:name";
+        for (count = 0; count < numFields; count++) {
+            fields.push(jsonFields.get(count).replaceFirst("_", ":"));
+        }
+    }
 
-   if (json.has("filter")) {
-	   var filterJson = json.get("filter");
-	  
-	   if (filterJson.has("sortField")) {
-		  var sortField = filterJson.get("sortField").replace("assoc_","").replace("prop_","").replace("_",":");
-	   } 
-	   if (filterJson.has("sortAsc")) {
-		  var sortAsc = filterJson.get("sortAsc");
-	   } 
-   }
-  
-   var parentNode = parsedArgs.listNode;
+    // Try to find a filter query based on the passed-in arguments
+    var filter = parsedArgs.filter,
+        allNodes = [], node,
+        items = [],
+        totalItems;
 
-   if (!allFilterUseSearch && (parentNode != null) && (filter == null || filter.filterId == "" || filter.filterId == "all"))
-   {
-	  // Use non-query method
+    var skip = 0,
+        size = 100,
+        total = 0,
+        page = 1,
+        requestTotalCountMax = skip + REQUEST_MAX;
+
+
+    if (json.has("size")) {
+        size = json.get("size");
+
+        if (json.has("page")) {
+            page = json.get("page");
+            skip = (page - 1) * size;
+        }
+    }
+
+    if (json.has("total")) {
+        total = json.get("total");
+
+        if (0 < total && total < REQUEST_MAX) {
+            requestTotalCountMax = total + 10; // add for growth
+        } // else we do not know use absolute max: requestTotalCountMax
+    }
+    var sortAsc = true;
+    var sortField = "cm:name";
+
+    if (json.has("filter")) {
+        var filterJson = json.get("filter");
+
+        if (filterJson.has("sortField")) {
+            var sortField = filterJson.get("sortField").replace("assoc_", "").replace("prop_", "").replace("_", ":");
+        }
+        if (filterJson.has("sortAsc")) {
+            var sortAsc = filterJson.get("sortAsc");
+        }
+    }
+
+    var parentNode = parsedArgs.listNode;
+
+    if (!ALL_FILTER_USE_SEARCH && (parentNode != null) && (filter == null || filter.filterId == "" || filter.filterId == "all")) {
+        if (logger.isLoggingEnabled()) {
+            logger.log("childFileFolders: skip = " + skip + ", size = " + size + ", requestTotalCountMax = " + requestTotalCountMax);
+        }
+        // Use non-query method
 //      if (parentNode != null)
 //      {
 
-         var pagedResult = parentNode.childFileFolders(true, false, Filters.IGNORED_TYPES, skip, size, requestTotalCountMax, sortField, sortAsc, null);
-         allNodes = pagedResult.page;
-         totalItems = pagedResult.totalResultCountUpper;
+        var pagedResult = parentNode.childFileFolders(true, false, Filters.IGNORED_TYPES, skip, size, requestTotalCountMax, sortField, sortAsc, null);
+        allNodes = pagedResult.page;
+        totalItems = pagedResult.totalResultCountUpper;
 //      }
-   }
-   else    
-   {
+    }
+    else {
 
-	 /* this creates a bug for the items filters in the datalist.
-	  * 
-	  // XPath for solr systems
-	  var n = search.findNode(parsedArgs.nodeRef);
-	  var q = xPathFilterQuery(filter.filterData);
-	  // logger.log(parsedArgs.nodeRef + " -> *" + q.propQuery);
-	  var res = n.childrenByXPath("* " + q.propQuery);
-	  logger.log("Got " + res.length + " results, " + q.rangeFilters.length + " range filters");
-	  for (var i=0; i<q.rangeFilters.length; i++) {
-		  res = filterRange(res, q.rangeFilters[i]);
-	  }
-	  allNodes = res;
-	  */
-	  
-      var filterParams = Filters.getFilterParams(filter, parsedArgs);
-      var query = filterParams.query;
-      // Query the nodes - passing in default sort and result limit parameters
-      if (query !== "")
-      {
-    	  var sortObj = [{
-    		                     column: "@" + sortField,
-    		                     ascending: sortAsc
-    		                  }];
-//this is just cm:name sorting - var sortObj = filterParams.sort;
-    	  
-    	  var queryObj = {
-    	            query: query,
-    	            language: filterParams.language,
-    	 /* we need to get all and slice, no paging results, doh! */
-    				page:
-    				{
-    					skipCount: skip,
-    					pageSize: size, 
-    					maxItems: requestTotalCountMax
-    				},
-    	            
-    	/*if you get exception on custom text property sorting, you need indexing in your model set to
-    	 * <index enabled="true">
-    	      <atomic>false</atomic>
-    	      <stored>false</stored> 
-    	      <tokenised>both</tokenised>
-    	   </index>
-    	   
-    	   for numerical properties you need
-    	     <index enabled="true">
-    	      <atomic>false</atomic>
-    	      <stored>false</stored> 
-    	      <tokenised>true</tokenised>
-    	   </index>
-    	  */
-    	            sort: sortObj,
-    	            templates: filterParams.templates,
-    	            namespace: (filterParams.namespace ? filterParams.namespace : null)
-    	         };
-
-         allNodes = search.query(queryObj);
-      }
-      if (pagedResult) {
-	      allNodes = pagedResult.page;
-	      totalItems = pagedResult.totalResultCountUpper;
-		  //allNodes = allNodes.slice(0, size);
-      }
-      else 
-	  {
-    	  totalItems = skip + allNodes.length;
-		  allNodes = allNodes.slice(0, size);
-	  }
-   }
-   
-   var paging = {
-		   totalRecords: totalItems,
-		   startIndex: skip };
-
-   if (paging.totalRecords == (skip + REQUEST_MAX)) {
-	   paging.totalRecordsUpper = true;
-   }
-   
-   if (allNodes.length > 0)
-   {
-      for each (node in allNodes)
-      {
-         try
-         {
-             items.push(Evaluator.run(node, fields));
+        /* this creates a bug for the items filters in the datalist.
+         *
+         // XPath for solr systems
+         var n = search.findNode(parsedArgs.nodeRef);
+         var q = xPathFilterQuery(filter.filterData);
+         // logger.log(parsedArgs.nodeRef + " -> *" + q.propQuery);
+         var res = n.childrenByXPath("* " + q.propQuery);
+         logger.log("Got " + res.length + " results, " + q.rangeFilters.length + " range filters");
+         for (var i=0; i<q.rangeFilters.length; i++) {
+         res = filterRange(res, q.rangeFilters[i]);
          }
-         catch(e) {}
-      }
-   }
+         allNodes = res;
+         */
 
-   return (
-   {
-      fields: fields,
-      paging: paging,
-      parent:
-      {
-         node: parsedArgs.listNode,
-         userAccess:
-         {
-            create: parsedArgs.listNode.hasPermission("CreateChildren")
-         }
-      },
-      items: items
-   });
+        var filterParams = Filters.getFilterParams(filter, parsedArgs);
+        var query = filterParams.query;
+        // Query the nodes - passing in default sort and result limit parameters
+        if (query !== "") {
+            var sortObj = [{
+                column: "@" + sortField,
+                ascending: sortAsc
+            }]; //this is just cm:name sorting - var sortObj = filterParams.sort;
+
+            var queryObj = {
+                query: query,
+                language: filterParams.language,
+                /* we need to get all and slice, no paging results, doh! */
+                page: {
+                    skipCount: skip,
+                    pageSize: size,
+                    maxItems: requestTotalCountMax
+                },
+
+                /*if you get exception on custom text property sorting, you need indexing in your model set to
+                 * <index enabled="true">
+                 <atomic>false</atomic>
+                 <stored>false</stored>
+                 <tokenised>both</tokenised>
+                 </index>
+
+                 for numerical properties you need
+                 <index enabled="true">
+                 <atomic>false</atomic>
+                 <stored>false</stored>
+                 <tokenised>true</tokenised>
+                 </index>
+                 */
+                sort: sortObj,
+                templates: filterParams.templates,
+                namespace: (filterParams.namespace ? filterParams.namespace : null)
+            };
+            if (logger.isLoggingEnabled()) {
+                logger.log("Query " + jsonUtils.toJSONString(queryObj));
+            }
+            allNodes = search.query(queryObj);
+        }
+        if (pagedResult) {
+            allNodes = pagedResult.page;
+            totalItems = pagedResult.totalResultCountUpper;
+            //allNodes = allNodes.slice(0, size);
+        }
+        else {
+            totalItems = skip + allNodes.length;
+            allNodes = allNodes.slice(0, size);
+        }
+    }
+
+    var paging = {
+        totalRecords: totalItems,
+        startIndex: skip
+    };
+
+    if (paging.totalRecords == (skip + REQUEST_MAX)) {
+        paging.totalRecordsUpper = true;
+    }
+
+    if (allNodes.length > 0) {
+        for each(node in allNodes)
+        {
+            try {
+                items.push(Evaluator.run(node, fields));
+            }
+            catch (e) {
+            }
+        }
+    }
+
+    return (
+    {
+        fields: fields,
+        paging: paging,
+        parent: {
+            node: parsedArgs.listNode,
+            userAccess: {
+                create: parsedArgs.listNode.hasPermission("CreateChildren")
+            }
+        },
+        items: items
+    });
 }
 
 model.data = getData();

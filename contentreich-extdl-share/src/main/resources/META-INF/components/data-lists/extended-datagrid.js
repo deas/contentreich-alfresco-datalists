@@ -703,10 +703,14 @@
           //alert(this.formsRuntime.getFormData());
     	  this.currentFilter="";
     	  this.formsRuntime.reset();
-    	  
+    	  // Some specialized controls - e.g. auto-complete don't implement reset today
+          // So this is the only way to get a really safe reset
+          /*
     	  YAHOO.Bubbling.fire("resetDataRange");
     	  YAHOO.Bubbling.fire("resetFinder");
-    	  YAHOO.Bubbling.fire("changeFilter");
+          this.onFilterFormSubmit();
+          */
+          location.hash = '';
       },
       /**
        * DataList View change filter request event handler
@@ -911,7 +915,7 @@
            fields: this.dataRequestFields,
            page : this.currentPage,
            size : this.options.pageSize,
-           total : this.totalRecords,
+           // total : this.totalRecords,
            noCache : new Date().getTime() 
         };
         

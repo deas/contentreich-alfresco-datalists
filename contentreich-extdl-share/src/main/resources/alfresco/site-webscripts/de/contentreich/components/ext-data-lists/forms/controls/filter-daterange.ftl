@@ -10,8 +10,8 @@
          ${messages}
       );
       
-      YAHOO.Bubbling.on("resetDataRange" , filterDataRange._handleFieldChangeFrom, filterDataRange);
-      YAHOO.Bubbling.on("resetDataRange" , filterDataRange._handleFieldChangeTo, filterDataRange);
+      YAHOO.Bubbling.on("resetForm" , filterDataRange._handleFieldChangeFrom, filterDataRange);
+      YAHOO.Bubbling.on("resetForm" , filterDataRange._handleFieldChangeTo, filterDataRange);
    })();
    //]]></script>
    

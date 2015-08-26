@@ -22,7 +22,7 @@
    {
       Alfresco.component.ExtDataGrid.superclass.constructor.call(this, htmlId);
       YAHOO.Bubbling.on("afterFormRuntimeInit", this.onAfterFormRuntimeInit, this);
-      YAHOO.Bubbling.on("beforeFormRuntimeInit", this.onBeforeFormRuntimeInit, this);
+      // YAHOO.Bubbling.on("beforeFormRuntimeInit", this.onBeforeFormRuntimeInit, this);
 
       this.totalRecordsUpper = null;
       
@@ -703,14 +703,13 @@
           //alert(this.formsRuntime.getFormData());
     	  this.currentFilter="";
     	  this.formsRuntime.reset();
-    	  // Some specialized controls - e.g. auto-complete don't implement reset today
-          // So this is the only way to get a really safe reset
-          /*
-    	  YAHOO.Bubbling.fire("resetDataRange");
-    	  YAHOO.Bubbling.fire("resetFinder");
-          this.onFilterFormSubmit();
-          */
-          location.hash = '';
+    	  // Some specialized controls - e.g. auto-complete  or object-finder don't implement reset
+    	  YAHOO.Bubbling.fire("resetForm");
+          // Seems nobody is is listening
+    	  // YAHOO.Bubbling.fire("resetFinder"); // Seems nobody is is listening
+          // this.onFilterFormSubmit();
+         // So this is the best way to get a "most of the time right" reset
+         location.hash = '';
       },
       /**
        * DataList View change filter request event handler
@@ -828,11 +827,13 @@
       *    args.[1].runtime: Alfresco.forms.Form instance
       * </pre>
       */
+     /*
       onBeforeFormRuntimeInit: function ExtDataGrid_onBeforeFormRuntimeInit(layer, args)
      {
         this.formUI = args[1].component;
         this.formsRuntime = args[1].runtime;
      },
+     */
      
      /**
       * Event handler called when the "onAfterFormRuntimeInit" event is received.
@@ -847,59 +848,64 @@
       */
      onAfterFormRuntimeInit: function ExtDataGrid_onAfterFormRuntimeInit(layer, args)
      {
-    	 var me = this;
-    	 var form = Dom.get(this.formsRuntime.formId);
-    	 YAHOO.util.Event.removeListener(form, "keypress");
-    	 YAHOO.util.Event.removeListener(form, KeyListener.KEYDOWN);
-    	 /**
-    	  * Prevent the Enter key from causing a double form submission
-    	  */
-    	 var fnStopEvent = function(id, keyEvent)
-    	 {
-    		 var event = keyEvent[1],
-    		 target = event.target ? event.target : event.srcElement;
-    		 
-    		 var targetId = target.id;
-    		 if (!(targetId.contains(me.id) && targetId.contains("-extDgFilterForm")))
-    		 {
-    		 	 //this is not from filterForm
-    		 	 return false;
-    		 }
-    		 
-    		 if (target.tagName == "TEXTAREA")
-    		 {
-    			 // Allow linefeeds in textareas
-    			 return false;
-    		 }
-    		 else if (target.tagName == "BUTTON" || Dom.hasClass(target, "yuimenuitemlabel"))
-    		 {
-    			 // Eventlisteners for buttons and menus must be notified that the enter key was entered
-    		 }
-    		 else
-    		 {
-    			 var targetName = target.name;
-    			 if (targetName && (targetName != "-"))
-    			 {
-    				 me.onFilterFormSubmit(event);
-    			 }
-    			 Event.stopEvent(event);
-    			 return false;
-    		 }
-    	 };
-    	 var enterListener = new KeyListener(form,
-    			 {
-    		 keys: KeyListener.KEY.ENTER
-    			 }, fnStopEvent, YAHOO.env.ua.ie > 0 ? KeyListener.KEYDOWN : "keypress");
-    	 enterListener.enable();
-    	 if (this.currentFilter.filterId == "filterform"){
-    	 
-	    	 YAHOO.Bubbling.fire("filterChanged",
-	          {
-	             filterOwner: this.id,
-	             filterId: this.currentFilter.filterId,
-	             filterData: Alfresco.util.toQueryString(this.currentFilter.filterData)
-	          });
-    	 }
+        var rt = args[1].runtime;
+        if (rt.formId === this.id + "-extDgFilterForm-form") {
+           this.formsRuntime = rt;
+           var me = this,
+               form = Dom.get(this.formsRuntime.formId);
+
+           YAHOO.util.Event.removeListener(form, "keypress");
+           YAHOO.util.Event.removeListener(form, KeyListener.KEYDOWN);
+           /**
+            * Prevent the Enter key from causing a double form submission
+            */
+           var fnStopEvent = function(id, keyEvent)
+           {
+              var event = keyEvent[1],
+                  target = event.target ? event.target : event.srcElement;
+
+              var targetId = target.id;
+              if (!(targetId.contains(me.id) && targetId.contains("-extDgFilterForm")))
+              {
+                 //this is not from filterForm
+                 return false;
+              }
+
+              if (target.tagName == "TEXTAREA")
+              {
+                 // Allow linefeeds in textareas
+                 return false;
+              }
+              else if (target.tagName == "BUTTON" || Dom.hasClass(target, "yuimenuitemlabel"))
+              {
+                 // Eventlisteners for buttons and menus must be notified that the enter key was entered
+              }
+              else
+              {
+                 var targetName = target.name;
+                 if (targetName && (targetName != "-"))
+                 {
+                    me.onFilterFormSubmit(event);
+                 }
+                 Event.stopEvent(event);
+                 return false;
+              }
+           };
+           var enterListener = new KeyListener(form,
+               {
+                  keys: KeyListener.KEY.ENTER
+               }, fnStopEvent, YAHOO.env.ua.ie > 0 ? KeyListener.KEYDOWN : "keypress");
+           enterListener.enable();
+           if (this.currentFilter.filterId == "filterform"){
+
+              YAHOO.Bubbling.fire("filterChanged",
+                  {
+                     filterOwner: this.id,
+                     filterId: this.currentFilter.filterId,
+                     filterData: Alfresco.util.toQueryString(this.currentFilter.filterData)
+                  });
+           }
+        }
      },
      /**
       * Build URI parameter string for doclist JSON data webscript

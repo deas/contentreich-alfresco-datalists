@@ -16,6 +16,7 @@ import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
 import org.alfresco.util.Pair;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.*;
@@ -232,7 +233,7 @@ public class TypeFixDataListDownloadWebScript extends DeclarativeSpreadsheetWebS
 
         // Our various formats
         DataFormat formatter = workbook.createDataFormat();
-
+        String listJoiner = ",";
         CellStyle styleInt = workbook.createCellStyle();
         styleInt.setDataFormat( formatter.getFormat("0") );
         CellStyle styleDate = workbook.createCellStyle();
@@ -290,7 +291,7 @@ public class TypeFixDataListDownloadWebScript extends DeclarativeSpreadsheetWebS
                             }
                             else
                             {
-                                System.err.println("TODO: handle " + type + " for " + child);
+                                logger.warn("TODO: handle " + type + " for " + child);
                             }
                         }
 
@@ -336,10 +337,12 @@ public class TypeFixDataListDownloadWebScript extends DeclarativeSpreadsheetWebS
                         c.setCellValue(v);
                         c.setCellStyle(styleDouble);
                     }
-                    else
+                    else if (val instanceof List) {
+                        c.setCellValue(StringUtils.join((List) val, listJoiner));
+                    } else
                     {
                         // TODO
-                        System.err.println("TODO: handle " + val.getClass().getName() + " - " + val);
+                        logger.warn("TODO: handle " + val.getClass().getName() + " - " + val);
                     }
                 }
 

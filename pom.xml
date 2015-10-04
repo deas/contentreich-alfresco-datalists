@@ -53,9 +53,9 @@
     <module>contentreich-extdl-share</module>
   </modules>
   <properties>
-    <alfresco.version>5.0.d</alfresco.version><!-- works with 5.0.c also with version set to 4.2.f -->
+    <alfresco.version>4.2.f</alfresco.version><!-- works with 5.0.c also with version set to 4.2.f -->
     <spring.version>3.2.10.RELEASE</spring.version>
-    <spring.surf.version>5.0.d</spring.surf.version>
+    <spring.surf.version>1.2.0</spring.surf.version>
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
   </properties>

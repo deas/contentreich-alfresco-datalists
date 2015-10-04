@@ -144,7 +144,4 @@
 	      }
       
    }, true);
-
-   /* Dummy instance to load optional YUI components early */
-   var dummyInstance = new Alfresco.component.ExtDataListToolbar("null");
 })();

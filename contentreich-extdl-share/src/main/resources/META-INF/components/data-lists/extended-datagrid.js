@@ -674,7 +674,8 @@
 
     	  //this._createFilterForm();
     	  // I am giving the browser some time to process the response before creating the form
-    	  YAHOO.lang.later(500, this, _createFilterForm);
+    	  var me = this;
+    	  YAHOO.lang.later(300, me, _createFilterForm);
       },
       
       _createFilterForm: function ExtDataGrid_createFilterForm() {

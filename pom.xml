@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.fme</groupId>
-  <artifactId>fme-alfresco-extdl-parent</artifactId>
+  <groupId>de.contentreich</groupId>
+  <artifactId>contentreich-extdl</artifactId>
   <packaging>pom</packaging>
-  <name>fme Alfresco Extended Datalists</name>
-  <version>1.4.6</version>
+  <name>Contentreich Alfresco Extended Datalists</name>
+  <version>2.0.0-SNAPSHOT</version>
   <description>
-        Parent project for fme Alfresco Extended Datalists
+        Parent project for Contentreich Alfresco Extended Datalists
     </description>
   <organization>
     <name>Andreas Steffan</name>
@@ -49,13 +49,13 @@
     <url>https://github.com/deas/fme-alfresco-extdl/issues</url>
   </issueManagement>
   <modules>
-    <module>fme-alfresco-extdl-repo</module>
-    <module>fme-alfresco-extdl-share</module>
+    <module>contentreich-extdl-repo</module>
+    <module>contentreich-extdl-share</module>
   </modules>
   <properties>
-    <alfresco.version>5.0.d</alfresco.version><!-- works with 5.0.c also with version set to 4.2.f -->
+    <alfresco.version>4.2.f</alfresco.version><!-- works with 5.0.c also with version set to 4.2.f -->
     <spring.version>3.2.10.RELEASE</spring.version>
-    <spring.surf.version>5.0.d</spring.surf.version>
+    <spring.surf.version>1.2.0</spring.surf.version>
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
   </properties>

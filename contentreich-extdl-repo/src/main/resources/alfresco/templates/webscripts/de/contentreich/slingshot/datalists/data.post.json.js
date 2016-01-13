@@ -264,6 +264,7 @@ function getData() {
                 items.push(Evaluator.run(node, fields));
             }
             catch (e) {
+                logger.error(e);
             }
         }
     }

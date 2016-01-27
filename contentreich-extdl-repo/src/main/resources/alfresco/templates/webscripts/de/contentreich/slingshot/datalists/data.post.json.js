@@ -253,9 +253,7 @@ function getData() {
         startIndex: skip
     };
 
-    if (paging.totalRecords == (skip + REQUEST_MAX)) {
-        paging.totalRecordsUpper = true;
-    }
+    paging.totalRecordsUpper ? (paging.totalRecords == (skip + REQUEST_MAX)) : false;
 
     if (allNodes.length > 0) {
         for each(node in allNodes)

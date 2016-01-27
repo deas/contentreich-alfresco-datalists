@@ -4,7 +4,7 @@
    "totalRecords": ${data.paging.totalRecords?c},
    "startIndex": ${data.paging.startIndex?c},
 <#if data.paging.totalRecordsUpper??>
-	"totalRecordsUpper": ${data.paging.totalRecordsUpper?c},
+	"totalRecordsUpper": ${data.paging.totalRecordsUpper?string},
 </#if>
    "metadata":
    {

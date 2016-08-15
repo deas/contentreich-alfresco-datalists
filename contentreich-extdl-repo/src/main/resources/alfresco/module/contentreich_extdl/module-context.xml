@@ -6,15 +6,35 @@
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-    <!--bean id="extension.dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
+  <bean id="extension.dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="datalistModelBootstrap">
       <property name="models">
           <list>
-              <value>alfresco/extension/fme-extended-datalist-model.xml</value>
+              <value>alfresco/module/contentreich_extdl/contentreich-extdl-datalist-model.xml</value>
           </list>
       </property>
-  </bean-->
+  </bean>
 
-    <!-- Datalist Policy -->
+    <bean id="contentreich.extdl.abstractAutoId" class="de.contentreich.alfresco.repo.policy.AutoID" abstract="true"
+      init-method="init">
+      <property name="policyComponent" ref="policyComponent"/>
+      <property name="datalistIDService" ref="datalistIDService" />
+      <!--property name="type">
+          <bean class="org.alfresco.service.namespace.QName" factory-method="createQName">
+              <constructor-arg value="http://www.contentreich.de/model/sample-datalists/1.0"/>
+              <constructor-arg value="myDataList"/>
+          </bean>
+      </property-->
+    </bean>
+
+    <bean id="contentreich.extdl.demoXdlTodo" parent="contentreich.extdl.abstractAutoId">
+        <property name="type">
+            <bean class="org.alfresco.service.namespace.QName" factory-method="createQName">
+                <constructor-arg value="http://www.contentreich.de/model/xdatalist/1.0"/>
+                <constructor-arg value="demoXdlTodo"/>
+            </bean>
+        </property>
+    </bean>
+
     <!-- bean id="DataListItemPolicies" class="de.fme.alfresco.repo.policy.DataListItemPolicies"
       init-method="init">
       <property name="policyComponent" ref="policyComponent"/>
@@ -24,7 +44,7 @@
       <property name="datalistIDService" ref="datalistIDService" />
     </bean-->
 
-    <!--bean id="datalistBaseFormFilter" abstract="true" parent="baseFormFilter">
+    <bean id="datalistBaseFormFilter" abstract="true" parent="baseFormFilter" class="de.philb.repo.forms.processor.Json2XmlFilter">
         <property name="namespacePrefixResolver">
             <ref bean="namespaceService" />
         </property>
@@ -32,7 +52,7 @@
         <property name="behaviourFilter" ref="policyBehaviourFilter" />
           <property name="nodeService" ref="nodeService" />
           <property name="contentService" ref="contentService" />
-           <property name="datalistTypes">
+           <!--property name="datalistTypes">
            <set>
                <value>dl:simpletask</value>
                <value>dl:contact</value>
@@ -44,8 +64,8 @@
                <value>dl:location</value>
                <value>dl:meetingAgenda</value>
            </set>
-       </property>
-    </bean-->
+       </property-->
+    </bean>
 
     <!--bean id="datalistFormFilterNode" class="de.fme.alfresco.repo.form.DataListFormFilter" parent="datalistBaseFormFilter" >
         <property name="filterRegistry" ref="nodeFilterRegistry" />
@@ -57,16 +77,12 @@
         <property name="properties" ref="global-properties" />
     </bean-->
 
-    <!--bean id="datalistIDService" class="de.fme.alfresco.repo.datalist.DatalistIDServiceImpl">
+    <!-- parent="baseJavaScriptExtension" -->
+    <bean id="datalistIDService"
+          class="de.contentreich.alfresco.repo.datalist.DatalistIDServiceImpl">
+        <!--property name="extensionName" value="datalistIDService" /-->
 		<property name="nodeService" ref="NodeService" />
 	</bean>
-
-	<bean id="datalistIDServiceSciptFacade" parent="baseJavaScriptExtension" class="de.fme.alfresco.repo.datalist.DatalistIDServiceScriptFacade">
-		<property name="extensionName" value="datalistIDService" />
-		<property name="datalistIDService" ref="datalistIDService" />
-		<property name="nodeService" ref="NodeService" />
-	</bean>
-	-->
 
     <util:map id="contentreich.extdl.modelOrder">
         <entry key="dl:todoList">

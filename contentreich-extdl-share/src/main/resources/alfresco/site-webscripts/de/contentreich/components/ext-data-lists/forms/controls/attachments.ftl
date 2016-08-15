@@ -1,4 +1,4 @@
-<#include "common/picker.inc.ftl" />
+<#include "/org/alfresco/components/form/controls/common/picker.inc.ftl" />
 
 <#assign controlId = fieldHtmlId + "-cntrl">
 

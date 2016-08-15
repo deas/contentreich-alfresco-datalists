@@ -4,7 +4,6 @@
 package de.contentreich.alfresco.repo.datalist;
 
 import org.alfresco.service.cmr.repository.ChildAssociationRef;
-import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.namespace.QName;
 
 /**
@@ -13,10 +12,11 @@ import org.alfresco.service.namespace.QName;
  */
 public interface DatalistIDService {
 	
-	public static final String DL_NAMESPACE = "http://www.alfresco.org/model/datalist/1.0";
-	public static final QName PROP_DATALISTITEM_ID = QName.createQName(DL_NAMESPACE, "itemId");
-
-	int getNextId(NodeRef datalist);
+	String XDL_NAMESPACE = "http://www.contentreich.de/model/xdatalist/1.0";
+	QName ASPECT_AUTO_ID_LIST = QName.createQName(XDL_NAMESPACE, "autoidList");
+	QName ASPECT_AUTO_ID_ITEM = QName.createQName(XDL_NAMESPACE, "autoIdItem");
+	QName PROP_DATALISTITEM_ID = QName.createQName(XDL_NAMESPACE, "id");
+	QName PROP_DATALIST_LASTID = QName.createQName(XDL_NAMESPACE, "lastId");
 
 	void setNextId(ChildAssociationRef childAssocRef);
 }

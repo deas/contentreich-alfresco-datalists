@@ -91,10 +91,10 @@
             </configurations>
 
         </module>
+
         <module>
             <id>CR Extended Datalists Sample Filter Forms</id>
             <version>2.0.0-SNAPSHOT</version>
-
             <configurations>
 
                 <!-- dl:simpletask (simple) type create form config-->
@@ -795,5 +795,190 @@
                 </config>
             </configurations>
         </module>
+
+        <!-- foobar -->
+        <module>
+            <id>CR Extended Datalists Sample Custom Lists</id>
+            <version>2.0.0-SNAPSHOT</version>
+            <configurations>
+
+                <!-- dl:simpletask (simple) type create form config-->
+                <config evaluator="model-type" condition="xdl:demoXdlTodo">
+                    <forms>
+                        <!-- Create item form -->
+                        <form>
+                            <field-visibility>
+                                <show id="dl:todoTitle" />
+                                <show id="dl:todoDueDate" />
+                                <show id="dl:todoPriority" />
+                                <show id="dl:todoStatus" />
+                                <show id="dl:todoNotes" />
+                                <show id="dl:assignee" />
+                                <show id="dl:attachments" />
+                            </field-visibility>
+                            <create-form template="../data-lists/forms/dataitem.ftl" />
+                            <appearance>
+                                <field id="dl:todoTitle">
+                                    <control template="/org/alfresco/components/form/controls/textfield.ftl" >
+                                        <control-param name="style">width:450px</control-param>
+                                    </control>
+                                </field>
+                                <field id="dl:todoNotes">
+                                    <control template="/org/alfresco/components/form/controls/textarea.ftl" >
+                                        <control-param name="style">width:750px</control-param>
+                                        <control-param name="rows">10</control-param>
+                                    </control>
+                                </field>
+                                <field id="dl:attachments">
+                                    <control template="/de/contentreich/components/ext-data-lists/forms/controls/attachments.ftl">
+                                        <control-param name="startLocation">{doclib}</control-param>
+                                        <control-param name="showTargetLink">true</control-param>
+                                    </control>
+                                </field>
+                            </appearance>
+                        </form>
+                        <form id="datagrid">
+                            <field-visibility>
+                                <show id="dl:todoTitle" />
+                                <!--  show id="dl:itemId" /-->
+                                <show id="dl:todoDueDate" />
+                                <show id="dl:todoPriority" />
+                                <show id="dl:todoStatus" />
+                                <show id="dl:todoNotes" />
+                                <show id="dl:assignee" />
+                                <show id="dl:attachments" />
+                                <show id="fm:discussable" force="true"/>
+                            </field-visibility>
+                        </form>
+                        <form id="filter">
+                            <field-visibility>
+                                <show id="dl:todoTitle" />
+                                <show id="dl:todoPriority" />
+                                <show id="dl:todoStatus" />
+                                <show id="dl:todoNotes" />
+                                <!--show id="dl:assigneeFullName" /-->
+                                <show id="cm:creator" />
+                                <show id="dl:todoDueDate" />
+                                <show id="cm:created" />
+                            </field-visibility>
+                            <appearance>
+                                <set id="normal" template="/org/alfresco/components/form/3-column-set.ftl"/>
+                                <set id="dates" template="/org/alfresco/components/form/3-column-set.ftl"/>
+                                <field id="dl:todoTitle"  set="normal">
+                                    <control template="/org/alfresco/components/form/controls/textfield.ftl" >
+                                        <control-param name="style">width:250px</control-param>
+                                    </control>
+                                </field>
+                                <field id="dl:todoStatus"  set="normal">
+                                    <control template="/de/contentreich/components/ext-data-lists/forms/controls/filter-selectmany.ftl">
+                                        <control-param name="style">width:250px</control-param>
+                                        <control-param name="defaultValues">Not Started,In Progress,Complete,On Hold</control-param>
+                                        <control-param name="size">4</control-param>
+                                    </control>
+                                </field>
+                                <field id="dl:todoPriority"  set="normal">
+                                    <control template="/org/alfresco/components/form/controls/textfield.ftl">
+                                        <control-param name="style">width:250px</control-param>
+                                    </control>
+                                </field>
+                                <field id="dl:todoNotes"  set="normal">
+                                    <control template="/org/alfresco/components/form/controls/textfield.ftl" >
+                                        <control-param name="style">width:250px</control-param>
+                                    </control>
+                                </field>
+                                <!--field id="dl:assigneeFullName" label-id="form.label.dl_assigneeFullName" set="normal">
+                                        <control template="/org/alfresco/components/form/controls/textfield.ftl" >
+                                           <control-param name="style">width:250px</control-param>
+                                       </control>
+                                </field-->
+                                <field id="cm:creator" set="normal" mandatory="false">
+                                    <control template="/org/alfresco/components/form/controls/textfield.ftl">
+                                        <control-param name="forceEditable">true</control-param>
+                                        <control-param name="style">width:250px</control-param>
+                                    </control>
+                                </field>
+                                <field id="dl:todoDueDate"  set="dates">
+                                    <control template="/de/contentreich/components/ext-data-lists/forms/controls/filter-daterange.ftl">
+                                        <control-param name="forceEditable">true</control-param>
+                                        <control-param name="style">width:250px</control-param>
+                                    </control>
+                                </field>
+                                <field id="cm:created" set="dates" mandatory="false">
+                                    <control template="/de/contentreich/components/ext-data-lists/forms/controls/filter-daterange.ftl">
+                                        <control-param name="forceEditable">true</control-param>
+                                        <control-param name="style">width:250px</control-param>
+                                    </control>
+                                </field>
+                            </appearance>
+                        </form>
+
+                    </forms>
+                </config>
+
+                <!-- dl:todoList type edit form config-->
+                <config evaluator="node-type" condition="xdl:demoXdlTodo">
+                    <forms>
+                        <!-- Data List pop-up edit form -->
+                        <form>
+                            <field-visibility>
+                                <show id="dl:todoTitle" />
+                                <show id="dl:todoDueDate" />
+                                <show id="dl:todoPriority" />
+                                <show id="dl:todoStatus" />
+                                <show id="dl:todoNotes" />
+                                <show id="dl:assignee" />
+                                <show id="dl:attachments" />
+                                <show id="fm:discussable"/>
+                                <show id="cm:creator" />
+                                <show id="cm:created" />
+                                <!--show id="cm:versionable"/-->
+                            </field-visibility>
+                            <edit-form template="../data-lists/forms/dataitem-edit.ftl" />
+                            <view-form template="../data-lists/forms/dataitem-view.ftl" />
+                            <appearance>
+                                <set id="normal" appearance=""/>
+                                <set id="other" appearance=""/>
+                                <field id="dl:todoTitle" set="normal">
+                                    <control template="/org/alfresco/components/form/controls/textfield.ftl" >
+                                        <control-param name="style">width:450px</control-param>
+                                    </control>
+                                </field>
+                                <field id="dl:todoDueDate" set="normal"/>
+                                <field id="dl:todoPriority" set="normal"/>
+                                <field id="dl:todoStatus" set="normal"/>
+                                <field id="dl:todoNotes" set="normal">
+                                    <control template="/org/alfresco/components/form/controls/textarea.ftl" >
+                                        <control-param name="style">width:450px</control-param>
+                                        <control-param name="rows">10</control-param>
+                                    </control>
+                                </field>
+                                <field id="dl:assignee" set="normal"/>
+                                <field id="dl:attachments" set="normal">
+                                    <control template="/de/contentreich/components/ext-data-lists/forms/controls/attachments.ftl">
+                                        <control-param name="startLocation">{doclib}</control-param>
+                                        <control-param name="showTargetLink">true</control-param>
+                                    </control>
+                                </field>
+                                <field id="fm:discussable" label-id="form.label.comments" set="other">
+                                    <control template="/org/alfresco/components/form/controls/comments.ftl">
+                                        <control-param name="style">width:450px;</control-param>
+                                    </control>
+                                </field>
+                                <field id="cm:creator" set="other">
+                                    <control template="/org/alfresco/components/form/controls/extended-person.ftl"/>
+                                </field>
+                                <field id="cm:created" set="other"/>
+                                <!--field id="cm:versionable" label-id="form.label.version-history" set="other">
+                                    <control template="/org/alfresco/components/form/controls/version.ftl" />
+                                </field-->
+                            </appearance>
+                        </form>
+                    </forms>
+                </config>
+            </configurations>
+        </module>
+
+
+
     </modules>
 </extension>

@@ -41,7 +41,7 @@
 
           <div class="doclist document-manage-granular-permissions">
               <#-- actions.folder.manage-permissions -->
-            <a title="${msg("actions.folder.manage-permissions")}" class="simple-link" href="${url.context}/page/manage-permissions?nodeRef${nodeRef}" style="background-image:url(${url.context}/res/components/documentlibrary/actions/folder-manage-permissions-16.png)" id="yui-gen122">
+            <a title="${msg("actions.folder.manage-permissions")}" class="simple-link" href="${url.context}/page/manage-permissions?nodeRef=${nodeRef}" style="background-image:url(${url.context}/res/components/documentlibrary/actions/folder-manage-permissions-16.png)" id="yui-gen122">
                 <span id="yui-gen124">${msg("actions.folder.manage-permissions")}</span>
             </a>
           </div>

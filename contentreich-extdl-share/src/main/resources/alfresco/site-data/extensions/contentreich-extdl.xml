@@ -859,7 +859,7 @@
                                 <show id="dl:todoNotes" />
                                 <show id="dl:assignee" />
                                 <show id="dl:attachments" />
-                                <show id="fm:commentCount"/>
+                                <show id="fm:commentCount" force="true"/>
                                 <!--show id="fm:discussion" force="true"/-->
                                 <!--show id="fm:discussable" force="true"/-->
                             </field-visibility>

@@ -61,23 +61,34 @@
                 </component>
             </components>
 
+            <customizations>
+                <customization>
+                    <targetPackageRoot>org.alfresco.components.form</targetPackageRoot>
+                    <sourcePackageRoot>de.contentreich.components.ext-data-lists.form</sourcePackageRoot>
+                </customization>
+            </customizations>
+
+            <!-- org.alfresco.components.form.form.get -->
+
             <configurations>
                 <config>
                     <forms>
                         <dependencies>
-                            <js src="/components/form/version.js"/>
+                            <!--js src="/components/form/version.js"/>
                             <css src="/components/data-lists/datalist-versions.css"/>
-                            <js src="/components/data-lists/datalist-versions.js"/>
+                            <js src="/components/data-lists/datalist-versions.js"/-->
                             <js src="/components/form/attachments.js"/>
                             <js src="/components/form/attachmentsMod.js"/>
                             <js src="/modules/documentlibrary/global-folder.js"/>
                             <css src="/modules/documentlibrary/global-folder.css"/>
                             <js src="/modules/simple-view-dialog.js"/>
-                            <css src="/components/form/comments.css"/>
+                            <!--css src="/components/form/comments.css"/>
                             <js src="/components/form/comments.js"/>
                             <css src="/components/blog/createcomment.css"/>
                             <js src="/components/blog/createcomment.js"/>
-                            <js src="/components/blog/blogdiscussions-common.js"/>
+                            <js src="/components/blog/blogdiscussions-common.js"/-->
+                            <js src="/components/comments/comments-list.js"/>
+                            <css src="/components/comments/comments-list.css"/>
                             <js src="/components/upload/file-upload.js"/>
                             <js src="/components/upload/flash-upload.js"/>
                             <js src="/components/upload/html-upload.js"/>
@@ -816,7 +827,7 @@
                                 <show id="dl:assignee" />
                                 <show id="dl:attachments" />
                             </field-visibility>
-                            <create-form template="../data-lists/forms/dataitem.ftl" />
+                            <create-form template="/org/alfresco/components/data-lists/forms/dataitem.ftl" />
                             <appearance>
                                 <field id="dl:todoTitle">
                                     <control template="/org/alfresco/components/form/controls/textfield.ftl" >
@@ -839,19 +850,22 @@
                         </form>
                         <form id="datagrid">
                             <field-visibility>
+                                <show id="xdl:id" />
                                 <show id="dl:todoTitle" />
-                                <!--  show id="dl:itemId" /-->
                                 <show id="dl:todoDueDate" />
                                 <show id="dl:todoPriority" />
                                 <show id="dl:todoStatus" />
                                 <show id="dl:todoNotes" />
                                 <show id="dl:assignee" />
                                 <show id="dl:attachments" />
-                                <show id="fm:discussable" force="true"/>
+                                <show id="fm:commentCount"/>
+                                <!--show id="fm:discussion" force="true"/-->
+                                <!--show id="fm:discussable" force="true"/-->
                             </field-visibility>
                         </form>
                         <form id="filter">
                             <field-visibility>
+                                <show id="xdl:id" />
                                 <show id="dl:todoTitle" />
                                 <show id="dl:todoPriority" />
                                 <show id="dl:todoStatus" />
@@ -928,13 +942,16 @@
                                 <show id="dl:todoNotes" />
                                 <show id="dl:assignee" />
                                 <show id="dl:attachments" />
-                                <show id="fm:discussable"/>
+                                <!--show id="fm:discussable"/-->
+                                <!--show id="fm:discussion"/-->
+                                <!--show id="fm:commentCount"/-->
                                 <show id="cm:creator" />
                                 <show id="cm:created" />
                                 <!--show id="cm:versionable"/-->
                             </field-visibility>
-                            <edit-form template="../data-lists/forms/dataitem-edit.ftl" />
-                            <view-form template="../data-lists/forms/dataitem-view.ftl" />
+                            <edit-form template="/de/contentreich/components/ext-data-lists/forms/dataitem-edit.ftl" />
+                            <view-form template="/de/contentreich/components/ext-data-lists/forms/dataitem-edit.ftl" />
+                            <!--view-form template="/de/contentreich/components/ext-data-lists/forms/dataitem-view.ftl" /-->
                             <appearance>
                                 <set id="normal" appearance=""/>
                                 <set id="other" appearance=""/>
@@ -959,17 +976,17 @@
                                         <control-param name="showTargetLink">true</control-param>
                                     </control>
                                 </field>
-                                <field id="fm:discussable" label-id="form.label.comments" set="other">
-                                    <control template="/org/alfresco/components/form/controls/comments.ftl">
+                                <!--field id="fm:discussion" label-id="form.label.comments" set="other"--><!-- discussable -->
+                                    <!--control template="/de/contentreich/components/ext-data-lists/forms/controls/comments.ftl">
                                         <control-param name="style">width:450px;</control-param>
                                     </control>
-                                </field>
+                                </field-->
                                 <field id="cm:creator" set="other">
-                                    <control template="/org/alfresco/components/form/controls/extended-person.ftl"/>
+                                    <control template="/de/contentreich/components/data-lists/forms/controls/extended-person.ftl"/>
                                 </field>
                                 <field id="cm:created" set="other"/>
                                 <!--field id="cm:versionable" label-id="form.label.version-history" set="other">
-                                    <control template="/org/alfresco/components/form/controls/version.ftl" />
+                                    <control template="/de/contentreich/components/data-lists/forms/controls/version.ftl" />
                                 </field-->
                             </appearance>
                         </form>

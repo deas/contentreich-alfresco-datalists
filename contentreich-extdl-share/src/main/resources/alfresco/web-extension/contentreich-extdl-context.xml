@@ -7,6 +7,8 @@
       <property name="resourceBundles">
          <list>
             <value>alfresco.web-extension.messages.contentreich-extdl</value>
+            <!-- get does not work -->
+            <!--value>alfresco.site-webscripts.org.alfresco.components.comments.comments-list.get</value--><!-- form hack -->
          </list>
       </property>
    </bean>

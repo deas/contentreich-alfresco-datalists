@@ -31,7 +31,8 @@ public class DatalistIDServiceImpl /* extends BaseProcessorExtension */ implemen
 		if (nodeService.hasAspect(itemNodeRef, ASPECT_AUTO_ID_ITEM)) {
 			nodeService.addAspect(listNodeRef, ASPECT_AUTO_ID_ITEM, Collections.EMPTY_MAP);
 		}
-		nodeService.setProperty(itemNodeRef, PROP_DATALISTITEM_ID, nextId);
+		// String is better on the item
+		nodeService.setProperty(itemNodeRef, PROP_DATALISTITEM_ID, nextId.toString());
 		logger.debug("Set id of {} to {}", itemNodeRef, nextId);
 	}
 	

@@ -38,6 +38,13 @@
 <div id="${formId}-container" class="theme-bg-color-1 form-container columns-form-container">
       <#if form.showCaption?exists && form.showCaption>
          <div id="${formId}-caption" class="caption"><span class="mandatory-indicator">*</span>${msg("form.required.fields")}</div>
+
+          <div class="doclist document-manage-granular-permissions">
+              <#-- actions.folder.manage-permissions -->
+            <a title="${msg("actions.folder.manage-permissions")}" class="simple-link" href="${url.context}/page/manage-permissions?nodeRef${nodeRef}" style="background-image:url(${url.context}/res/components/documentlibrary/actions/folder-manage-permissions-16.png)" id="yui-gen122">
+                <span id="yui-gen124">${msg("actions.folder.manage-permissions")}</span>
+            </a>
+          </div>
       </#if>
          
       <#--if form.mode != "view">

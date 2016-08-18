@@ -74,6 +74,7 @@
                 <config>
                     <forms>
                         <dependencies>
+                            <css src="/components/documentlibrary/actions.css"/>
                             <!--js src="/components/form/version.js"/>
                             <css src="/components/data-lists/datalist-versions.css"/>
                             <js src="/components/data-lists/datalist-versions.js"/-->
@@ -953,6 +954,7 @@
                             <view-form template="/de/contentreich/components/ext-data-lists/forms/dataitem-edit.ftl" />
                             <!--view-form template="/de/contentreich/components/ext-data-lists/forms/dataitem-view.ftl" /-->
                             <appearance>
+                                <!--set id="normal" template="/org/alfresco/components/form/3-column-set.ftl"/-->
                                 <set id="normal" appearance=""/>
                                 <set id="other" appearance=""/>
                                 <field id="dl:todoTitle" set="normal">

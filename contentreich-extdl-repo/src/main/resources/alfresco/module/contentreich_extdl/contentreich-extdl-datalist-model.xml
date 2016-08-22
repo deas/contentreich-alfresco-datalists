@@ -30,6 +30,20 @@
       <namespace uri="http://www.contentreich.de/model/xdatalist/1.0" prefix="xdl"/>
    </namespaces>
 
+   <constraints>
+      <constraint name="xdl:task_status" type="LIST">
+         <parameter name="allowedValues">
+            <list>
+               <value>Not Started</value>
+               <value>In Progress</value>
+               <value>Complete</value>
+               <value>On Hold</value>
+               <value>Approval</value>
+            </list>
+         </parameter>
+      </constraint>
+   </constraints>
+
    <types>
 
       <!-- Data List - Container. DO NOT MODIFY -->
@@ -48,10 +62,32 @@
          </mandatory-aspects>
       </type-->
 
+
       <!-- Data List - Data Item Base Type. DO NOT MODIFY -->
-      <type name="xdl:demoXdlTodo">
-         <title>Ext. To Do List</title>
-         <parent>dl:todoList</parent>
+      <type name="xdl:demoXdlTask">
+         <title>Ext. Task List (Advanced)</title>
+         <description>Demo of extending the advanced task list</description>
+         <parent>dl:task</parent><!-- dl:task -->
+         <properties>
+            <property name="xdl:testId">
+               <title>Test ID</title>
+               <description/>
+               <type>d:text</type>
+               <index enabled="true">
+                  <!--atomic>false</atomic>
+                  <stored>false</stored-->
+                  <tokenised>false</tokenised>
+               </index>
+            </property>
+         </properties>
+         <overrides>
+            <property name="dl:taskStatus">
+               <default>Not Started</default>
+               <constraints>
+                  <constraint ref="xdl:task_status" />
+               </constraints>
+            </property>
+         </overrides>
          <mandatory-aspects>
             <aspect>xdl:autoIdItem</aspect><!-- cm:versionable -->
          	<!--aspect>fm:discussable</aspect-->

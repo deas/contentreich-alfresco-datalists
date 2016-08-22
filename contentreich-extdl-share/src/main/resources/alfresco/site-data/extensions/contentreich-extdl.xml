@@ -815,33 +815,32 @@
             <configurations>
 
                 <!-- dl:simpletask (simple) type create form config-->
-                <config evaluator="model-type" condition="xdl:demoXdlTodo">
+                <config evaluator="model-type" condition="xdl:demoXdlTask">
                     <forms>
                         <!-- Create item form -->
                         <form>
                             <field-visibility>
-                                <show id="dl:todoTitle" />
-                                <show id="dl:todoDueDate" />
-                                <show id="dl:todoPriority" />
-                                <show id="dl:todoStatus" />
-                                <show id="dl:todoNotes" />
-                                <show id="dl:assignee" />
-                                <show id="dl:attachments" />
+                                <show id="cm:title" />
+                                <show id="cm:description" />
+                                <show id="xdl:testId"/>
+                                <show id="dl:ganttStartDate" />
+                                <show id="dl:ganttEndDate" />
+                                <show id="dl:taskAssignee" />
+                                <show id="dl:taskPriority" />
+                                <show id="dl:taskStatus" />
+                                <show id="cm:attachments" />
                             </field-visibility>
-                            <create-form template="/org/alfresco/components/data-lists/forms/dataitem.ftl" />
+                            <!-- create-form template="/de/contentreich/components/ext-data-lists/forms/dl_task.ftl" /-->
+                            <!-- Basic version -->
+                            <create-form template="/org/alfresco/components/data-lists/forms/dataitem.ftl" /><!-- Basic version -->
                             <appearance>
-                                <field id="dl:todoTitle">
-                                    <control template="/org/alfresco/components/form/controls/textfield.ftl" >
-                                        <control-param name="style">width:450px</control-param>
-                                    </control>
+                                <field id="cm:title">
+                                    <control template="/org/alfresco/components/form/controls/textfield.ftl" />
                                 </field>
-                                <field id="dl:todoNotes">
-                                    <control template="/org/alfresco/components/form/controls/textarea.ftl" >
-                                        <control-param name="style">width:750px</control-param>
-                                        <control-param name="rows">10</control-param>
-                                    </control>
-                                </field>
-                                <field id="dl:attachments">
+                                <!--field id="dl:taskComments">
+                                    <control template="/org/alfresco/components/form/controls/textarea.ftl" />
+                                </field-->
+                                <field id="cm:attachments">
                                     <control template="/de/contentreich/components/ext-data-lists/forms/controls/attachments.ftl">
                                         <control-param name="startLocation">{doclib}</control-param>
                                         <control-param name="showTargetLink">true</control-param>
@@ -849,55 +848,55 @@
                                 </field>
                             </appearance>
                         </form>
+                        <!-- An example of an optional "datagrid" form-id to show a different set of fields to the new/edit forms -->
                         <form id="datagrid">
                             <field-visibility>
                                 <show id="xdl:id" />
-                                <show id="dl:todoTitle" />
-                                <show id="dl:todoDueDate" />
-                                <show id="dl:todoPriority" />
-                                <show id="dl:todoStatus" />
-                                <show id="dl:todoNotes" />
-                                <show id="dl:assignee" />
-                                <show id="dl:attachments" />
-                                <show id="fm:commentCount" force="true"/>
-                                <!--show id="fm:discussion" force="true"/-->
-                                <!--show id="fm:discussable" force="true"/-->
+                                <show id="cm:title" />
+                                <show id="dl:taskAssignee" />
+                                <show id="cm:creator"/>
+                                <show id="cm:created"/>
+                                <show id="cm:modifier"/>
+                                <show id="cm:modified"/>
+                                <show id="cm:description" />
+                                <show id="xdl:testId"/>
+                                <show id="dl:ganttStartDate"/>
+                                <show id="dl:ganttEndDate"/>
+                                <show id="cm:attachments"/>
+                                <show id="fm:commentCount"/>
+                                <appearance>
+                                    <field id="fm:commentCount" label-id="form.label.comments" force="true"/>
+                                </appearance>
                             </field-visibility>
                         </form>
                         <form id="filter">
                             <field-visibility>
+                                <!-- cm:titled aspect -->
                                 <show id="xdl:id" />
-                                <show id="dl:todoTitle" />
-                                <show id="dl:todoPriority" />
-                                <show id="dl:todoStatus" />
-                                <show id="dl:todoNotes" />
+                                <show id="cm:title" />
+                                <show id="cm:description" />
+
+                                <show id="dl:ganttStartDate"/>
+                                <show id="dl:ganttEndDate"/>
                                 <!--show id="dl:assigneeFullName" /-->
-                                <show id="cm:creator" />
-                                <show id="dl:todoDueDate" />
-                                <show id="cm:created" />
+                                <show id="dl:taskPriority"/>
+                                <show id="dl:taskStatus"/>
+                                <!--show id="dl:ganttPercentComplete"/-->
+                                <show id="cm:creator"/>
+                                <!-- show id="dl:taskAssignee" /--><!-- Is assoc -->
+                                <show id="cm:created"/>
                             </field-visibility>
                             <appearance>
                                 <set id="normal" template="/org/alfresco/components/form/3-column-set.ftl"/>
-                                <set id="dates" template="/org/alfresco/components/form/3-column-set.ftl"/>
-                                <field id="dl:todoTitle"  set="normal">
-                                    <control template="/org/alfresco/components/form/controls/textfield.ftl" >
-                                        <control-param name="style">width:250px</control-param>
-                                    </control>
-                                </field>
-                                <field id="dl:todoStatus"  set="normal">
-                                    <control template="/de/contentreich/components/ext-data-lists/forms/controls/filter-selectmany.ftl">
-                                        <control-param name="style">width:250px</control-param>
-                                        <control-param name="defaultValues">Not Started,In Progress,Complete,On Hold</control-param>
-                                        <control-param name="size">4</control-param>
-                                    </control>
-                                </field>
-                                <field id="dl:todoPriority"  set="normal">
+                                <set id="dates" template="/org/alfresco/components/form/3-column-set.ftl"/>>
+                                <field id="xdl:id" set="normal"/>
+                                <field id="cm:title" set="normal">
                                     <control template="/org/alfresco/components/form/controls/textfield.ftl">
                                         <control-param name="style">width:250px</control-param>
                                     </control>
                                 </field>
-                                <field id="dl:todoNotes"  set="normal">
-                                    <control template="/org/alfresco/components/form/controls/textfield.ftl" >
+                                <field id="cm:description" set="normal">
+                                    <control template="/org/alfresco/components/form/controls/textfield.ftl">
                                         <control-param name="style">width:250px</control-param>
                                     </control>
                                 </field>
@@ -906,90 +905,104 @@
                                            <control-param name="style">width:250px</control-param>
                                        </control>
                                 </field-->
+                                <field id="dl:taskStatus" set="normal">
+                                    <control
+                                            template="/de/contentreich/components/ext-data-lists/forms/controls/filter-selectmany.ftl">
+                                        <control-param name="style">width:250px</control-param>
+                                        <control-param name="defaultValues">Not Started,In Progress,Complete,On Hold
+                                        </control-param>
+                                        <control-param name="size">4</control-param>
+                                    </control>
+                                </field>
+                                <field id="dl:taskPriority" set="normal">
+                                    <control
+                                            template="/de/contentreich/components/ext-data-lists/forms/controls/filter-selectmany.ftl">
+                                        <control-param name="style">width:250px</control-param>
+                                        <control-param name="defaultValues">High,Low,Normal</control-param>
+                                        <control-param name="size">4</control-param>
+                                    </control>
+                                </field>
                                 <field id="cm:creator" set="normal" mandatory="false">
                                     <control template="/org/alfresco/components/form/controls/textfield.ftl">
                                         <control-param name="forceEditable">true</control-param>
                                         <control-param name="style">width:250px</control-param>
                                     </control>
                                 </field>
-                                <field id="dl:todoDueDate"  set="dates">
-                                    <control template="/de/contentreich/components/ext-data-lists/forms/controls/filter-daterange.ftl">
+                                <!--field id="dl:taskAssignee" set="normal" mandatory="false">
+                                    <control template="/org/alfresco/components/form/controls/textfield.ftl">
+                                        <control-param name="forceEditable">true</control-param>
+                                        <control-param name="style">width:250px</control-param>
+                                    </control>
+                                </field-->
+                                <field id="dl:ganttStartDate" set="dates">
+                                    <control
+                                            template="/de/contentreich/components/ext-data-lists/forms/controls/filter-daterange.ftl">
+                                        <control-param name="forceEditable">true</control-param>
+                                        <control-param name="style">width:250px</control-param>
+                                    </control>
+                                </field>
+                                <field id="dl:ganttEndDate" set="dates">
+                                    <control
+                                            template="/de/contentreich/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                                         <control-param name="forceEditable">true</control-param>
                                         <control-param name="style">width:250px</control-param>
                                     </control>
                                 </field>
                                 <field id="cm:created" set="dates" mandatory="false">
-                                    <control template="/de/contentreich/components/ext-data-lists/forms/controls/filter-daterange.ftl">
+                                    <control
+                                            template="/de/contentreich/components/ext-data-lists/forms/controls/filter-daterange.ftl">
                                         <control-param name="forceEditable">true</control-param>
                                         <control-param name="style">width:250px</control-param>
                                     </control>
                                 </field>
+
                             </appearance>
                         </form>
 
                     </forms>
                 </config>
 
-                <!-- dl:todoList type edit form config-->
-                <config evaluator="node-type" condition="xdl:demoXdlTodo">
+                <!-- xdl:demoXdlTask edit form config-->
+                <config evaluator="node-type" condition="xdl:demoXdlTask">
                     <forms>
                         <!-- Data List pop-up edit form -->
                         <form>
                             <field-visibility>
-                                <show id="dl:todoTitle" />
-                                <show id="dl:todoDueDate" />
-                                <show id="dl:todoPriority" />
-                                <show id="dl:todoStatus" />
-                                <show id="dl:todoNotes" />
-                                <show id="dl:assignee" />
-                                <show id="dl:attachments" />
-                                <!--show id="fm:discussable"/-->
-                                <!--show id="fm:discussion"/-->
-                                <!--show id="fm:commentCount"/-->
-                                <show id="cm:creator" />
-                                <show id="cm:created" />
-                                <!--show id="cm:versionable"/-->
+                                <show id="xdl:id" />
+                                <show id="cm:title" />
+                                <show id="cm:description" />
+                                <show id="xdl:testId"/>
+                                <show id="cm:creator"/>
+                                <show id="cm:created"/>
+                                <show id="dl:ganttStartDate" />
+                                <show id="dl:ganttEndDate" />
+                                <show id="dl:taskAssignee" />
+                                <show id="dl:taskPriority" />
+                                <show id="dl:taskStatus" />
+                                <show id="cm:attachments" /><!-- Ugh! its an assoc ! -->
+
+
+                                <!--show id="fm:discussable"/>
+                                <show id="cm:versionable"/-->
                             </field-visibility>
-                            <edit-form template="/de/contentreich/components/ext-data-lists/forms/dataitem-edit.ftl" />
-                            <view-form template="/de/contentreich/components/ext-data-lists/forms/dataitem-edit.ftl" />
+                            <!-- edit-form template="/de/contentreich/components/ext-data-lists/forms/dl_task.ftl"/-->
+                            <!-- edit-form template="/org/alfresco/components/data-lists/forms/dl_task.ftl" /-->
+                            <edit-form template="/de/contentreich/components/ext-data-lists/forms/dataitem.ftl" />
                             <!--view-form template="/de/contentreich/components/ext-data-lists/forms/dataitem-view.ftl" /-->
                             <appearance>
-                                <!--set id="normal" template="/org/alfresco/components/form/3-column-set.ftl"/-->
-                                <set id="normal" appearance=""/>
-                                <set id="other" appearance=""/>
-                                <field id="dl:todoTitle" set="normal">
-                                    <control template="/org/alfresco/components/form/controls/textfield.ftl" >
-                                        <control-param name="style">width:450px</control-param>
-                                    </control>
-                                </field>
-                                <field id="dl:todoDueDate" set="normal"/>
-                                <field id="dl:todoPriority" set="normal"/>
-                                <field id="dl:todoStatus" set="normal"/>
-                                <field id="dl:todoNotes" set="normal">
-                                    <control template="/org/alfresco/components/form/controls/textarea.ftl" >
-                                        <control-param name="style">width:450px</control-param>
-                                        <control-param name="rows">10</control-param>
-                                    </control>
-                                </field>
-                                <field id="dl:assignee" set="normal"/>
-                                <field id="dl:attachments" set="normal">
+                                <!--set id="normal" appearance=""/>
+                                <set id="other" appearance=""/-->
+                                <field id="xdl:id" read-only="true"/>
+
+                                <field id="cm:creator" read-only="true"/><!-- set="normal"  -->
+                                <field id="cm:created" read-only="true"/> <!-- set="normal"  -->
+
+                                <field id="cm:attachments" force="true"> <!-- set="normal"  -->
                                     <control template="/de/contentreich/components/ext-data-lists/forms/controls/attachments.ftl">
                                         <control-param name="startLocation">{doclib}</control-param>
                                         <control-param name="showTargetLink">true</control-param>
                                     </control>
                                 </field>
-                                <!--field id="fm:discussion" label-id="form.label.comments" set="other"--><!-- discussable -->
-                                    <!--control template="/de/contentreich/components/ext-data-lists/forms/controls/comments.ftl">
-                                        <control-param name="style">width:450px;</control-param>
-                                    </control>
-                                </field-->
-                                <field id="cm:creator" set="other">
-                                    <control template="/de/contentreich/components/data-lists/forms/controls/extended-person.ftl"/>
-                                </field>
-                                <field id="cm:created" set="other"/>
-                                <!--field id="cm:versionable" label-id="form.label.version-history" set="other">
-                                    <control template="/de/contentreich/components/data-lists/forms/controls/version.ftl" />
-                                </field-->
                             </appearance>
                         </form>
                     </forms>

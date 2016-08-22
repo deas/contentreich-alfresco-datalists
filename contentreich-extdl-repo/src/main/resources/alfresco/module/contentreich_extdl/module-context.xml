@@ -12,6 +12,12 @@
                 <value>alfresco/module/contentreich_extdl/contentreich-extdl-datalist-model.xml</value>
             </list>
         </property>
+        <property name="labels">
+            <list>
+                <value>alfresco/module/contentreich_extdl/contentreich-extdl-model</value>
+            </list>
+        </property>
+
     </bean>
 
     <bean id="contentreich.extdl.abstractAutoId" class="de.contentreich.alfresco.repo.policy.AutoID" abstract="true"
@@ -26,11 +32,11 @@
         </property-->
     </bean>
 
-    <bean id="contentreich.extdl.demoXdlTodo" parent="contentreich.extdl.abstractAutoId">
+    <bean id="contentreich.extdl.demoXdlTask" parent="contentreich.extdl.abstractAutoId">
         <property name="type">
             <bean class="org.alfresco.service.namespace.QName" factory-method="createQName">
                 <constructor-arg value="http://www.contentreich.de/model/xdatalist/1.0"/>
-                <constructor-arg value="demoXdlTodo"/>
+                <constructor-arg value="demoXdlTask"/>
             </bean>
         </property>
     </bean>
@@ -78,11 +84,11 @@
         <property name="properties" ref="global-properties" />
     </bean-->
 
-    <bean id="datalistFormFilterNode"
+    <!--bean id="datalistFormFilterNode"
           parent="xdl.datalistXXXFormFilter">
-        <property name="filterRegistry" ref="nodeFilterRegistry"/>
+        <property name="filterRegistry" ref="nodeFilterRegistry"/-->
         <!--property name="properties" ref="global-properties"/-->
-    </bean>
+    <!--/bean-->
 
     <!--bean id="datalistFormFilterType"
           parent="xdl.datalistXXXFormFilter">

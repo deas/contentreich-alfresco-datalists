@@ -809,7 +809,7 @@
                       }
                    }
                 }
-            }else if (this.currentFilter.filterId != "filterform"){
+            } else if (!this.currentFilter.datagridFirstTimeNav && this.currentFilter.filterId != "filterform"){
             	//clear from
             	this._createFilterForm(); //this.populateFilterForm();
             }

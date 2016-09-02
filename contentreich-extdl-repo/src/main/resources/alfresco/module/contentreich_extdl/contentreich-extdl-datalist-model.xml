@@ -211,6 +211,14 @@
                   <tokenised>true</tokenised>
                </index>
             </property>
+            <property name="xdl:idFmt">
+               <title>Optional format ID assigned</title>
+               <type>d:text</type>
+               <index enabled="true">
+                  <tokenised>false</tokenised>
+               </index>
+            </property>
+
          </properties>
       </aspect>
       <aspect name="xdl:autoIdItem">

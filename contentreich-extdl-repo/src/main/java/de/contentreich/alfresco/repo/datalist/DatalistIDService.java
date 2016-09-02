@@ -17,6 +17,7 @@ public interface DatalistIDService {
 	QName ASPECT_AUTO_ID_ITEM = QName.createQName(XDL_NAMESPACE, "autoIdItem");
 	QName PROP_DATALISTITEM_ID = QName.createQName(XDL_NAMESPACE, "id");
 	QName PROP_DATALIST_LASTID = QName.createQName(XDL_NAMESPACE, "lastId");
+	QName PROP_DATALIST_ID_FMT = QName.createQName(XDL_NAMESPACE, "idFmt");
 
 	void setNextId(ChildAssociationRef childAssocRef);
 }

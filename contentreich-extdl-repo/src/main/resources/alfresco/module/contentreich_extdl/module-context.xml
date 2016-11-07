@@ -6,7 +6,7 @@
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-    <bean id="contentreich.xdlDictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="datalistModelBootstrap">
+    <bean id="contentreich.xdlDictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
         <property name="models">
             <list>
                 <value>alfresco/module/contentreich_extdl/contentreich-extdl-datalist-model.xml</value>

@@ -671,10 +671,7 @@
       onFilterFormTemplateLoaded: function ExtDataGrid_onFilterFormTemplateLoaded(response)
       {
     	  this.filterFormResponse = response;
-
-    	  //this._createFilterForm();
-    	  // I am giving the browser some time to process the response before creating the form
-    	  YAHOO.lang.later(500, this, _createFilterForm);
+    	  this._createFilterForm();
       },
       
       _createFilterForm: function ExtDataGrid_createFilterForm() {

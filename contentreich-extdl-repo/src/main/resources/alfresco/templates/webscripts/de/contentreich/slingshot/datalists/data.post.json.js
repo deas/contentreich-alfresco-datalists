@@ -1,6 +1,132 @@
 <import resource="classpath:alfresco/templates/webscripts/org/alfresco/slingshot/datalists/evaluator.lib.js">
 <import resource="classpath:alfresco/templates/webscripts/de/contentreich/slingshot/datalists/extdl-filters.lib.js">
-<import resource="classpath:alfresco/templates/webscripts/de/contentreich/slingshot/datalists/parse-args.lib.js">
+<import resource="classpath:/alfresco/templates/webscripts/org/alfresco/slingshot/datalists/parse-args.lib.js">
+
+ParseArgs.getParsedArgs = function Contentreich_ExtDl_ParseArgs_getParsedArgs(containerType)
+{
+    var rootNode = null,
+        nodeRef = null,
+        listNode = null;
+
+    if (url.templateArgs.store_type !== null)
+    {
+        /**
+         * nodeRef input: store_type, store_id and id
+         */
+        var storeType = url.templateArgs.store_type,
+            storeId = url.templateArgs.store_id,
+            id = url.templateArgs.id;
+
+        nodeRef = storeType + "://" + storeId + "/" + id;
+        rootNode = ParseArgs.resolveNode(nodeRef);
+        if (rootNode == null)
+        {
+            rootNode = search.findNode(nodeRef);
+            if (rootNode === null)
+            {
+                status.setCode(status.STATUS_NOT_FOUND, "Not a valid nodeRef: '" + nodeRef + "'");
+                return null;
+            }
+        }
+
+        listNode = rootNode;
+    }
+    else
+    {
+        /**
+         * Site and container input
+         */
+        var siteId = url.templateArgs.site,
+            containerId = url.templateArgs.container,
+            listId = url.templateArgs.list,
+            siteNode = siteService.getSite(siteId);
+
+        if (siteNode === null)
+        {
+            status.setCode(status.STATUS_NOT_FOUND, "Site not found: '" + siteId + "'");
+            return null;
+        }
+
+        rootNode = siteNode.getContainer(containerId);
+        if (rootNode === null)
+        {
+            rootNode = siteNode.createAndSaveContainer(containerId, containerType || "cm:folder", "Data Lists");
+            if (rootNode === null)
+            {
+                status.setCode(status.STATUS_NOT_FOUND, "Data Lists container '" + containerId + "' not found in '" + siteId + "'. (No permission?)");
+                return null;
+            }
+        }
+        listNode = rootNode;
+
+        if (listId !== null)
+        {
+            listNode = rootNode.childByNamePath(listId);
+            if (listNode === null)
+            {
+                status.setCode(status.STATUS_NOT_FOUND, "List not found: '" + listId + "'");
+                return null;
+            }
+        }
+    }
+
+    // Filter
+    var filter = null;
+    if (args.filter)
+    {
+        filter =
+        {
+            filterId: args.filter,
+            filterData: args.filterData
+        }
+    }
+    else if (typeof json !== "undefined" && json.has("filter") &&json.get("filter").get("filterId") =="filterform" && json.get("filter").has("filterData"))
+    {
+        var repoFormData = new Packages.org.alfresco.repo.forms.FormData();
+        var filterData = json.get("filter").get("filterData");
+        var jsonKeys = filterData.keys();
+        for ( ; jsonKeys.hasNext(); )
+        {
+            var nextKey = jsonKeys.next();
+
+            // add field to form data
+            repoFormData.addFieldData(nextKey, filterData.get(nextKey));
+        }
+
+
+        filter = {
+            filterId : json.get("filter").get("filterId"),
+            filterData : repoFormData
+        }
+    }
+    else if (typeof json !== "undefined" && json.has("filter") &&json.get("filter").get("filterId") !="filterform")
+    {
+        filter = {
+            filterId : json.get("filter").get("filterId")
+        }
+    }
+    else if (typeof json !== "undefined" && json.has("filter"))
+    {
+        filter = jsonUtils.toObject(json.getObject("filter"));
+        if (filter == null)
+        {
+            filter =
+            {
+                filterId: ""
+            }
+        }
+    }
+
+    var objRet =
+    {
+        rootNode: rootNode,
+        listNode: listNode,
+        nodeRef: String(listNode.nodeRef),
+        filter: filter
+    };
+
+    return objRet;
+};
 
 const REQUEST_MAX = 2000;
 const ALL_FILTER_USE_SEARCH = true; //this works faster for larger lists
@@ -264,6 +390,7 @@ function getData() {
                 items.push(Evaluator.run(node, fields));
             }
             catch (e) {
+                logger.error(e);
             }
         }
     }

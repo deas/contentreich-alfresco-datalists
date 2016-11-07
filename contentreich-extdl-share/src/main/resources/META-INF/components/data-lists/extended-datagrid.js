@@ -867,7 +867,7 @@
                   target = event.target ? event.target : event.srcElement;
 
               var targetId = target.id;
-              if (!(targetId.contains(me.id) && targetId.contains("-extDgFilterForm")))
+              if (!(targetId.indexOf(me.id)!==-1 && targetId.indexOf("-extDgFilterForm")!==-1))
               {
                  //this is not from filterForm
                  return false;

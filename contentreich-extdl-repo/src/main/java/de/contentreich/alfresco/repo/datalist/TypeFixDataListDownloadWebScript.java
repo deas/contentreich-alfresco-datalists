@@ -45,6 +45,11 @@ public class TypeFixDataListDownloadWebScript extends DeclarativeSpreadsheetWebS
     private NamespaceService namespaceService;
     private Map<QName,List<QName>> modelOrder;
     private Map<String,String> rawModelOrder;
+    private Map<QName, AssocExport> assocExports = Collections.emptyMap();
+
+    public void setAssocExports(Map<QName, AssocExport> assocExports) {
+        this.assocExports = assocExports;
+    }
 
     public TypeFixDataListDownloadWebScript()
     {
@@ -268,30 +273,40 @@ public class TypeFixDataListDownloadWebScript extends DeclarativeSpreadsheetWebS
                         {
                             NodeRef child = ref.getTargetRef();
                             QName type = nodeService.getType(child);
-                            if(ContentModel.TYPE_PERSON.equals(type))
-                            {
+
+                            AssocExport assocExport = assocExports.get(type);
+                            if (assocExport != null) {
                                 if(text.length() > 0) {
                                     text.append('\n');
                                     lines++;
                                 }
-                                text.append(nodeService.getProperty(
-                                        child, ContentModel.PROP_USERNAME
-                                ));
-                            }
-                            else if(ContentModel.TYPE_CONTENT.equals(type))
-                            {
-                                // TODO Link to the content
-                                if(text.length() > 0) {
-                                    text.append('\n');
-                                    lines++;
+                                text.append(assocExport.export(nodeService, child));
+                            } else {
+                                if(ContentModel.TYPE_PERSON.equals(type))
+                                {
+                                    if(text.length() > 0) {
+                                        text.append('\n');
+                                        lines++;
+                                    }
+                                    text.append(nodeService.getProperty(
+                                            child, ContentModel.PROP_USERNAME
+                                    ));
                                 }
-                                text.append(nodeService.getProperty(
-                                        child, ContentModel.PROP_TITLE
-                                ));
-                            }
-                            else
-                            {
-                                logger.warn("TODO: handle " + type + " for " + child);
+                                else if(ContentModel.TYPE_CONTENT.equals(type))
+                                {
+                                    // TODO Link to the content
+                                    if(text.length() > 0) {
+                                        text.append('\n');
+                                        lines++;
+                                    }
+                                    text.append(nodeService.getProperty(
+                                            child, ContentModel.PROP_TITLE
+                                    ));
+                                }
+                                else
+                                {
+                                    logger.warn("TODO: handle " + type + " for " + child);
+                                }
                             }
                         }
 

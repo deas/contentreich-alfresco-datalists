@@ -6,7 +6,8 @@
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-    <bean id="contentreich.xdlDictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="datalistModelBootstrap">
+    <bean id="contentreich.xdlDictionaryBootstrap" parent="dictionaryModelBootstrap"
+          depends-on="datalistModelBootstrap">
         <property name="models">
             <list>
                 <value>alfresco/module/contentreich_extdl/contentreich-extdl-datalist-model.xml</value>
@@ -58,19 +59,19 @@
         <property name="behaviourFilter" ref="policyBehaviourFilter"/>
         <property name="nodeService" ref="nodeService"/>
         <property name="contentService" ref="contentService"/-->
-        <!--property name="datalistTypes">
-        <set>
-            <value>dl:simpletask</value>
-            <value>dl:contact</value>
-            <value>dl:eventAgenda</value>
-            <value>dl:todoList</value>
-            <value>dl:task</value>
-            <value>dl:issue</value>
-            <value>dl:event</value>
-            <value>dl:location</value>
-            <value>dl:meetingAgenda</value>
-        </set>
-    </property-->
+    <!--property name="datalistTypes">
+    <set>
+        <value>dl:simpletask</value>
+        <value>dl:contact</value>
+        <value>dl:eventAgenda</value>
+        <value>dl:todoList</value>
+        <value>dl:task</value>
+        <value>dl:issue</value>
+        <value>dl:event</value>
+        <value>dl:location</value>
+        <value>dl:meetingAgenda</value>
+    </set>
+</property-->
     <!--/bean-->
 
     <!--bean id="datalistFormFilterNode" class="de.fme.alfresco.repo.form.DataListFormFilter" parent="datalistBaseFormFilter" >
@@ -86,13 +87,13 @@
     <!--bean id="datalistFormFilterNode"
           parent="xdl.datalistXXXFormFilter">
         <property name="filterRegistry" ref="nodeFilterRegistry"/-->
-        <!--property name="properties" ref="global-properties"/-->
+    <!--property name="properties" ref="global-properties"/-->
     <!--/bean-->
 
     <!--bean id="datalistFormFilterType"
           parent="xdl.datalistXXXFormFilter">
         <property name="filterRegistry" ref="typeFilterRegistry"/-->
-        <!--property name="properties" ref="global-properties"/-->
+    <!--property name="properties" ref="global-properties"/-->
     <!--/bean-->
 
     <!-- parent="baseJavaScriptExtension" -->
@@ -105,13 +106,13 @@
 
     <util:map id="contentreich.extdl.modelOrder">
         <entry key="dl:todoList"
-                value="dl:todoTitle,dl:todoDueDate,dl:todoPriority,dl:todoStatus,dl:todoNotes,dl:assignee,dl:attachments"/>
+               value="dl:todoTitle,dl:todoDueDate,dl:todoPriority,dl:todoStatus,dl:todoNotes,dl:assignee,dl:attachments"/>
         <entry key="dl:task"
                value="cm:title,cm:description,dl:ganttStartDate,dl:ganttEndDate,dl:taskAssignee,dl:taskPriority,dl:taskStatus,dl:ganttPercentComplete,dl:taskComments,cm:attachments"/>
         <entry key="dl:simpletask"
-                value="cm:title,cm:description,dl:simpletaskDueDate,dl:simpletaskPriority,dl:simpletaskStatus,dl:simpletaskComments"/>
+               value="cm:title,cm:description,dl:simpletaskDueDate,dl:simpletaskPriority,dl:simpletaskStatus,dl:simpletaskComments"/>
         <entry key="dl:contact"
-                value="dl:contactFirstName,dl:contactLastName,dl:contactEmail,dl:contactCompany,dl:contactJobTitle,dl:contactPhoneOffice,dl:contactPhoneMobile,dl:contactNotes"/>
+               value="dl:contactFirstName,dl:contactLastName,dl:contactEmail,dl:contactCompany,dl:contactJobTitle,dl:contactPhoneOffice,dl:contactPhoneMobile,dl:contactNotes"/>
         <entry key="dl:issue"
                value="dl:issueID,cm:title,dl:issueAssignedTo,dl:issueStatus,dl:issuePriority,cm:description,dl:issueDueDate,dl:issueComments,cm:attachments"/>
         <entry key="dl:event"
@@ -128,5 +129,33 @@
           class="de.contentreich.alfresco.repo.datalist.TypeFixDataListDownloadWebScript"
           parent="webscript.org.alfresco.slingshot.datalists.list.get">
         <property name="modelOrder" ref="contentreich.extdl.modelOrder"/>
+        <property name="assocExports" ref="contentreich.extdl.assocExports"/>
     </bean>
+
+    <util:map id="contentreich.extdl.assocExports">
+        <!-- sample entry -->
+        <!--entry>
+            <key>
+                <bean class="org.alfresco.service.namespace.QName" factory-method="createQName">
+                    <constructor-arg value="http://www.alfresco.org/model/content/1.0"/>
+                    <constructor-arg value="person"/>
+                </bean>
+            </key>
+            <bean class="de.contentreich.alfresco.repo.datalist.AssocExport">
+                <property name="format" value="${1}, {0}"/>
+                <property name="properties">
+                    <util:set>
+                        <bean class="org.alfresco.service.namespace.QName" factory-method="createQName">
+                            <constructor-arg value="http://www.alfresco.org/model/content/1.0"/>
+                            <constructor-arg value="firstName"/>
+                        </bean>
+                        <bean class="org.alfresco.service.namespace.QName" factory-method="createQName">
+                            <constructor-arg value="http://www.alfresco.org/model/content/1.0"/>
+                            <constructor-arg value="lastName"/>
+                        </bean>
+                    </util:set>
+                </property>
+            </bean>
+        </entry-->
+    </util:map>
 </beans>

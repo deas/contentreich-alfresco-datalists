@@ -1,4 +1,4 @@
-<#include "common/editorparams.inc.ftl" />
+<#include "/org/alfresco/components/form/controls/common/editorparams.inc.ftl" />
 <#if ((form.mode == "edit" || form.mode == "view") && args.itemId??)>
 <div class="form-field">
    <#if form.mode == "edit">

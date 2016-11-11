@@ -17,11 +17,12 @@
       <!-- Import Alfresco Content Domain Model Definitions -->
       <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
       <!-- Import Alfresco Forum Model Definitions -->
-      <import uri="http://www.alfresco.org/model/forum/1.0" prefix="fm"/>
+      <!-- import uri="http://www.alfresco.org/model/forum/1.0" prefix="fm"/-->
       <!-- Import Alfresco Content Domain Model Definitions -->
       <import uri="http://www.alfresco.org/model/system/1.0" prefix="sys" />
 
       <import uri="http://www.alfresco.org/model/datalist/1.0" prefix="dl"/>
+
    </imports>
 
    <!-- Data List Namespace -->
@@ -29,32 +30,67 @@
       <namespace uri="http://www.contentreich.de/model/xdatalist/1.0" prefix="xdl"/>
    </namespaces>
 
+   <constraints>
+      <constraint name="xdl:task_status" type="LIST">
+         <parameter name="allowedValues">
+            <list>
+               <value>Not Started</value>
+               <value>In Progress</value>
+               <value>Complete</value>
+               <value>On Hold</value>
+               <value>Approval</value>
+            </list>
+         </parameter>
+      </constraint>
+   </constraints>
+
    <types>
 
       <!-- Data List - Container. DO NOT MODIFY -->
-      <type name="xdl:dataList">
+      <!--type name="xdl:dataList">
          <title>Ext Data List container type</title>
          <parent>dl:dataList</parent>
-         <!--properties>
+         <properties>
             <property name="xdl:dataListItemType">
                <title>List Item Type</title>
                <description>Determines which Data Dictionary type will be used when create new items within the Data List.</description>
                <type>d:text</type>
             </property>
-         </properties-->
+         </properties>
          <mandatory-aspects>
             <aspect>cm:countable</aspect>
          </mandatory-aspects>
-      </type>
+      </type-->
+
 
       <!-- Data List - Data Item Base Type. DO NOT MODIFY -->
-      <type name="xdl:dataListItem">
-         <title>Ext. Data List parent type</title>
-         <parent>cm:dataListItem</parent>
+      <type name="xdl:demoXdlTask">
+         <title>Ext. Task List (Advanced)</title>
+         <description>Demo of extending the advanced task list</description>
+         <parent>dl:task</parent><!-- dl:task -->
+         <properties>
+            <property name="xdl:testId">
+               <title>Test ID</title>
+               <description/>
+               <type>d:text</type>
+               <index enabled="true">
+                  <!--atomic>false</atomic>
+                  <stored>false</stored-->
+                  <tokenised>false</tokenised>
+               </index>
+            </property>
+         </properties>
+         <overrides>
+            <property name="dl:taskStatus">
+               <default>Not Started</default>
+               <constraints>
+                  <constraint ref="xdl:task_status" />
+               </constraints>
+            </property>
+         </overrides>
          <mandatory-aspects>
-            <aspect>cm:versionable</aspect>
-         	<aspect>fm:discussable</aspect>
-         	<!--aspect>xdl:dataListItemId</aspect-->
+            <aspect>xdl:autoIdItem</aspect><!-- cm:versionable -->
+         	<!--aspect>fm:discussable</aspect-->
          </mandatory-aspects>
       </type>
 
@@ -69,15 +105,15 @@
       </type-->
 
       <!-- Data List - Simple Tasks List -->
-      <type name="xdl:simpletask">
+      <!--type name="xdl:simpletask">
          <title>Task List (Simple)</title>
-         <parent>xdl:dataListItem</parent>
+         <parent>xdl:dataListItem</parent-->
          <!--properties>
          </properties-->
          <!--mandatory-aspects>
             <aspect>cm:titled</aspect>
          </mandatory-aspects-->
-      </type>
+      <!--/type-->
 
       <!-- Data List - Advanced Tasks List -->
       <!--type name="xdl:task">
@@ -162,8 +198,43 @@
       </type-->
    </types>
 
-   <!--aspects-->
+   <aspects>
+      <aspect name="xdl:autoidList">
+         <title>Auto ID</title>
+         <properties>
+            <property name="xdl:lastId">
+               <title>Last ID</title>
+               <type>d:int</type>
+               <index enabled="true">
+                  <atomic>false</atomic>
+                  <stored>false</stored>
+                  <tokenised>true</tokenised>
+               </index>
+            </property>
+            <property name="xdl:idFmt">
+               <title>Optional format ID assigned</title>
+               <type>d:text</type>
+               <index enabled="true">
+                  <tokenised>false</tokenised>
+               </index>
+            </property>
 
+         </properties>
+      </aspect>
+      <aspect name="xdl:autoIdItem">
+         <title>Auto ID Item</title>
+         <properties>
+            <property name="xdl:id">
+               <title>ID</title>
+               <type>d:text</type>
+               <index enabled="true">
+                  <!--atomic>false</atomic-->
+                  <stored>false</stored>
+                  <tokenised>false</tokenised>
+               </index>
+            </property>
+         </properties>
+      </aspect>
       <!--aspect name="xdl:gantt">
          <title>Gantt</title>
          <properties>
@@ -194,6 +265,6 @@
          </properties>
       </aspect-->
 
-   <!--/aspects-->
+   </aspects>
 
 </model>

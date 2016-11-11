@@ -15,7 +15,12 @@
       <plugin>
         <groupId>net.alchim31.maven</groupId>
         <artifactId>yuicompressor-maven-plugin</artifactId>
-        <configuration/>
+        <configuration>
+          <excludes>
+            <exclude>**/site-webscripts/**/*.js</exclude>
+            <exclude>**/alfresco/templates/**/*.js</exclude>
+          </excludes>
+        </configuration>
         <version>1.5.1</version>
         <executions>
           <execution>

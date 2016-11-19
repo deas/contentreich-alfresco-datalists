@@ -671,8 +671,10 @@
       onFilterFormTemplateLoaded: function ExtDataGrid_onFilterFormTemplateLoaded(response)
       {
     	  this.filterFormResponse = response;
-    	  this._createFilterForm();
-           
+
+    	  //this._createFilterForm();
+    	  // I am giving the browser some time to process the response before creating the form
+    	  YAHOO.lang.later(200, this, _createFilterForm);
       },
       
       _createFilterForm: function ExtDataGrid_createFilterForm() {
@@ -1278,4 +1280,7 @@
          });
      }   
    }, true);
+
+    /* Dummy instance to load optional YUI components early */
+    var dummyInstance = new Alfresco.component.ExtDataGrid("null");
 })();
